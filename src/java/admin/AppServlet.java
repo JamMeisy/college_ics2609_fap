@@ -4,13 +4,14 @@
  */
 package admin;
 
-import user.UserData;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+
+import objects.User;
 
 /**
  *
@@ -23,7 +24,7 @@ public class AppServlet extends HttpServlet {
         super.init(config);
         driver = getServletContext().getInitParameter("driver");
         url = getServletContext().getInitParameter("url");
-        dbuser = getServletContext().getInitParameter("user");
+        dbuser = getServletContext().getInitParameter("student_teacher");
         dbpass = getServletContext().getInitParameter("pass");
     }
 
@@ -54,15 +55,15 @@ public class AppServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("3) Executed Query: " + query);
 
-            ArrayList<UserData> data = new ArrayList<UserData>();
+            ArrayList<User> data = new ArrayList<User>();
             System.out.println("4) Recording Queries...");
 
             while (rs.next()) {
-                data.add(new UserData(rs.getString("username"), rs.getString("password"), rs.getString("role")));
+                data.add(new User(rs.getString("username"), rs.getString("password"), rs.getString("role")));
             }
 
-            for (UserData x : data) {
-                System.out.println("-\tUsername: " + x.getUsername() + "\t\tPassword: " + x.getPassword() + "\t\tRole: " + x.getRole());
+            for (User x : data) {
+                System.out.println("-\tUsername: " + x.getEmail() + "\t\tPassword: " + x.getPassword() + "\t\tRole: " + x.getRole());
             }
 
             // Close the connection

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <!-- Header and Footer -->
     <context-param>
         <param-name>Header</param-name>
@@ -45,7 +48,7 @@
     <!-- Application Database -->
     <context-param>
         <param-name>mysqlDriver</param-name>
-        <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+        <param-value>org</param-value>
     </context-param>
     <context-param>
         <param-name>mysqlUser</param-name>
@@ -57,7 +60,7 @@
     </context-param>
     <context-param>
         <param-name>mysqlUrl</param-name>
-        <param-value>jdbc:derby://localhost:1527/application</param-value>
+        <param-value>jdbc:mysql://localhost:3066/application</param-value>
     </context-param>
 
     <!-- Servlets -->

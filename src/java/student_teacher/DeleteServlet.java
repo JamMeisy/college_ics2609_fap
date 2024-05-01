@@ -1,4 +1,4 @@
-package backend;
+package student_teacher;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,7 +17,7 @@ public class DeleteServlet extends HttpServlet {
         super.init(config);
         driver = getServletContext().getInitParameter("driver");
         url = getServletContext().getInitParameter("url");
-        dbuser = getServletContext().getInitParameter("user");
+        dbuser = getServletContext().getInitParameter("student_teacher");
         dbpass = getServletContext().getInitParameter("pass");        
     }
     

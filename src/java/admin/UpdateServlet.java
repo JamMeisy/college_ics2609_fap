@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+import authentication.Security;
 
 public class UpdateServlet extends HttpServlet {
     
@@ -19,7 +20,7 @@ public class UpdateServlet extends HttpServlet {
         super.init(config);
         driver = getServletContext().getInitParameter("driver");
         url = getServletContext().getInitParameter("url");
-        dbuser = getServletContext().getInitParameter("user");
+        dbuser = getServletContext().getInitParameter("student_teacher");
         dbpass = getServletContext().getInitParameter("pass");
         key = getServletContext().getInitParameter("key");
         cipher = getServletContext().getInitParameter("cipher");

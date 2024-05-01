@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package backend;
+package student_teacher;
 
-import user.UserData;
+import objects.User;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class AppServlet extends HttpServlet {
         super.init(config);
         driver = getServletContext().getInitParameter("driver");
         url = getServletContext().getInitParameter("url");
-        dbuser = getServletContext().getInitParameter("user");
+        dbuser = getServletContext().getInitParameter("student_teacher");
         dbpass = getServletContext().getInitParameter("pass");
     }
 
@@ -54,15 +54,15 @@ public class AppServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("3) Executed Query: " + query);
 
-            ArrayList<UserData> data = new ArrayList<UserData>();
+            ArrayList<User> data = new ArrayList<User>();
             System.out.println("4) Recording Queries...");
 
             while (rs.next()) {
-                data.add(new UserData(rs.getString("username"), rs.getString("password"), rs.getString("role")));
+                data.add(new User(rs.getString("username"), rs.getString("password"), rs.getString("role")));
             }
 
-            for (UserData x : data) {
-                System.out.println("-\tUsername: " + x.getUsername() + "\t\tPassword: " + x.getPassword() + "\t\tRole: " + x.getRole());
+            for (User x : data) {
+                System.out.println("-\tUsername: " + x.getEmail() + "\t\tPassword: " + x.getPassword() + "\t\tRole: " + x.getRole());
             }
 
             // Close the connection
@@ -82,7 +82,6 @@ public class AppServlet extends HttpServlet {
             sqle.printStackTrace();
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -121,5 +120,4 @@ public class AppServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
