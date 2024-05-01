@@ -1,13 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <!-- Header and Footer -->
+    <context-param>
+        <param-name>Header</param-name>
+        <param-value>assets/logo.png</param-value>
+    </context-param>
+    <context-param>
+        <param-name>Footer</param-name>
+        <param-value>Juico | Tan - Machine Problem #3 (ICS2609)</param-value>
+    </context-param>
 
+    <!-- Encryption -->
+    <context-param>
+        <param-name>key</param-name>
+        <param-value>activelearningph</param-value>
+    </context-param>
+    <context-param>
+        <param-name>cipher</param-name>
+        <param-value>AES/ECB/PKCS5Padding</param-value>
+    </context-param>
+    <context-param>
+        <param-name>captcha-length</param-name>
+        <param-value>8</param-value>
+    </context-param>
 
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
+    <!-- Authentication Database -->
+    <context-param>
+        <param-name>derbyDriver</param-name>
+        <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>derbyUser</param-name>
+        <param-value>app</param-value>
+    </context-param>
+    <context-param>
+        <param-name>derbyPass</param-name>
+        <param-value>app</param-value>
+    </context-param>
+    <context-param>
+        <param-name>derbyUrl</param-name>
+        <param-value>jdbc:derby://localhost:1527/authentication</param-value>
+    </context-param>
+
+    <!-- Application Database -->
+    <context-param>
+        <param-name>mysqlDriver</param-name>
+        <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mysqlUser</param-name>
+        <param-value>app</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mysqlPass</param-name>
+        <param-value>app</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mysqlUrl</param-name>
+        <param-value>jdbc:derby://localhost:1527/application</param-value>
+    </context-param>
+
+    <!-- Servlets -->
+
+    <!-- Error Page -->
+
+    <!-- Settings -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <session-config>
+        <session-timeout>
+            5
+        </session-timeout>
+    </session-config>
 </web-app>
