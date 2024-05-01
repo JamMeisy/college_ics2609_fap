@@ -5,27 +5,29 @@ package authentication;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-import exceptions.*;
+import exceptions.AuthenticationException;
+
 import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 
 public class LoginServlet extends HttpServlet {
-    
-    // Takes data from ServletConfig, NOT ServletContext
-    String driver, url, dbuser, dbpass, key, cipher;
+
+    String derbyDriver, derbyUrl, derbyUser, derbyPass, key, cipher;
     Security sec;
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        driver = config.getInitParameter("driver");
-        url = config.getInitParameter("url");
-        dbuser = config.getInitParameter("user");
-        dbpass = config.getInitParameter("pass");
-        
-        // ServletContext
-        key = getServletContext().getInitParameter("key");
-        cipher = getServletContext().getInitParameter("cipher");
+        ServletContext context = getServletContext();
+
+        derbyDriver = context.getInitParameter("derbyDriver");
+        derbyUrl = context.getInitParameter("derbyUrl");
+        derbyUser = context.getInitParameter("derbyUser");
+        derbyPass = context.getInitParameter("derbyPass");
+
+        // Authentication
+        key = context.getInitParameter("key");
+        cipher = context.getInitParameter("cipher");
         sec = new Security(key, cipher);
     }
     
@@ -49,11 +51,11 @@ public class LoginServlet extends HttpServlet {
         
         try {
             // Load Driver & Establishing Connection
-            Class.forName(driver);
-            System.out.println("1) Loaded Driver: " + driver);
+            Class.forName(derbyDriver);
+            System.out.println("1) Loaded Driver: " + derbyDriver);
             
-            Connection conn = DriverManager.getConnection(url, dbuser,dbpass);
-            System.out.println("2) Connected to: " + url);
+            Connection conn = DriverManager.getConnection(derbyUrl, derbyUser, derbyPass);
+            System.out.println("2) Connected to: " + derbyUrl);
             
             // Login Verification
             Statement stmt = conn.createStatement();
@@ -83,10 +85,10 @@ public class LoginServlet extends HttpServlet {
                 
                 // Case 2: No Password
                 if (password.equals(""))
-                    throw new WrongUserNullPassException("Incorrect Username, Blank Password");
+                    throw new AuthenticationException("Incorrect Username, Blank Password");
                 // Case 3: Password is incorrect
                 else                  
-                    throw new AuthenticationType2Exception("Incorrect Username, Incorrect Password");    
+                    throw new AuthenticationException("Incorrect Username, Incorrect Password");
             }
             
             System.out.println("--- Username \"" + username + "\" exists!");
@@ -95,7 +97,7 @@ public class LoginServlet extends HttpServlet {
                 
             // Case 4: Correct Username with Incorrect Password
             if (encryptedPassword == null || !encryptedPassword.equals(encryptedVerify))
-                throw new AuthenticationType1Exception("Correct Username, Incorrect Password");
+                throw new AuthenticationException("Correct Username, Incorrect Password");
                
             System.out.println("5) Verification Successful");
 
@@ -108,14 +110,15 @@ public class LoginServlet extends HttpServlet {
             
             // Case 5: Captcha Failed
             if (generatedCaptcha == null || !generatedCaptcha.equals(userCaptcha)) {
-                throw new WrongCaptchaException("CAPTCHA verification failed");
+                throw new AuthenticationException("CAPTCHA verification failed");
             }
 
             System.out.println("6) Captcha Verification Successful");
                 
             // Directly send to desired page with session attributes (no data transferred)
             // Can be modified for success_advanced.jsp via /app
-            response.sendRedirect("success.jsp");   
+            response.sendRedirect("success.jsp");
+
             
             // Close the connection
             rs.close();

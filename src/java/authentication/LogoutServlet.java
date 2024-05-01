@@ -11,9 +11,9 @@ import javax.servlet.http.*;
 
 public class LogoutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        session.invalidate(); 
+
+        request.getSession().invalidate();
+
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
@@ -60,5 +60,4 @@ public class LogoutServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
