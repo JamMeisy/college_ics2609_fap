@@ -1,4 +1,4 @@
-package student_teacher;
+package console;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,7 +12,7 @@ import java.sql.*;
 
 import authentication.Security;
 
-public class InsertServlet extends HttpServlet {
+public class InsertServlet1 extends HttpServlet {
     
     String driver, url, dbuser, dbpass, key, cipher;
     Security sec;

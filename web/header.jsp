@@ -10,7 +10,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% String role = (String) session.getAttribute("role"); %>
-<% if (role.equals("admin")) { %>
+<% if (role.equals("console")) { %>
     <header>
         <h1>HEADER WORKS - ADMIN</h1>
         <nav class="test">
