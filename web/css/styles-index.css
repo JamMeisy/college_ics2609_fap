@@ -1,0 +1,142 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: #131619;
+    font-family: "Jackarta", sans-serif;
+}
+
+body {
+    min-height: 72.5vh;
+    min-width: 25vw; 
+}
+
+.login-box, form{
+    width: 100%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form label{
+    font-size: 0.7rem;
+    color: whitesmoke;
+    margin-bottom: 1vh;
+}
+
+.label-container  h2,  h4{
+    margin-bottom: 2vh;
+    text-align: center;
+}
+
+.label-container h2{
+    font-size: 1.5rem;
+    color: whitesmoke;
+    letter-spacing: 1px;
+}
+
+.label-container h4{
+    font-size: 0.8rem;
+    color: #67696b
+}
+
+.label-container span{
+    font-weight: 750;
+    background-color: #f3ec78;
+    background-image: linear-gradient(20deg, #75bac8, #d9a25b);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+}
+
+.label-container{
+    margin:5vh auto ;
+    display: block;
+    width: fit-content;
+}
+
+form input, .button-container button{
+    width: 70%;
+    height: 6vh;
+    border-radius: 10px;
+    margin-bottom: 3vh;
+    border-style: solid;
+    border-width: thin;
+    
+}
+
+.button-container{
+    width: 100%;
+}
+
+.button-container button{
+    margin: 0 auto 4vh auto;
+    display: block;
+    font-size: 1rem;
+    color: #131619;
+    background-color: #f78c24;
+}
+
+.img-photo{
+    display: none;
+}
+
+
+@media only screen and (min-width: 768px){
+
+    .login-box{
+        max-width: 768px;
+        margin: 0 auto;
+    }
+    
+    .label-container h4{
+        text-align: left;
+    }
+    
+form input, .button-container button{
+    width: 50%;
+}
+    
+    .img-photo{
+        display: block;
+        max-width: 100%;
+        margin-top: 3vh;
+    }
+}
+
+@media only screen and (min-width: 1248px){
+    
+    .login-box{
+        width: 50%;
+        float: left;
+        margin: auto;
+    }
+  
+    form input, .button-container button{
+        width: 60%;
+    }
+    
+    .label-container{
+        width: fit-content;
+    }
+
+    .label-container h2{
+        font-size: 1.5rem;
+    }
+
+    .img-photo{
+        margin: 0;
+        width: 50vw;
+        height: 100vh; 
+        object-fit: cover;
+        position: fixed; 
+        top: 0; 
+        right: 0; 
+        border-top-left-radius: 3%;
+        border-bottom-left-radius: 3%;
+    }
+}
