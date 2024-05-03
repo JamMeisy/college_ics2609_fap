@@ -12,6 +12,16 @@
         <param-name>Footer</param-name>
         <param-value>Juico | Tan - Machine Problem #3 (ICS2609)</param-value>
     </context-param>
+    
+    <!-- PDF Header and Footer -->
+    <context-param>
+        <param-name>pdfHeader</param-name>
+        <param-value>Course List</param-value>
+    </context-param>
+    <context-param>
+        <param-name>pdfFooter</param-name>
+        <param-value>Borja, Castaneda, Dacayo, Juico, Tan - FAP</param-value>
+    </context-param>
 
     <!-- Encryption -->
     <context-param>
