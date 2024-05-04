@@ -1,7 +1,6 @@
 package objects;
 
 public class User {
-
     String email, password, role;
 
     public User(String email, String password, String role) {
@@ -10,7 +9,8 @@ public class User {
         this.role = role;
     }
 
-    public User() {
+    public User(String email) {
+        this.email = email;
     }
 
     public String getEmail() {

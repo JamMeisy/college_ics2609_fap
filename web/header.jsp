@@ -41,5 +41,4 @@
     <header>
         <h1>HEADER WORKS - GUEST</h1>
     </header>
-
 <% } %>

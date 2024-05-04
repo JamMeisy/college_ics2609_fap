@@ -6,9 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% session.setAttribute("page", "student-findcourses.jsp"); %>
 <html>
     <head>
-        <title>Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>ActiveLearning PH</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/styles-global.css" />
+        <link rel="stylesheet" href="css/styles-student-findcourses.css"/>
+        <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
+        />
     </head>
     <body>
 
@@ -18,8 +27,6 @@
             <h3>Course Name</h3>
             <p>Course Description</p>
             <p>Course kineme</p>
-            <!-- Alternative on being hidden using javascript -->
-            <button type="button" hidden>See More</button>
             <form method="post" action="course-request">
                 <i>Choose Teacher</i>
                 <select name="request-teacher" id="request-teacher" required>
@@ -34,6 +41,8 @@
                 <input type="date" name="date2" required>
                 <input type="date" name="date3" required>
                 <input type="date" name="date4" required>
+
+                <input type="hidden" name="">
                 <button type="submit">Apply</button>
             </form>
         </div>
