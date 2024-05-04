@@ -21,7 +21,6 @@
     </head>
     <body>
 
-
         <!-- Card Template for Applying Courses -->
         <div>
             <h3>Course Name</h3>

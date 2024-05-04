@@ -5,12 +5,12 @@ package authentication;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-import exceptions.AuthenticationException;
-
 import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
+import exceptions.AuthenticationException;
+import java.util.logging.Logger;
 
 public class LoginServlet extends HttpServlet {
 
@@ -33,7 +33,11 @@ public class LoginServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
-        
+
+        // Invalidating Previous Session if ever
+        request.getSession().invalidate();
+        log("username");
+
         System.out.println("---------------------------------------------");
         
         HttpSession session = request.getSession();
@@ -43,7 +47,7 @@ public class LoginServlet extends HttpServlet {
         String generatedCaptcha = (String) session.getAttribute("captcha");
         
         // Password is being encrypted
-        String encryptedPassword = sec.encrypt(password);       
+        String encryptedPassword = sec.encrypt(password);
         System.out.println("0) Encrypting Password ");
         System.out.println("-- Password: " + password);
         System.out.println("-- Encrypted Password: " + encryptedPassword);
@@ -67,8 +71,8 @@ public class LoginServlet extends HttpServlet {
 
             // Case 1: User is blank
             if (username.equals("")) {
-                session.setAttribute("error", "No input");
-                response.sendRedirect("");
+                session.setAttribute("error", "No Login Credentials");
+                throw new AuthenticationException("No Login Credentials");
             }
 
             boolean userExists = false;
@@ -88,13 +92,13 @@ public class LoginServlet extends HttpServlet {
                 // Case 2: No Password
                 if (password.equals("")) {
                     session.setAttribute("error", "Incorrect Username, Blank Password");
-                    response.sendRedirect("");
+                    throw new AuthenticationException("Incorrect Username, Blank Password");
                 }
 
                 // Case 3: Password is incorrect
                 else {
                     session.setAttribute("error", "Incorrect Username, Incorrect Password");
-                    response.sendRedirect("");
+                    throw new AuthenticationException("Incorrect Username, Incorrect Password");
                 }
             }
             
@@ -105,11 +109,12 @@ public class LoginServlet extends HttpServlet {
             // Case 4: Correct Username with Incorrect Password
             if (encryptedPassword == null || !encryptedPassword.equals(encryptedVerify)) {
                 session.setAttribute("error", "Correct Username, Incorrect Password");
-                response.sendRedirect("");
+                throw new AuthenticationException("Correct Username, Incorrect Password");
             }
 
             // Case 5: Captcha Failed
             if (generatedCaptcha == null || !generatedCaptcha.equals(userCaptcha)) {
+                session.setAttribute("error", "CAPTCHA verification failed");
                 throw new AuthenticationException("CAPTCHA verification failed");
             }
 
@@ -121,15 +126,15 @@ public class LoginServlet extends HttpServlet {
             System.out.println("5) Captcha & Credential Verification Successful");
             // </editor-fold>
 
-            if (role.equals("Admin")) {
+            if (role.equals("Admin"))
                 response.sendRedirect("admin-registration.jsp");
-            }
-            else if (role.equals("Teacher")) {
+
+            else if (role.equals("Teacher"))
                 response.sendRedirect("teacher-myclasses.jsp");
-            }
-            else if (role.equals("Guest")) {
+
+            else if (role.equals("Guest"))
                 response.sendRedirect("student-mycourses.jsp");
-            }
+
 
             // Close the connection
             rs.close();
