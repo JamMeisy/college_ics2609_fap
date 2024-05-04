@@ -23,7 +23,7 @@ public class DataServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         mysqlDriver = getServletContext().getInitParameter("mysqlDriver");
-        mysqlUrl = getServletContext().getInitParameter(" mysqlUrl");
+        mysqlUrl = getServletContext().getInitParameter("mysqlUrl");
         mysqlUser = getServletContext().getInitParameter("mysqlUser");
         mysqlPass = getServletContext().getInitParameter("mysqlPass");
     }
@@ -34,10 +34,12 @@ public class DataServlet extends HttpServlet {
         System.out.println("---------------------------------------------");
         try {
             // Load Driver & Establishing Connection
+            System.out.println("1) Loading Driver: " + mysqlDriver);
             Class.forName(mysqlDriver);
-            System.out.println("1) Loaded Driver: " + mysqlDriver);
-            Connection conn = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
-            System.out.println("2) Connected to: " + mysqlUrl);
+            System.out.println("2) Connecting to: " + mysqlUrl);
+            System.out.println("2.1) User: " + mysqlUser + " Password: " + mysqlPass);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/applicationdb?useSSL=false", mysqlUser, mysqlPass);
+
 
             // Transfer data
             Statement stmt = conn.createStatement();
@@ -48,71 +50,68 @@ public class DataServlet extends HttpServlet {
             String query5 = "SELECT * FROM teacher_courses ORDER BY teacher_users_email ASC";
             String query6 = "SELECT * FROM schedule ORDER BY date ASC";
 
-            ResultSet rs1 = stmt.executeQuery(query1);
-            ResultSet rs2 = stmt.executeQuery(query2);
-            ResultSet rs3 = stmt.executeQuery(query3);
-            ResultSet rs4 = stmt.executeQuery(query4);
-            ResultSet rs5 = stmt.executeQuery(query5);
-            ResultSet rs6 = stmt.executeQuery(query6);
+            System.out.println("3) Executing & Recording Queries:");
+            ResultSet rs;
 
-            System.out.println("3) Executed Queries:");
+            rs = stmt.executeQuery(query1);
             System.out.println(query1);
-            System.out.println(query2);
-            System.out.println(query3);
-            System.out.println(query4);
-            System.out.println(query5);
-            System.out.println(query6);
-
             ArrayList<User> users = new ArrayList<>();
-            ArrayList<Student> student = new ArrayList<>();
-            ArrayList<Teacher> teacher = new ArrayList<>();
-            ArrayList<Courses> courses = new ArrayList<>();
-            ArrayList<TeacherCourses> teacher_courses = new ArrayList<>();
-            ArrayList<Schedule> schedule = new ArrayList<>();
-
-            System.out.println("4) Recording Queries...");
-
-            while (rs1.next())
+            while (rs.next())
                 users.add(new User(
-                        rs1.getString("email"),
-                        rs1.getString("password"),
-                        rs1.getString("role")));
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("role")));
 
-            while (rs2.next())
+            System.out.println(query2);
+            rs = stmt.executeQuery(query2);
+            ArrayList<Student> student = new ArrayList<>();
+            while (rs.next())
                 student.add(new Student(
-                        rs2.getString("users_email"),
-                        rs2.getString("firstname"),
-                        rs2.getString("lastname"),
-                        rs2.getDate("birthdate")));
+                        rs.getString("users_email"),
+                        rs.getString("firstname"),
+                        rs.getString("lastname"),
+                        rs.getDate("birthdate")));
 
-            while (rs3.next())
+            System.out.println(query3);
+            rs = stmt.executeQuery(query3);
+            ArrayList<Teacher> teacher = new ArrayList<>();
+            while (rs.next())
                 teacher.add(new Teacher(
-                        rs3.getString("users_email"),
-                        rs3.getString("firstname"),
-                        rs3.getString("lastname"),
-                        rs3.getString("resume"),
-                        rs3.getString("status"),
-                        rs3.getDate("birthdate")));
+                        rs.getString("users_email"),
+                        rs.getString("firstname"),
+                        rs.getString("lastname"),
+                        rs.getString("resume"),
+                        rs.getString("status"),
+                        rs.getDate("birthdate")));
 
-            while (rs4.next())
+            System.out.println(query4);
+            rs = stmt.executeQuery(query4);
+            ArrayList<Courses> courses = new ArrayList<>();
+            while (rs.next())
                 courses.add(new Courses(
-                        rs4.getString("course_name"),
-                        rs4.getString("course_description"),
-                        rs4.getString("course_difficulty"),
-                        rs4.getString("course_hours")));
+                        rs.getString("course_name"),
+                        rs.getString("course_description"),
+                        rs.getString("course_difficulty"),
+                        rs.getString("course_hours")));
 
-            while (rs5.next())
+            System.out.println(query5);
+            rs = stmt.executeQuery(query5);
+            ArrayList<TeacherCourses> teacher_courses = new ArrayList<>();
+            while (rs.next())
                 teacher_courses.add(new TeacherCourses(
-                        rs5.getString("teacher_users_email"),
-                        rs5.getString("courses_course_name")));
+                        rs.getString("teacher_users_email"),
+                        rs.getString("courses_course_name")));
 
-            while (rs6.next())
+            System.out.println(query6);
+            rs = stmt.executeQuery(query6);
+            ArrayList<Schedule> schedule = new ArrayList<>();
+            while (rs.next())
                 schedule.add(new Schedule(
-                        rs6.getString("STUDENT_USERS_email"),
-                        rs6.getString("TEACHER_USERS_email"),
-                        rs6.getString("COURSES_course_name"),
-                        rs6.getString("status"),
-                        rs6.getDate("date")));
+                        rs.getString("STUDENT_USERS_email"),
+                        rs.getString("TEACHER_USERS_email"),
+                        rs.getString("COURSES_course_name"),
+                        rs.getString("status"),
+                        rs.getDate("date")));
 
             System.out.println(users);
             System.out.println(student);
@@ -122,31 +121,22 @@ public class DataServlet extends HttpServlet {
             System.out.println(schedule);
 
             // Close the connection
-            rs1.close();
-            rs2.close();
-            rs3.close();
-            rs4.close();
-            rs5.close();
-            rs6.close();
+            rs.close();
             stmt.close();
             conn.close();
 
-            System.out.println("5) Data recorded... Transferring data");
+            System.out.println("4) Data recorded... Transferring data");
 
             HttpSession session = request.getSession();
 
             session.setAttribute("users", users);
-            session.setAttribute("users", users);
-            session.setAttribute("users", users);
-            session.setAttribute("users", users);
-            session.setAttribute("users", users);
-            session.setAttribute("users", users);
+            session.setAttribute("student", student);
+            session.setAttribute("teacher", teacher);
+            session.setAttribute("courses", courses);
+            session.setAttribute("teacher_courses", teacher_courses);
+            session.setAttribute("schedule", schedule);
 
-            String page = (String) session.getAttribute("page");
-
-            request.getRequestDispatcher(page).forward(request, response);
-            System.out.println("6) Data transferred successfully!");
-            System.out.println("7) Reloading current page.");
+            System.out.println("5) Data transferred successfully!");
 
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
