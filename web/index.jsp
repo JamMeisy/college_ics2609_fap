@@ -1,12 +1,14 @@
 <%-- Document : index Created on : 05 1, 24, 3:05:50 PM Author : Jam --%>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<% session.setAttribute("page", "index.jsp"); %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="css/styles-login.css"/>
+        <link rel="stylesheet" href="css/styles-index.css"/>
+        <link rel="stylesheet" href="css/styles-global.css" />
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
@@ -44,7 +46,6 @@
         </script>
     </head>
     <body>
-
         <!-- Body  -->
         <div class="login-box">
             <h2>Welcome To Our Database!</h2>

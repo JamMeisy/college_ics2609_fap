@@ -10,7 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 
-public class DeleteServlet1 extends HttpServlet {
+public class RegistrationRejectServlet extends HttpServlet {
     
     String driver, url, dbuser, dbpass;
     public void init(ServletConfig config) throws ServletException {

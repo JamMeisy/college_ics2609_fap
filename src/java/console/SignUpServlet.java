@@ -12,7 +12,7 @@ import java.sql.*;
 
 import authentication.Security;
 
-public class InsertServlet1 extends HttpServlet {
+public class SignUpServlet extends HttpServlet {
     
     String driver, url, dbuser, dbpass, key, cipher;
     Security sec;

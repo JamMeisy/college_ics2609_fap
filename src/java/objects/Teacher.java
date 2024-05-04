@@ -1,14 +1,18 @@
 package objects;
+
 import java.util.Date;
 
-public class Student extends User {
-    String fname, lname;
+public class Teacher extends User {
+
+    String email, fname, lname, resume, status;
     Date bday;
 
-    public Student(String email, String fname, String lname, Date bday) {
+    public Teacher(String email, String fname, String lname, String resume, String status, Date bday) {
         super(email);
         this.fname = fname;
         this.lname = lname;
+        this.resume = resume;
+        this.status = status;
         this.bday = bday;
     }
 
@@ -26,6 +30,22 @@ public class Student extends User {
 
     public void setLname(String lname) {
         this.lname = lname;
+    }
+
+    public String getResume() {
+        return resume;
+    }
+
+    public void setResume(String resume) {
+        this.resume = resume;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getBday() {

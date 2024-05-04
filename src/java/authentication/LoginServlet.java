@@ -48,27 +48,29 @@ public class LoginServlet extends HttpServlet {
         System.out.println("-- Password: " + password);
         System.out.println("-- Encrypted Password: " + encryptedPassword);
         
-        
         try {
+            // <editor-fold defaultstate="collapsed" desc="Login Authentication (Click to expand)">
             // Load Driver & Establishing Connection
             Class.forName(derbyDriver);
             System.out.println("1) Loaded Driver: " + derbyDriver);
-            
+
             Connection conn = DriverManager.getConnection(derbyUrl, derbyUser, derbyPass);
             System.out.println("2) Connected to: " + derbyUrl);
-            
+
             // Login Verification
             Statement stmt = conn.createStatement();
             String query = "SELECT * FROM user_info";
             ResultSet rs = stmt.executeQuery(query);
             System.out.println("3) Executed Query: " + query);
-                
+
             System.out.println("4) Verifying Login Credentials");
-            
+
             // Case 1: User is blank
-            if (username.equals(""))
-                throw new NullPointerException();
-            
+            if (username.equals("")) {
+                session.setAttribute("error", "No input");
+                response.sendRedirect("");
+            }
+
             boolean userExists = false;
             while (rs.next()) {
                 String checkUser = rs.getString("username");
@@ -84,11 +86,16 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("--- Password = \"" + password + "\"");
                 
                 // Case 2: No Password
-                if (password.equals(""))
-                    throw new AuthenticationException("Incorrect Username, Blank Password");
+                if (password.equals("")) {
+                    session.setAttribute("error", "Incorrect Username, Blank Password");
+                    response.sendRedirect("");
+                }
+
                 // Case 3: Password is incorrect
-                else                  
-                    throw new AuthenticationException("Incorrect Username, Incorrect Password");
+                else {
+                    session.setAttribute("error", "Incorrect Username, Incorrect Password");
+                    response.sendRedirect("");
+                }
             }
             
             System.out.println("--- Username \"" + username + "\" exists!");
@@ -96,30 +103,34 @@ public class LoginServlet extends HttpServlet {
             String role = rs.getString("role");
                 
             // Case 4: Correct Username with Incorrect Password
-            if (encryptedPassword == null || !encryptedPassword.equals(encryptedVerify))
-                throw new AuthenticationException("Correct Username, Incorrect Password");
-               
-            System.out.println("5) Verification Successful");
+            if (encryptedPassword == null || !encryptedPassword.equals(encryptedVerify)) {
+                session.setAttribute("error", "Correct Username, Incorrect Password");
+                response.sendRedirect("");
+            }
 
-            session.setAttribute("username", username);
-            session.setAttribute("role", role);
-            System.out.println("Role set in session: " + role);
-            
-            // For added security when generating reports
-            session.setAttribute("password", password);
-            
             // Case 5: Captcha Failed
             if (generatedCaptcha == null || !generatedCaptcha.equals(userCaptcha)) {
                 throw new AuthenticationException("CAPTCHA verification failed");
             }
 
-            System.out.println("6) Captcha Verification Successful");
-                
-            // Directly send to desired page with session attributes (no data transferred)
-            // Can be modified for success_advanced.jsp via /app
-            response.sendRedirect("success.jsp");
+            session.setAttribute("username", username);
+            session.setAttribute("password", password);
+            session.setAttribute("role", role);
+            System.out.println("Role set in session: " + role);
 
-            
+            System.out.println("5) Captcha & Credential Verification Successful");
+            // </editor-fold>
+
+            if (role.equals("Admin")) {
+                response.sendRedirect("admin-registration.jsp");
+            }
+            else if (role.equals("Teacher")) {
+                response.sendRedirect("teacher-myclasses.jsp");
+            }
+            else if (role.equals("Guest")) {
+                response.sendRedirect("student-mycourses.jsp");
+            }
+
             // Close the connection
             rs.close();
             stmt.close();
