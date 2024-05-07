@@ -1,0 +1,167 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Jackarta", sans-serif;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #131619;
+    color: #97999b;
+    border-color: #97999b;
+}
+
+body{
+    min-width: 25.45vw;
+    min-height: 72.5vh;
+}
+
+.signup-box{
+    width: 100%;
+    margin-top: 2vh;
+}
+
+form{
+    width: 70%;
+    margin:auto;
+}
+
+.button-box{    
+    margin:1vh 0;
+    border: solid;
+    height: 6vh;
+    border-radius: 10px;
+    margin-bottom: 3vh;
+    border-style: solid;
+    border-width: thin;
+    
+}
+
+.button-box .user-btn{
+    width:50%;
+    height: fit-content;
+    border-style: none;
+    background-image: linear-gradient(335deg,  #dd7227, #3756cb);
+    color: black;
+}
+
+.button-box #student-btn{
+    float: left;
+    height: 100%;
+    background-image: linear-gradient( 25deg,   #dd7227, #3756cb);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.button-box #teacher-btn{
+   float:right;
+   height: 100%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.input-box{
+    width: 100%;
+}
+
+.input-box label {
+    width: 100%;
+}
+
+form .input-box input{
+    margin: 1vh 0 3vh;
+    width:100%;
+    height: 5vh;
+    border-radius: 10px;
+    margin-bottom: 3vh;
+    border-style: solid;
+    border-width: thin;
+    background-color: #1a1d21;
+}
+
+input, input::placeholder {
+    font-size: 0.8rem;
+}
+
+form .submit-btn {
+    width: 100%;
+    height: 5vh;
+    background-image: linear-gradient( 25deg,   #dd7227, #3756cb);
+    color: black;
+}
+
+form .input-box input, form .submit-btn{    
+    border-radius: 10px;
+    margin-bottom: 3vh;
+    border-style: solid;
+    border-width: thin;
+}
+
+.img-photo{
+    display: none;
+}
+label{
+    font-size: 1.5vh;
+    letter-spacing: 1px;
+}
+
+span{
+    color: #de6d20;
+}
+
+.bday {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media only screen and (min-width: 768px) {
+    .name {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    form .name label,
+    form .name input,
+    .fname-box,
+    .lname-box{
+        width:100%;
+        margin: auto;
+    }
+    
+     .fname-box,
+    .lname-box{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .fname-box{
+        float: left;
+    }
+    
+    .lname-box{
+        float: right;
+    }
+}
+
+@media only screen and (min-width: 1248px){
+    
+    .signup-box{
+        width: 50%;
+        float: left;
+        margin: auto;
+    }
+    
+    .img-photo{
+        margin: 0;
+        width: 50vw;
+        height: 100vh;  
+        object-fit: cover;
+        position: fixed; 
+        top: 0; 
+        right: 0; 
+        border-top-left-radius: 3%;
+        border-bottom-left-radius: 3%;
+   }
+}

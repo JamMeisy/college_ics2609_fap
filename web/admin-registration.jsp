@@ -31,19 +31,26 @@
     </head>
     <body>
         <h1>ADMIN MODE</h1>
+
+        <!-- Pending Registration Applications -->
         <%
-            ArrayList<Teacher> teacher = (ArrayList<Teacher>) session.getAttribute("teacher");
-            for (Teacher x : teacher) {
-                if (x.getStatus().equals("Unverified")) {
-                    out.print("<tr>");
-                    out.print("<td>" + x.getEmail() + "</td>");
-                    out.print("<td>" + x.getFname() + "</td>");
-                    out.print("<td>" + x.getLname() + "</td>");
-                    out.print("<td>" + x.getBday() + "</td>");
-                    out.print("<td>" + x.getStatus() + "</td>");
-                    out.print("</tr>");
+            if (session.getAttribute("teacher") != null) {
+                ArrayList<Teacher> teacher = (ArrayList<Teacher>) session.getAttribute("teacher");
+                for (Teacher x : teacher) {
+                    if (x.getStatus().equals("Unverified")) {
+                        out.print("<tr>");
+                        out.print("<td>" + x.getEmail() + "</td>");
+                        out.print("<td>" + x.getFname() + "</td>");
+                        out.print("<td>" + x.getLname() + "</td>");
+                        out.print("<td>" + x.getBday() + "</td>");
+                        out.print("<td>" + x.getStatus() + "</td>");
+                        out.print("</tr>");
+                    }
                 }
             }
+            else
+                System.out.println("Null Value");
         %>
+        <h1>END</h1>
     </body>
 </html>
