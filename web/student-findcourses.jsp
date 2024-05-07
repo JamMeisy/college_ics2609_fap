@@ -24,6 +24,13 @@
         />
     </head>
     <body>
+        <img class="img-photo" src="assets/UST.jpg" alt="UST">
+        <div class="label-container">
+            <p class="p1">Explore Programs</p>
+            <h2>Our Most Popular Classes</h2>
+            <p class="p2">Let's join our famous class, the knowledge provided will definately be useful to you.</p>
+        </div>
+      
         <!-- Course Application Card-->
         <%
             ArrayList<Courses> courses = (ArrayList<Courses>) session.getAttribute("courses");
@@ -33,7 +40,10 @@
                 // ! Quick Fix: Ensure Database is populated so that each course has a teacher
                 for (Courses x : courses) {
         %>
-        <div>
+        
+      
+        <div class="course-card">
+            <img class="course-card-img" src="assets/UST.jpg" alt="UST">
             <h3><%= x.getCname() %></h3>
             <p><%= x.getCdescription() %></p>
             <p><%= x.getChours() %></p>

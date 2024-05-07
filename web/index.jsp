@@ -12,10 +12,10 @@
         <link rel="stylesheet" href="css/styles-global.css" />
         <link
                 rel="stylesheet"
-                href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
-        />
+                href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"/>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://kit.fontawesome.com/f5ce89fef9.js" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function () {
                 $("#captcha").on("paste", function (e) {
@@ -50,15 +50,16 @@
         <%@ include file="header.jsp" %>
         <!-- Body  -->
         <div class="login-box">
-            <h2>Welcome To Our Database!</h2>
+            <div class="label-container">
+                <h2>Welcome to <span class="bold">Active Learning!</span></h2>
+                <h4>Login to Activate Learning to start Your IT career!</h4>
+            </div>
             <form action="login" method="POST">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username"/>
+                <input type="text" name="username" id="username" placeholder="  Email address" required/>
 
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password"/>
+                <input type="password" name="password" id="password" placeholder="  Password" required/>
 
-                <label for="generatedCaptcha">Generated CAPTCHA</label>
+                <label for="generatedCaptcha">Generated CAPTCHA:</label>
                 <input
                         type="text"
                         name="generatedCaptcha"
@@ -67,12 +68,13 @@
                         onfocus="this.blur()"
                 />
 
-                <label for="captcha">CAPTCHA:</label>
                 <input
                         type="text"
                         name="captcha"
                         id="captcha"
                         onpaste="return false;"
+                        placeholder="  Type the Characters above" 
+                        required
                 />
 
                 <div class="button-container">
@@ -87,6 +89,7 @@
                 </div>
             </form>
         </div>
+        <img class="img-photo" src="assets/UST.jpg" alt="UST">
         <%@ include file="footer.jsp" %>
     </body>
 </html>
