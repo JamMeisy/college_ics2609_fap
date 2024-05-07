@@ -16,7 +16,7 @@
     <!-- Encryption -->
     <context-param>
         <param-name>key</param-name>
-        <param-value>activelearningph</param-value>
+        <param-value>fourfourfourfour</param-value>
     </context-param>
     <context-param>
         <param-name>cipher</param-name>
@@ -48,7 +48,7 @@
     <!-- Application Database -->
     <context-param>
         <param-name>mysqlDriver</param-name>
-        <param-value>org</param-value>
+        <param-value>com.mysql.cj.jdbc.Driver</param-value>
     </context-param>
     <context-param>
         <param-name>mysqlUser</param-name>
@@ -91,6 +91,15 @@
         <url-pattern>/captcha</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DataServlet</servlet-name>
+        <servlet-class>console.DataServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DataServlet</servlet-name>
+        <url-pattern>/data</url-pattern>
+    </servlet-mapping>
+
     <!-- Error Page -->
     <error-page>
         <error-code>404</error-code>
@@ -99,6 +108,10 @@
     <error-page>
         <exception-type>exceptions.InvalidSessionException</exception-type>
         <location>/error-invalidsession.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>exceptions.AuthenticationException</exception-type>
+        <location>/index.jsp</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.Exception</exception-type>

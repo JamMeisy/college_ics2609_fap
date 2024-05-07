@@ -1,6 +1,7 @@
 <%-- Document : index Created on : 05 1, 24, 3:05:50 PM Author : Jam --%>
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <% session.setAttribute("page", "index.jsp"); %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,6 +47,7 @@
         </script>
     </head>
     <body>
+        <%@ include file="header.jsp" %>
         <!-- Body  -->
         <div class="login-box">
             <div class="label-container">
@@ -88,5 +90,6 @@
             </form>
         </div>
         <img class="img-photo" src="assets/UST.jpg" alt="UST">
+        <%@ include file="footer.jsp" %>
     </body>
 </html>

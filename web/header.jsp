@@ -6,39 +6,34 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%-- TODO: Raph, add specific nav bar for each role --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% String role = (String) session.getAttribute("role"); %>
-<% if (role.equals("console")) { %>
-    <header>
-        <h1>HEADER WORKS - ADMIN</h1>
-        <nav class="test">
-            <a href="admin-registration.jsp">Registration</a>
-            <a href="admin-registration.jsp">Registration</a>
-            <a href="admin-registration.jsp">Registration</a>
-        </nav>
-    </header>
+        <header>
+            <% if (role == null) { %>
+            <h1>HEADER WORKS - LOGIN</h1>
 
-<% } else if (role.equals("teacher")) { %>
-    <header>
-        <h1>HEADER WORKS - TEACHER</h1>
-        <nav class="test">
-            <a href="admin-registration.jsp">Registration</a>
-        </nav>
-    </header>
+            <% } else if (role.equals("Admin")) { %>
 
-<% } else if (role.equals("guest")) { %>
-    <header>
-        <h1>HEADER WORKS - STUDENT</h1>
-        <nav class="test">
-            <a href="admin-registration.jsp">Registration</a>
-            <a href="admin-registration.jsp">Registration</a>
-        </nav>
-    </header>
+            <h1>HEADER WORKS - ADMIN</h1>
+            <nav class="test">
+                <a href="admin-registration.jsp">Registration</a>
+                <a href="admin-registration.jsp">Registration</a>
+                <a href="admin-registration.jsp">Registration</a>
+            </nav>
 
-<% } else { %>
-    <header>
-        <h1>HEADER WORKS - GUEST</h1>
-    </header>
-<% } %>
+            <% } else if (role.equals("Teacher")) { %>
+            <h1>HEADER WORKS - TEACHER</h1>
+            <nav class="test">
+                <a href="admin-registration.jsp">Registration</a>
+            </nav>
+
+
+            <% } else { %>
+            <h1>HEADER WORKS - STUDENT</h1>
+            <nav class="test">
+                <a href="admin-registration.jsp">Registration</a>
+                <a href="admin-registration.jsp">Registration</a>
+            </nav>
+
+            <% } %>
+        </header>
