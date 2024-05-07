@@ -156,12 +156,12 @@ span{
     .img-photo{
         margin: 0;
         width: 50vw;
-        height: 100vh; 
+        height: 100vh;  
         object-fit: cover;
         position: fixed; 
         top: 0; 
         right: 0; 
         border-top-left-radius: 3%;
         border-bottom-left-radius: 3%;
-        }
+   }
 }

@@ -19,11 +19,18 @@
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
         />
     </head>
-    <body>
-
+    <body>  
+        <img class="img-photo" src="assets/UST.jpg" alt="UST">
+        <div class="label-container">
+            <p class="p1">Explore Programs</p>
+            <h2>Our Most Popular Classes</h2>
+            <p class="p2">Let's join our famous class, the knowledge provided will definately be useful to you.</p>
+        </div>
+        
 
         <!-- Card Template for Applying Courses -->
-        <div>
+        <div class="course-card">
+            <img class="course-card-img" src="assets/UST.jpg" alt="UST">
             <h3>Course Name</h3>
             <p>Course Description</p>
             <p>Course kineme</p>
