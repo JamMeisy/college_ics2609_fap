@@ -34,14 +34,31 @@
     font-size: 0.7rem;
 }
 
+.container{
+    display: flex;
+    flex-direction: row;
+     width:100%;
+     height: fit-content;
+     overflow: hidden;
+     border-style: none;
+     overflow-x: scroll;
+     -webkit-overflow-scrolling: touch;
+}
+
+
+    
+
 .course-card{
-    margin: auto;
-    min-width: fit-content;
+    margin: auto 2vw;
+    width: 50vw;
+    min-width: 30vw;
+    height: fit-content;
     padding: 2vh 2vw;
-    border-radius: 10px;
+    border-radius: 10px;    
     margin-bottom: 1vh;
     border-style: solid;
     border-width: thin;
+    color: white;   
 }
 
 .course-card form{
@@ -49,6 +66,38 @@
     flex-direction: column;
 }
 
+.course-card p, .course-card form input, 
+.course-card form i, .course-card form select{
+    font-size: 0.7rem;
+    margin-top:0.5vh;
+}
+
+.course-card p:first-of-type, .course-card p:last-of-type{
+    color: #808080;
+    margin: 1vh 0;
+}
+
 .course-card .course-card-img{
     width: 100%;
+    height: 10vh;
+    object-fit: cover;
 }
+
+.date-container input{
+    width: 30%;
+    margin-bottom: 1vh;
+    border-radius: 5px; 
+    border-style: solid;
+    border-width: thin;
+    margin: auto;
+}
+
+.course-card button{
+    margin-top: 0.8vh;
+    font-size: 0.8rem;
+    padding: 0.7vh 0.7vw;
+    border-radius: 5px; 
+    border-style: solid;
+    border-width: thin;
+}
+

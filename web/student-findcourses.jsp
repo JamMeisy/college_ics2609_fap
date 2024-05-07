@@ -29,29 +29,122 @@
         
 
         <!-- Card Template for Applying Courses -->
-        <div class="course-card">
-            <img class="course-card-img" src="assets/UST.jpg" alt="UST">
-            <h3>Course Name</h3>
-            <p>Course Description</p>
-            <p>Course kineme</p>
-            <form method="post" action="course-request">
-                <i>Choose Teacher</i>
-                <select name="request-teacher" id="request-teacher" required>
-                    <!-- Options in JSP -->
-                    <option value="sample">sample</option>
-                </select>
+        <div class="container">
+                <div class="course-card">
+                    <img class="course-card-img" src="assets/UST.jpg" alt="UST">
+                   <p>Course kineme</p>
+                    <h2>Course Name</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Est ante in nibh mauris cursus. Nulla facilisi etiam dignissim diam quis enim lobortis.</p>
+                    <form method="post" action="course-request">
+                        <i>Choose Teacher</i>
+                        <select name="request-teacher" id="request-teacher" required>
+                            <!-- Options in JSP -->
+                            <option value="sample">sample</option>
+                        </select>
 
-                <i>Choose your sessions</i>
-                <i>Note that choosing the same date indicates more hours</i>
+                        <i>Choose your sessions</i>
+                        <i>Note that choosing the same date indicates more hours</i>
 
-                <input type="date" name="date1" required>
-                <input type="date" name="date2" required>
-                <input type="date" name="date3" required>
-                <input type="date" name="date4" required>
+                        <div class="date-container"> 
+                        <input type="date" name="date1" required>
+                        <input type="date" name="date2" required>
+                        <input type="date" name="date3" required>
+                        <input type="date" name="date4" required>
+                        </div>
 
-                <input type="hidden" name="">
-                <button type="submit">Apply</button>
-            </form>
+                        <input type="hidden" name="">
+                        <button type="submit">Apply</button>
+                    </form>
+                </div>
+
+                <div class="course-card">
+                    <img class="course-card-img" src="assets/UST.jpg" alt="UST">
+                   <p>Course kineme</p>
+                    <h2>Course Name</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Est ante in nibh mauris cursus. Nulla facilisi etiam dignissim diam quis enim lobortis.</p>
+                    <form method="post" action="course-request">
+                        <i>Choose Teacher</i>
+                        <select name="request-teacher" id="request-teacher" required>
+                            <!-- Options in JSP -->
+                            <option value="sample">sample</option>
+                        </select>
+
+                        <i>Choose your sessions</i>
+                        <i>Note that choosing the same date indicates more hours</i>
+
+                        <div class="date-container"> 
+                        <input type="date" name="date1" required>
+                        <input type="date" name="date2" required>
+                        <input type="date" name="date3" required>
+                        <input type="date" name="date4" required>
+                        </div>
+
+                        <input type="hidden" name="">
+                        <button type="submit">Apply</button>
+                    </form>
+                </div>
+
+                            <div class="course-card">
+                    <img class="course-card-img" src="assets/UST.jpg" alt="UST">
+                   <p>Course kineme</p>
+                    <h2>Course Name</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Est ante in nibh mauris cursus. Nulla facilisi etiam dignissim diam quis enim lobortis.</p>
+                    <form method="post" action="course-request">
+                        <i>Choose Teacher</i>
+                        <select name="request-teacher" id="request-teacher" required>
+                            <!-- Options in JSP -->
+                            <option value="sample">sample</option>
+                        </select>
+
+                        <i>Choose your sessions</i>
+                        <i>Note that choosing the same date indicates more hours</i>
+
+                        <div class="date-container"> 
+                        <input type="date" name="date1" required>
+                        <input type="date" name="date2" required>
+                        <input type="date" name="date3" required>
+                        <input type="date" name="date4" required>
+                        </div>
+
+                        <input type="hidden" name="">
+                        <button type="submit">Apply</button>
+                    </form>
+                </div>
+
+                <div class="course-card">
+                    <img class="course-card-img" src="assets/UST.jpg" alt="UST">
+                   <p>Course kineme</p>
+                    <h2>Course Name</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Est ante in nibh mauris cursus. Nulla facilisi etiam dignissim diam quis enim lobortis.</p>
+                    <form method="post" action="course-request">
+                        <i>Choose Teacher</i>
+                        <select name="request-teacher" id="request-teacher" required>
+                            <!-- Options in JSP -->
+                            <option value="sample">sample</option>
+                        </select>
+
+                        <i>Choose your sessions</i>
+                        <i>Note that choosing the same date indicates more hours</i>
+
+                        <div class="date-container"> 
+                        <input type="date" name="date1" required>
+                        <input type="date" name="date2" required>
+                        <input type="date" name="date3" required>
+                        <input type="date" name="date4" required>
+                        </div>
+
+                        <input type="hidden" name="">
+                        <button type="submit">Apply</button>
+                    </form>
+                </div>
         </div>
     </body>
 </html>
