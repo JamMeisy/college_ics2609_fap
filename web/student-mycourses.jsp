@@ -8,11 +8,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="exceptions.InvalidSessionException" %>
 
 <%
-    session.setAttribute("page", "student-mycourses.jsp");
     String username = (String) session.getAttribute("username");
+    String role = (String) session.getAttribute("role");
+    System.out.println("-- Current User:" + username);
+//    if (username == null || username.isEmpty()) {
+//        throw new InvalidSessionException("Unauthorized Access");
+//    }
+//    if (!role.equals("student")) {
+//        throw new InvalidSessionException("Unauthorized Access");
+//    }
 %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -26,24 +35,33 @@
         />
     </head>
     <body>
+        <jsp:include page="header.jsp" />
+        <jsp:include page="/data" />
         <!-- Student Course Schedules -->
-        <%
-            if (session.getAttribute("schedule") != null) {
-                ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
-                for (Schedule x : schedule) {
-                    if (x.getStudentEmail().equals(username)) {
-                        out.print("<tr>");
-                        out.print("<td>" + x.getStudentEmail() + "</td>");
-                        out.print("<td>" + x.getTeacherEmail() + "</td>");
-                        out.print("<td>" + x.getCourse() + "</td>");
-                        out.print("<td>" + x.getSchedule() + "</td>");
-                        out.print("</tr>");
+        <table>
+            <tr>
+                <th>Teacher</th>
+                <th>Course</th>
+                <th>Schedule</th>
+            </tr>
+            <%
+                if (session.getAttribute("schedule") != null) {
+                    ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
+                    for (Schedule x : schedule) {
+                        if (x.getStudentEmail().equals(username)) {
+            %>
+            <tr>
+                <td><%= x.getTeacherEmail() %></td>
+                <td><%= x.getCourse() %></td>
+                <td><%= x.getSchedule() %></td>
+            </tr>
+            <%
+                        }
                     }
-                }
-            }
-            else
-                System.out.println("Null Value");
-        %>
-
+                } else
+                    System.out.println("Null Value");
+            %>
+        </table>
+        <jsp:include page="footer.jsp" />
     </body>
 </html>
