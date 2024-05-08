@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Jackarta", sans-serif;
+    background-color: #131619;
+    color: #97999b;
+    border-color: #97999b;
+}
+.img-photo {
+    display: none;
+}
+
+.teacher-info {
+    width: 100%; 
+    display: flex; 
+    flex-direction: column;
+    background-color: transparent;
+    position: relative;
+}
+
+.teacher-description {
+    margin: 1vh;
+    padding-right: 2vw;
+    width: 90%;
+    background-color: transparent;
+}
+
+.teacher-description p {
+    width: 90%;
+    height: 15%;
+    font-size: 0.7rem;
+}
+
+.teacher-description h4 {
+    font-size: 0.8rem;
+    color: #e69249;
+    background-color: transparent;
+}
+
+.teacher-description h2 {
+    font-size: 0.9rem;
+    margin: 1vh 0;
+    background-color: transparent;
+}
+
+.img-container {
+    margin: 1vh 2vh;
+    width: 50%; 
+    background-color: transparent;
+    
+}
+
+.img-container .img-profile-pic {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.table-container{
+    margin: 1.5vh auto;
+    width: 90%;
+    padding: 2%;
+    overflow: hidden;
+    overflow-x: scroll;
+    border-style: solid;
+    border-width: thin;
+}
+
+table{
+    width: 100%;
+    min-width: 50vh;
+    text-align: center;
+}
+
+@media only screen and (min-width: 1024px) {
+    
+    .teacher-info {
+    margin:auto;
+    display: block; 
+    }
+    
+    .teacher-description{
+    width: 50%; 
+    float: left;
+    margin: 2vh 2vw;
+    }
+    
+    .img-container {
+    width: 30%; 
+    float: right;
+    }
+
+    .img-container .img-profile-pic {
+        width: 150px;
+        height: 150px;
+    }
+    
+    
+    .teacher-description p {
+    font-size: 0.8rem;
+    }
+
+    .teacher-description h4 {
+        font-size: 1rem;
+    }
+
+    .teacher-description h2 {
+        font-size: 1.5rem;
+    }
+
+}
+
+
+
+
