@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <footer>
-    <%-- TODO: Raph, content of footer --%>
+
     <h1>FOOTER</h1>
+    <%= request.getServletContext().getInitParameter("footer") %>
 </footer>

@@ -12,6 +12,8 @@
         <title>Title</title>
     </head>
     <body>
-
+        <jsp:include page="header.jsp" />
+        <h1> ERROR 404 </h1>
+        <jsp:include page="footer.jsp" />
     </body>
 </html>

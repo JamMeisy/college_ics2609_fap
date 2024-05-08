@@ -5,18 +5,18 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <!-- Header and Footer -->
     <context-param>
-        <param-name>Header</param-name>
+        <param-name>header</param-name>
         <param-value>assets/logo.png</param-value>
     </context-param>
     <context-param>
-        <param-name>Footer</param-name>
-        <param-value>Juico | Tan - Machine Problem #3 (ICS2609)</param-value>
+        <param-name>footer</param-name>
+        <param-value>| Borja | Castañeda | Dacayo | Juico | Tan | -- Finals (ICS2609)</param-value>
     </context-param>
 
     <!-- Encryption -->
     <context-param>
         <param-name>key</param-name>
-        <param-value>fourfourfourfour</param-value>
+        <param-value>activelearningph</param-value>
     </context-param>
     <context-param>
         <param-name>cipher</param-name>
@@ -60,7 +60,7 @@
     </context-param>
     <context-param>
         <param-name>mysqlUrl</param-name>
-        <param-value>jdbc:mysql://localhost:3306/applicationdb</param-value>
+        <param-value>jdbc:mysql://localhost:3306/applicationdb?useSSL=false</param-value>
     </context-param>
 
     <!-- Servlets -->
@@ -100,11 +100,25 @@
         <url-pattern>/data</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SignUpServlet</servlet-name>
+        <servlet-class>console.SignUpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUpServlet</servlet-name>
+        <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignUpDecisionServlet</servlet-name>
+        <servlet-class>console.SignUpDecisionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignUpDecisionServlet</servlet-name>
+        <url-pattern>/signup-decision</url-pattern>
+    </servlet-mapping>
+
     <!-- Error Page -->
-    <error-page>
-        <error-code>404</error-code>
-        <location>/error.jsp</location>
-    </error-page>
     <error-page>
         <exception-type>exceptions.InvalidSessionException</exception-type>
         <location>/error-invalidsession.jsp</location>
@@ -114,13 +128,17 @@
         <location>/index.jsp</location>
     </error-page>
     <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+    <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/error.jsp</location>
     </error-page>
 
     <!-- Settings -->
     <welcome-file-list>
-        <welcome-file>signup.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <session-config>

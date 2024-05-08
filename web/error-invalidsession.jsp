@@ -12,6 +12,9 @@
         <title>Title</title>
     </head>
     <body>
+        <jsp:include page="header.jsp" />
+        <h1>INVALID SESSION</h1>
+        <jsp:include page="footer.jsp" />
 
     </body>
 </html>

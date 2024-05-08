@@ -9,20 +9,17 @@
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="exceptions.InvalidSessionException" %>
-<%@ page import="console.*" %>
-
 
 <%
-    //    String username = (String) session.getAttribute("username");
-//    String role = (String) session.getAttribute("role");
-//    System.out.println("-- Current User:" + username);
+    String username = (String) session.getAttribute("username");
+    String role = (String) session.getAttribute("role");
+    System.out.println("-- Current User:" + username);
 //    if (username == null || username.isEmpty()) {
 //        throw new InvalidSessionException("Unauthorized Access");
 //    }
-//    if (!role.equals("Admin")) {
+//    if (!role.equals("admin")) {
 //        throw new InvalidSessionException("Unauthorized Access");
 //    }
-
 %>
 
 <html>
@@ -30,27 +27,55 @@
         <title>Title</title>
     </head>
     <body>
-        <h1>ADMIN MODE</h1>
+        <h2>Admin</h2>
+        <jsp:include page="header.jsp" />
+        <jsp:include page="/data" />
 
         <!-- Pending Registration Applications -->
+        <!-- TODO: Make Javascript to hide this message after action -->
+        <% if (session.getAttribute("message") != null) { %>
+            <p><%= session.getAttribute("message") %></p>
+        <% } %>
+        <table>
+            <tr>
+                <th>Email</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Birthdate</th>
+                <th>Accept/Deny</th>
+            </tr>
+
         <%
             if (session.getAttribute("teacher") != null) {
                 ArrayList<Teacher> teacher = (ArrayList<Teacher>) session.getAttribute("teacher");
                 for (Teacher x : teacher) {
-                    if (x.getStatus().equals("Unverified")) {
-                        out.print("<tr>");
-                        out.print("<td>" + x.getEmail() + "</td>");
-                        out.print("<td>" + x.getFname() + "</td>");
-                        out.print("<td>" + x.getLname() + "</td>");
-                        out.print("<td>" + x.getBday() + "</td>");
-                        out.print("<td>" + x.getStatus() + "</td>");
-                        out.print("</tr>");
+                    if (x.getStatus().equals("pending")) {
+        %>
+            <tr>
+                <td><%= x.getEmail() %></td>
+                <td><%= x.getLname() %></td>
+                <td><%= x.getFname() %></td>
+                <td><%= x.getBday() %></td>
+                <td>
+                    <form action="signup-decision" method="POST">
+                        <input name="username" value="<%= x.getEmail()%>" hidden/>
+                        <button type="submit" name="decision" value="accept">Accept</button>
+                    </form>
+                    <form action="signup-decision" method="POST">
+                        <input name="username" value="<%= x.getEmail()%>" hidden/>
+                        <button type="submit" name="decision" value="reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        <%
                     }
                 }
             }
             else
                 System.out.println("Null Value");
         %>
+        </table>
         <h1>END</h1>
+        <jsp:include page="footer.jsp" />
     </body>
 </html>

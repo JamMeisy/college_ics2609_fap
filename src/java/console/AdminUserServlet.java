@@ -5,14 +5,19 @@ package console;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-import java.io.IOException;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.sql.*;
-
 import authentication.Security;
 
-public class SignUpServlet extends HttpServlet {
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.*;
+
+public class AdminUserServlet extends HttpServlet {
 
     String derbyDriver, derbyUrl, derbyUser, derbyPass;
     String mysqlDriver, mysqlUrl, mysqlUser, mysqlPass;
