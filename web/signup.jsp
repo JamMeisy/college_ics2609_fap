@@ -47,7 +47,7 @@
                     </div>
 
                     <label for="username">Email <span>*</span></label>
-                    <input type="text" name="username" id="username" placeholder=" Email Address" required/>
+                    <input type="email" name="username" id="username" placeholder=" Email Address" required/>
 
                     <label for="password">Password <span>*</span></label>
                     <input type="password" name="password" id="password" placeholder="  Password" required/>

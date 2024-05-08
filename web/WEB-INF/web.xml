@@ -118,10 +118,37 @@
         <url-pattern>/signup-decision</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CourseRequestServlet</servlet-name>
+        <servlet-class>console.CourseRequestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseRequestServlet</servlet-name>
+        <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CourseRequestDecisionServlet</servlet-name>
+        <servlet-class>console.CourseRequestDecisionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseRequestDecisionServlet</servlet-name>
+        <url-pattern>/request-decision</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminUserServlet</servlet-name>
+        <servlet-class>console.AdminUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminUserServlet</servlet-name>
+        <url-pattern>/admin-user</url-pattern>
+    </servlet-mapping>
+
     <!-- Error Page -->
     <error-page>
         <exception-type>exceptions.InvalidSessionException</exception-type>
-        <location>/error-invalidsession.jsp</location>
+        <location>/error-invalid-session.jsp</location>
     </error-page>
     <error-page>
         <exception-type>exceptions.AuthenticationException</exception-type>

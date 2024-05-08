@@ -69,7 +69,7 @@
 
             <!-- Form -->
             <form action="login" method="POST">
-                <input type="text" name="username" id="username" placeholder="  Email address" required/>
+                <input type="email" name="username" id="username" placeholder="  Email address" required/>
 
                 <input type="password" name="password" id="password" placeholder="  Password" required/>
 

@@ -47,18 +47,13 @@ public class AdminUserServlet extends HttpServlet {
             throws ServletException, IOException  {
         
         System.out.println("---------------------------------------------");
-        
+
         HttpSession session = request.getSession();
-        String role = request.getParameter("role");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String confirmpassword = request.getParameter("confirmpassword");
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
-        Date bday = Date.valueOf(request.getParameter("bday"));
+        String type = request.getParameter("type");
 
-        String resume = request.getParameter("resume");
-        
         // Inserted password is being encrypted
         String encryptedPassword =  sec.encrypt(password);       
         System.out.println("0) Encrypting Password ");
@@ -66,35 +61,6 @@ public class AdminUserServlet extends HttpServlet {
         System.out.println("-- Encrypted Password: " + encryptedPassword);
                
         try {
-            System.out.println("--- Initializing Preliminary Safety Protocols...");
-            // Role Checking
-            if (!role.equals("student") && !role.equals("teacher")) {
-                System.out.println("-- Error: Invalid Signup");
-                session.setAttribute("error", "Invalid Signup!");
-            }
-            // Password Checking
-            if (!password.equals(confirmpassword)) {
-                System.out.println("-- Error: Passwords do not match!");
-                session.setAttribute("error", "Passwords do not match!");
-                response.sendRedirect("signup.jsp");
-                return;
-            }
-            // Bday Checking
-//            if (bday.before()) {
-//                if (bday.after(Date)) {
-//                    System.out.println("-- Error: Cannot set birthday in the future!");
-//                    session.setAttribute("error", "Cannot set birthday in the future!");
-//                }
-//                else {
-//                    System.out.println("-- Error: Person is not at least 5 years old!");
-//                    session.setAttribute("error", "Person is not at least 5 years old!");
-//                }
-//
-//                response.sendRedirect("signup.jsp");
-//            }
-
-
-            
             // Load Driver & Establishing Connection
             Class.forName(derbyDriver);
             System.out.println("1) Loaded Driver: " + derbyDriver);
@@ -106,71 +72,127 @@ public class AdminUserServlet extends HttpServlet {
             Connection connSql = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
             System.out.println("2) Connected to: " + mysqlUrl);
 
-            // Inserting User in Database
-            String queryDer = "INSERT INTO user_info VALUES (?, ?, ?)";
-            String querySql = "INSERT INTO users VALUES (?, ?, ?)";
-            PreparedStatement insertDer = connDer.prepareStatement(queryDer);
-            PreparedStatement insertSql = connSql.prepareStatement(querySql);
+            // <editor-fold defaultstate="collapsed" desc="Insert ADMIN Method (Click to expand)">
+            if (type.equals("insert")) {
+                System.out.println("--- Initializing Preliminary Safety Protocols...");
+                // Password Checking
+                if (!password.equals(confirmpassword)) {
+                    System.out.println("-- Error: Passwords do not match!");
+                    session.setAttribute("error", "Passwords do not match!");
+                    response.sendRedirect("admin-users.jsp");
+                    return;
+                }
 
-            System.out.println("3) User " + username + " is being added !");
-            insertDer.setString(1, username);
-            insertDer.setString(2, encryptedPassword);
-            insertDer.setString(3, role);
-            insertSql.setString(1, username);
-            insertSql.setString(2, encryptedPassword);
-            insertSql.setString(3, role);
-            int rows1 = insertDer.executeUpdate();
-            int rows2 = insertSql.executeUpdate();
+                // Inserting User in Database
+                String queryDer = "INSERT INTO user_info VALUES (?, ?, ?)";
+                String querySql = "INSERT INTO users VALUES (?, ?, ?)";
+                PreparedStatement stmtDer = connDer.prepareStatement(queryDer);
+                PreparedStatement stmtSql = connSql.prepareStatement(querySql);
 
-            if (rows1 == 0 || rows2 == 0) {
-                System.out.println("-- Error: User already exists! ");
-                session.setAttribute("error", "Email already exists!");
-                response.sendRedirect("signup.jsp");
-                return;
+                System.out.println("3) Admin User " + username + " is being added !");
+                stmtDer.setString(1, username);
+                stmtDer.setString(2, encryptedPassword);
+                stmtDer.setString(3, "admin");
+                stmtSql.setString(1, username);
+                stmtSql.setString(2, encryptedPassword);
+                stmtSql.setString(3, "admin");
+                int rows1 = stmtDer.executeUpdate();
+                int rows2 = stmtSql.executeUpdate();
+
+                if (rows1 == 0 || rows2 == 0) {
+                    System.out.println("-- Error: Admin User already exists! ");
+                    session.setAttribute("error", "Email already exists!");
+                    response.sendRedirect("admin-users.jsp");
+                    return;
+                }
+
+                stmtDer.close();
+                stmtSql.close();
+                response.sendRedirect("admin-users.jsp");
             }
+            // </editor-fold>
 
-            // Setting Session Information
-            session.setAttribute("username", username);
-            session.setAttribute("password", password);
-            session.setAttribute("role", role);
+            // <editor-fold defaultstate="collapsed" desc="Update Method (Click to expand)">
+            if (type.equals("update")) {
+                System.out.println("--- Initializing Preliminary Safety Protocols...");
+                // Password Checking
+                if (!password.equals(confirmpassword)) {
+                    System.out.println("-- Error: Passwords do not match!");
+                    session.setAttribute("error", "Passwords do not match!");
+                    response.sendRedirect("admin-users.jsp");
+                    return;
+                }
 
-            // Insert Info for Student / Teacher
-            if (role.equals("student")) {
-                String querySqlInfo = "INSERT INTO student VALUES (?, ?, ?, ?)";
-                PreparedStatement insertSqlStudent = connSql.prepareStatement(querySqlInfo);
-                insertSqlStudent.setString(1, username);
-                insertSqlStudent.setString(2, fname);
-                insertSqlStudent.setString(3, lname);
-                insertSqlStudent.setDate(4, bday);
+                // Updating User in Database
+                String queryDer = "UPDATE user_info SET password=? WHERE username=?";
+                String querySql = "UPDATE users SET password=? WHERE email=?";
+                PreparedStatement stmtDer = connDer.prepareStatement(queryDer);
+                PreparedStatement stmtSql = connSql.prepareStatement(querySql);
 
-                insertSqlStudent.executeUpdate();
-                insertSqlStudent.close();
-                response.sendRedirect("student-mycourses.jsp");
+                System.out.println("3) Admin User " + username + " is being updated !");
+                stmtDer.setString(1, encryptedPassword);
+                stmtDer.setString(2, username);
+                stmtSql.setString(1, encryptedPassword);
+                stmtSql.setString(2, username);
+                int rows1 = stmtDer.executeUpdate();
+                int rows2 = stmtSql.executeUpdate();
+
+                if (rows1 == 0 || rows2 == 0) {
+                    System.out.println("-- Error: Cannot update admin user, something went wrong! ");
+                    session.setAttribute("error", "Updating user went wrong!");
+                    response.sendRedirect("admin-users.jsp");
+                    return;
+                }
+
+                stmtDer.close();
+                stmtSql.close();
+                response.sendRedirect("admin-users.jsp");
             }
-            else if (role.equals("teacher")) {
-                String querySqlInfo = "INSERT INTO student VALUES (?, ?, ?, ?, ?, ?)";
-                PreparedStatement insertSqlTeacher = connSql.prepareStatement(querySqlInfo);
-                insertSqlTeacher.setString(1, username);
-                insertSqlTeacher.setString(2, fname);
-                insertSqlTeacher.setString(3, lname);
-                insertSqlTeacher.setDate(4, bday);
-                insertSqlTeacher.setString(5, resume);
-                insertSqlTeacher.setString(6, "pending");
+            // </editor-fold>
 
-                insertSqlTeacher.executeUpdate();
-                insertSqlTeacher.close();
-                response.sendRedirect("teacher-myclasses.jsp");
+            // <editor-fold defaultstate="collapsed" desc="Delete Method (Click to expand)">
+            if (type.equals("delete")) {
+                System.out.println("--- Initializing Preliminary Safety Protocols...");
+                // Password Checking
+                if (session.getAttribute("username").equals(username)) {
+                    System.out.println("-- Error: Cannot delete current admin user!");
+                    session.setAttribute("error", "Cannot delete current admin user!");
+                    response.sendRedirect("admin-users.jsp");
+                    return;
+                }
 
+                // Delete User from Database
+                String queryDer = "DELETE FROM user_info WHERE username=?";
+                String querySql = "DELETE FROM users WHERE email=?";
+                PreparedStatement stmtDer = connDer.prepareStatement(queryDer);
+                PreparedStatement stmtSql = connSql.prepareStatement(querySql);
+
+                System.out.println("3) Admin User " + username + " is being deleted !");
+                stmtDer.setString(1, username);
+                stmtSql.setString(1, username);
+                int rows1 = stmtDer.executeUpdate();
+                int rows2 = stmtSql.executeUpdate();
+
+                if (rows1 == 0 || rows2 == 0) {
+                    System.out.println("-- Error: Cannot delete admin user, something went wrong! ");
+                    session.setAttribute("error", "Deleting user went wrong!");
+                    response.sendRedirect("admin-users.jsp");
+                    return;
+                }
+
+                stmtDer.close();
+                stmtSql.close();
+                response.sendRedirect("admin-users.jsp");
             }
+            // </editor-fold>
 
             // Close the connection
-            insertDer.close();
-            insertSql.close();
             connDer.close();
             connSql.close();
 
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
+            response.sendRedirect("admin-users.jsp");
         }
     }
 
