@@ -8,9 +8,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="javax.crypto.Cipher" %>
+<%@ page import="exceptions.InvalidSessionException" %>
 
-<% session.setAttribute("page", "student-findcourses.jsp"); %>
+<%
+    String username = (String) session.getAttribute("username");
+    String role = (String) session.getAttribute("role");
+    System.out.println("-- Current User:" + username);
+//    if (username == null || username.isEmpty()) {
+//        throw new InvalidSessionException("Unauthorized Access");
+//    }
+//    if (!role.equals("student")) {
+//        throw new InvalidSessionException("Unauthorized Access");
+//    }
+%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -24,23 +35,25 @@
         />
     </head>
     <body>
+        <jsp:include page="header.jsp" />
+        <jsp:include page="/data" />
         <img class="img-photo" src="assets/UST.jpg" alt="UST">
         <div class="label-container">
             <p class="p1">Explore Programs</p>
             <h2>Our Most Popular Classes</h2>
             <p class="p2">Let's join our famous class, the knowledge provided will definately be useful to you.</p>
         </div>
-      
+
         <!-- Course Application Card-->
         <%
             ArrayList<Courses> courses = (ArrayList<Courses>) session.getAttribute("courses");
             ArrayList<TeacherCourses> teacher_courses = (ArrayList<TeacherCourses>) session.getAttribute("teacher_courses");
             if (courses != null) {
-                // ! Inconsistency : Code creates template for all courses even if there is not teacher
-                // ! Quick Fix: Ensure Database is populated so that each course has a teacher
+                // ! Inconsistency : Creates template for all courses even if there is not teacher
+                // ! Inconsistency : Teacher is added regardless of verified or not
+                // ! Quick Fix: Ensure Database is populated so that each course has a verified teacher
                 for (Courses x : courses) {
         %>
-        
       
         <div class="course-card">
             <img class="course-card-img" src="assets/UST.jpg" alt="UST">
@@ -79,5 +92,6 @@
                 }
             }
         %>
+        <jsp:include page="footer.jsp" />
     </body>
 </html>

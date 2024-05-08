@@ -10,11 +10,11 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 import exceptions.AuthenticationException;
-import java.util.logging.Logger;
 
 public class LoginServlet extends HttpServlet {
 
-    String derbyDriver, derbyUrl, derbyUser, derbyPass, key, cipher;
+    String derbyDriver, derbyUrl, derbyUser, derbyPass;
+    String key, cipher;
     Security sec;
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
             System.out.println("4) Verifying Login Credentials");
 
             // Case 1: User is blank
-            if (username.equals("")) {
+            if (username.isEmpty()) {
                 session.setAttribute("error", "No Login Credentials");
                 throw new AuthenticationException("No Login Credentials");
             }
@@ -126,13 +126,13 @@ public class LoginServlet extends HttpServlet {
             System.out.println("5) Captcha & Credential Verification Successful");
             // </editor-fold>
 
-            if (role.equals("Admin"))
+            if (role.equals("admin"))
                 response.sendRedirect("admin-registration.jsp");
 
-            else if (role.equals("Teacher"))
+            else if (role.equals("teacher"))
                 response.sendRedirect("teacher-myclasses.jsp");
 
-            else if (role.equals("Guest"))
+            else if (role.equals("student"))
                 response.sendRedirect("student-mycourses.jsp");
 
 
