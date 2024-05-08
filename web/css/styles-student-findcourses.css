@@ -148,20 +148,29 @@
     -moz-text-fill-color: transparent;
 }
 
-@media only screen and (min-width: 768px) {
-    :root {
-        --columns: 2; /* Default: Show 2 cards per row */
-    }
-}
 
 @media only screen and (min-width: 1024px) {
     :root {
-        --columns: 3; /* On larger screens, show 3 cards per row */
+        --columns: 3; 
+        
     }
+    
+    .label-container h2{
+    font-size: 1rem;
+    }
+
+    .label-container .p1{
+        font-size: 0.9rem;
+    }
+
+    .label-container .p2{
+        font-size: 0.8rem;
+    }
+
 }
 
 @media only screen and (min-width: 1280px) {
     :root {
-        --columns: 4; /* On even larger screens, show 4 cards per row */
+        --columns: 4;
     }
 }
