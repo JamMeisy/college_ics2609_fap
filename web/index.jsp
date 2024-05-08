@@ -1,6 +1,14 @@
 <%-- Document : index Created on : 05 1, 24, 3:05:50 PM Author : Jam --%>
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
-<% session.setAttribute("page", "index.jsp"); %>
+<%
+    // Disable Caching
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+
+    // Auto-Logout
+    session.setAttribute("username", null);
+%>
 
 <!DOCTYPE html>
 <html>
@@ -54,8 +62,14 @@
                 <h2>Welcome to <span class="bold">Active Learning!</span></h2>
                 <h4>Login to Activate Learning to start Your IT career!</h4>
             </div>
+            <!-- Error Prompt -->
+            <% if (session.getAttribute("error") != null) { %>
+            <h1> <%= (String) session.getAttribute("error") %></h1>
+            <% } %>
+
+            <!-- Form -->
             <form action="login" method="POST">
-                <input type="text" name="username" id="username" placeholder="  Email address" required/>
+                <input type="email" name="username" id="username" placeholder="  Email address" required/>
 
                 <input type="password" name="password" id="password" placeholder="  Password" required/>
 

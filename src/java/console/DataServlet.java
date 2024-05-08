@@ -113,13 +113,6 @@ public class DataServlet extends HttpServlet {
                         rs.getString("status"),
                         rs.getDate("date")));
 
-            System.out.println(users);
-            System.out.println(student);
-            System.out.println(teacher);
-            System.out.println(courses);
-            System.out.println(teacher_courses);
-            System.out.println(schedule);
-
             // Close the connection
             rs.close();
             stmt.close();
