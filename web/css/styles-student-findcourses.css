@@ -35,31 +35,33 @@
     font-size: 0.7rem;
 }
 
-.container {
+.container{
     padding: 3vh;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2vh;
-    border-style: none;
-    overflow-x: hidden;
+    flex-direction: row;
+     width:100%;
+     height: fit-content;
+     overflow: hidden;
+     border-style: none;
+     overflow-x: scroll;
+     -webkit-overflow-scrolling: touch;
 }
 
-.course-card {
-    margin: 2vh 1vw;
-    min-width: 250px;
-    width: calc(100% / var(--columns) - 2vw); /* Adjust width dynamically */
-    height: fit-content;
+.course-card{
+    margin: auto 1.5vw;
+    max-height: 40vh;
+    min-width: 30vw;
+    overflow: hidden;
+    overflow-y: scroll;
     padding: 2vh 2vw;
-    border-radius: 10px;
-    margin-bottom: 2vh;
+    border-radius: 10px;    
+    margin-bottom: 1vh;
     border-style: solid;
     border-width: thin;
     position: relative;
-    background-color: white;
+    background-color: white;   
     color: #667085;
 }
-
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .course-card::-webkit-scrollbar {
@@ -149,19 +151,49 @@
 }
 
 @media only screen and (min-width: 768px) {
-    :root {
-        --columns: 2; /* Default: Show 2 cards per row */
+    
+    .label-container h2{
+    font-size: 1rem;
     }
-}
 
-@media only screen and (min-width: 1024px) {
-    :root {
-        --columns: 3; /* On larger screens, show 3 cards per row */
+    .label-container .p1{
+        font-size: 0.9rem;
     }
-}
 
-@media only screen and (min-width: 1280px) {
-    :root {
-        --columns: 4; /* On even larger screens, show 4 cards per row */
+    .label-container .p2{
+        font-size: 0.8rem;
+    }
+    .container{
+     height: fit-content;
+    }
+
+    .course-card{
+        
+        min-height: 50vh;
+        min-width:fit-content;
+    }
+    
+    .course-card .Chours {
+        font-size: 0.8rem;
+    }
+     .course-card h3{
+        font-size: 1rem;
+    }
+    
+    .course-card p, .course-card form input, 
+    .course-card form i, .course-card form select{
+        font-size: 0.8rem;
+    }
+
+    .date-container input{
+        display:flex;
+        margin: 1vh 0;
+        width: 40%;
+
+    }
+
+    .course-card button{
+        font-size: 0.8rem;
+
     }
 }
