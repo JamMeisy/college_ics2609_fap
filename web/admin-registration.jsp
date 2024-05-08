@@ -31,8 +31,9 @@
     </head>
     <body>
         <h1>ADMIN MODE</h1>
-
+        
         <!-- Pending Registration Applications -->
+        <jsp:include page="/data" />
         <%
             if (session.getAttribute("teacher") != null) {
                 ArrayList<Teacher> teacher = (ArrayList<Teacher>) session.getAttribute("teacher");

@@ -23,30 +23,32 @@
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
         />
     </head>
-    <body>
-        <img class="img-photo" src="assets/UST.jpg" alt="UST">
-        <div class="label-container">
-            <p class="p1">Explore Programs</p>
-            <h2>Our Most Popular Classes</h2>
-            <p class="p2">Let's join our famous class, the knowledge provided will definately be useful to you.</p>
-        </div>
-      
-        <!-- Course Application Card-->
-        <%
-            ArrayList<Courses> courses = (ArrayList<Courses>) session.getAttribute("courses");
-            ArrayList<TeacherCourses> teacher_courses = (ArrayList<TeacherCourses>) session.getAttribute("teacher_courses");
-            if (courses != null) {
-                // ! Inconsistency : Code creates template for all courses even if there is not teacher
-                // ! Quick Fix: Ensure Database is populated so that each course has a teacher
-                for (Courses x : courses) {
-        %>
-        
-      
+<body>
+    <img class="img-photo" src="assets/UST.jpg" alt="UST">
+    <div class="label-container">
+        <p class="p1">Explore Programs</p>
+        <h2>Our Most Popular Classes</h2>
+        <p class="p2">Let's join our famous class, the knowledge provided will definitely be useful to you.</p>
+    </div>
+  
+    <!-- Course Application Card-->
+     <jsp:include page="/data" />
+    <%
+        ArrayList<Courses> courses = (ArrayList<Courses>) session.getAttribute("courses");
+        ArrayList<TeacherCourses> teacher_courses = (ArrayList<TeacherCourses>) session.getAttribute("teacher_courses");
+        if (courses != null) {
+    %>
+    
+    <div class="container">
+    <%    
+            for (Courses x : courses) {
+    %>
+    
         <div class="course-card">
             <img class="course-card-img" src="assets/UST.jpg" alt="UST">
             <h3><%= x.getCname() %></h3>
             <p><%= x.getCdescription() %></p>
-            <p><%= x.getChours() %></p>
+            <p class="Chours">Completion Hours: <%= x.getChours() %></p>
             <form method="post" action="course-request">
                 <i>Choose Teacher</i>
                 <select name="request-teacher" id="request-teacher" required>
@@ -65,19 +67,22 @@
 
                 <i>Choose your sessions</i>
                 <i>Note that choosing the same date indicates more hours</i>
-
-                <input type="date" name="date1" required>
-                <input type="date" name="date2" required>
-                <input type="date" name="date3" required>
-                <input type="date" name="date4" required>
+                <div class="date-container">
+                    <input type="date" name="date1" required>
+                    <input type="date" name="date2" required>
+                    <input type="date" name="date3" required>
+                    <input type="date" name="date4" required>
+                </div>
 
                 <input type="hidden" name="<%= x.getCname() %>">
-                <button type="submit">Apply</button>
+                <button type="submit">Click here to Apply   >   </button>
             </form>
         </div>
-        <%
-                }
+    <%
             }
-        %>
-    </body>
+    %>
+    </div> <!-- End of .container -->
+    <% } %>
+</body>
+
 </html>
