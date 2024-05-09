@@ -36,30 +36,34 @@
     </head>
     <body>
         <jsp:include page="header.jsp"/>
+        
         <div class="signup-box">
-            <!-- Error Prompt -->
-            <% if (session.getAttribute("signup-error") != null) { %>
-            <h1> <%= (String) session.getAttribute("signup-error") %></h1>
-            <%
-                    session.setAttribute("signup-error", null);
-                }
-            %>
+           
             <h3>Are you a</h3>
             <div class="role-box" id="role-box">
                 <button type="button" id="student-btn" class="user-btn selected" onclick="student()">Student</button>
                 <button type="button" id="teacher-btn" class="user-btn" onclick="teacher()">Teacher</button>
             </div>
             <!-- Form -->
+             <h1 class="error">
+            <!-- Error Prompt -->
+            <% if (session.getAttribute("signup-error") != null) { %>
+             <%= (String) session.getAttribute("signup-error") %>
+            <%
+                    session.setAttribute("signup-error", null);
+                }
+            %>
+            </h1>
             <form action="signup" method="POST">
                 <div class="input-box">
                     <div class="name">
                         <div class="fname-box">
                             <label id="lbl-fname" for="fname">First name <span>*</span></label>
-                            <input type="text" name="fname" id="fname" placeholder="  First Name" required/>
+                            <input type="text" class="fname" name="fname" id="fname" placeholder="  First Name" required/>
                         </div>
-                        <div class="fname-box">
+                        <div class="lname-box">
                             <label id="lbl-lname" for="lname">Last name <span>*</span></label>
-                            <input type="text" name="lname" id="lname" placeholder="  Last Name" required/>
+                            <input type="text"  class="lname" name="lname" id="lname" placeholder="  Last Name" required/>
                         </div>
                     </div>
 

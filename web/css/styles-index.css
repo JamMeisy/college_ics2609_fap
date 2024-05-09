@@ -107,6 +107,13 @@ input{
     display: none;
 }
 
+div.login-box h1.error {
+    justify-content: center;
+    font-size: 10px;
+    margin-bottom: 10px;
+    color: red;
+}
+
 #link-signup {
     align-items: center;
     justify-content: center;
