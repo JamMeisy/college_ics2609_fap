@@ -168,10 +168,6 @@ span {
   animation: glow 1s ease-in-out infinite alternate;
 }
 
-#link-login {
-    margin-bottom: 10vh;
-}
-
 @-webkit-keyframes glow {
   from {
     text-shadow: 0 0 1px #395ACC, 0 0 10px #395ACC, 0 0 5px #395ACC, 0 0 20px #395ACC, 0 0 25px #395ACC, 0 0 30px #395ACC, 0 0 35px #395ACC;

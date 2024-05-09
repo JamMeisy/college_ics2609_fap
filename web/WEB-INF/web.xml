@@ -177,11 +177,7 @@
         <error-code>404</error-code>
         <location>/error404.jsp</location>
     </error-page>
-    <error-page>
-        <exception-type>java.lang.Exception</exception-type>
-        <location>/error500.jsp</location>
-    </error-page>
-
+    
     <!-- Settings -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
