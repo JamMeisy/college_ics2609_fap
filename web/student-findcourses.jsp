@@ -44,7 +44,12 @@
             <h2>Our Most Popular Classes</h2>
             <p class="p2">Let's join our famous class, the knowledge provided will definately be useful to you.</p>
         </div>
-
+        <% if (session.getAttribute("course-request-error") != null) { %>
+        <h1> <%= (String) session.getAttribute("course-request-error") %></h1>
+        <%
+                session.setAttribute("course-request-error", null);
+            }
+        %>
         <!-- Course Application Card-->
         <%
             ArrayList<Courses> courses = (ArrayList<Courses>) session.getAttribute("courses");
@@ -54,8 +59,8 @@
                 // ! Inconsistency : Creates template for all courses even if there is not teacher
                 // ! Inconsistency : Teacher is added regardless of verified or not
                 // ! Quick Fix: Ensure Database is populated so that each course has a verified teacher
+                int count = 1;
                 for (Courses x : courses) {
-                    int count = 1;
         %>
       
         <div class="course-card">
@@ -91,7 +96,7 @@
                 </div>
 
                 <input type="hidden" name="course" value="<%= x.getCname() %>">
-                <button type="submit" form="course<%= count %>">Apply</button>
+                <button type="submit" form="course<%= count++ %>">Apply</button>
             </form>
         </div>
     <%

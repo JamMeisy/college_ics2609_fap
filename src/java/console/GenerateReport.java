@@ -16,6 +16,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import exceptions.AuthorizationException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +35,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
+
 import objects.Schedule;
 import objects.User;
 
 /**
- *
  * @author Lejan Juico
  */
 public class GenerateReport extends HttpServlet {
@@ -89,7 +90,7 @@ public class GenerateReport extends HttpServlet {
 
                 // Transfer data for schedule
                 Statement stmtSchedule = conn.createStatement();
-                String querySchedule = "SELECT * FROM schedule ORDER BY date ASC";
+                String querySchedule = "SELECT * FROM schedule WHERE status != 'rejected' ORDER BY status, date ASC";
                 ResultSet rsSchedule = stmtSchedule.executeQuery(querySchedule);
                 System.out.println("5) Executed Query: " + querySchedule);
                 schedule = new ArrayList<>();
@@ -135,7 +136,7 @@ public class GenerateReport extends HttpServlet {
             String endDateString = request.getParameter("endDate");
 
             HttpSession session = request.getSession();
-            
+
             try {
                 if (startDateString != null && !startDateString.isEmpty()) {
                     startDate = dateFormatRange.parse(startDateString);
@@ -143,15 +144,24 @@ public class GenerateReport extends HttpServlet {
                 if (endDateString != null && !endDateString.isEmpty()) {
                     endDate = dateFormatRange.parse(endDateString);
                 }
-
                 if (startDate != null && endDate != null && startDate.after(endDate)) {
-                    session.setAttribute("schedule-admin-error", "Cannot have start date greater than end date");
-                    response.sendRedirect("admin-schedule.jsp");
-                    return;
+                    if (reportType.equals("schedule-admin")) {
+                        session.setAttribute("schedule-admin-error", "Cannot have start date greater than end date");
+                        response.sendRedirect("admin-schedule.jsp");
+                        return;
+                    }
+                    else if (reportType.equals("schedule-student")) {
+                        session.setAttribute("schedule-student-error", "Cannot have start date greater than end date");
+                        response.sendRedirect("student_mycourses.jsp");
+                        return;
+                    }
+                    else if (reportType.equals("schedule-teacher")) {
+                        session.setAttribute("schedule-teacher-error", "Cannot have start date greater than end date");
+                        response.sendRedirect("teacher_myclasses.jsp");
+                        return;
+                    }
                 }
             } catch (ParseException e) {
-                session.setAttribute("schedule-admin-error", "Invalid date format. Please enter dates in the correct format.");
-                response.sendRedirect("admin-schedule.jsp");
                 e.printStackTrace();
             }
 
@@ -703,7 +713,6 @@ public class GenerateReport extends HttpServlet {
     }
 
     /**
-     *
      * @param request
      * @param response
      * @throws ServletException

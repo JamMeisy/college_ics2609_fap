@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="css/styles-footer.css">
 <footer class="footer">
     <div class="footer-section">
+        <h3>ACTIVE LEARNING</h3>
+        <a href="#">My Courses</a>
+        <a href="#">Profile</a>
+    </div>
+    <div class="footer-section">
         <h3>Courses</h3>
         <a href="#">Project Management</a>
         <a href="#">Java</a>
@@ -16,8 +21,8 @@
     </div>
     <div class="footer-section">
         <h3>Home</h3>
-        <a href="#">About Us</aa>
-            <a href="#">Contact Us</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
     </div>
     <div class="footer-section">
         <h3>Search</h3>

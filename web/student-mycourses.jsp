@@ -64,6 +64,14 @@
                     System.out.println("Null Value");
             %>
         </table>
+        <h1>Generate Schedule</h1>
+        <% if (session.getAttribute("schedule-student-error") != null) { %>
+        <p><%= session.getAttribute("schedule-student-error") %></p>
+        <%
+                session.setAttribute("schedule-student-error", null);
+            }
+        %>
+
         <form action="generate-report" method="POST">
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">

@@ -14,29 +14,27 @@
         <img src="<%= request.getServletContext().getInitParameter("header") %>"
              alt="Active Learning Logo"/>
     </div>
+    <nav class="navbar">
+        <% if (role == null) { %>
 
-    <% if (role == null) { %>
+        <% } else if (role.equals("admin")) { %>
 
-    <% } else if (role.equals("admin")) { %>
-    <nav class="test">
         <a href="admin-registration.jsp">Registration</a>
         <a href="admin-schedule.jsp">Schedule</a>
         <a href="admin-users.jsp">Users</a>
-    </nav>
 
-    <% } else if (role.equals("teacher")) { %>
-    <nav class="test">
+        <% } else if (role.equals("teacher")) { %>
+
         <a href="teacher-myclasses.jsp">My Classes</a>
-    </nav>
 
-    <% } else if (role.equals("student")) { %>
-    <nav class="test">
+        <% } else if (role.equals("student")) { %>
+
         <a href="student-findcourses.jsp">Find Courses</a>
         <a href="student-mycourses.jsp">My Courses</a>
-    </nav>
 
-    <% } %>
-    <div class="action-buttons">
-        <a href="logout" class="logout">Logout</a>
+        <% } %>
+    </nav>
+    <div class="logout">
+        <a href="logout">Logout</a>
     </div>
 </header>
