@@ -91,7 +91,7 @@ public class GenerateReport extends HttpServlet {
                 System.out.println("6) Recording Schedule...");
 
                 while (rsSchedule.next()) {
-                    schedule.add(new Schedule(rsSchedule.getInt("entry"),rsSchedule.getString("STUDENT_USERS_email_schedule"), rsSchedule.getString("TEACHER_USERS_email_schedule"),
+                    schedule.add(new Schedule(rsSchedule.getInt("entry"), rsSchedule.getString("STUDENT_USERS_email_schedule"), rsSchedule.getString("TEACHER_USERS_email_schedule"),
                             rsSchedule.getString("COURSES_course_name_schedule"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
                 }   // Close the schedule result set and statement
                 rsSchedule.close();
@@ -100,21 +100,19 @@ public class GenerateReport extends HttpServlet {
 
             System.out.println("5) Data recorded... Generating...");
 
-            /* 
             String email = (String) request.getSession().getAttribute("email");
             String userRole = (String) request.getSession().getAttribute("role");
-            String userPass = (String) request.getSession().getAttribute("password"); 
-            String reportType = request.getParameter("reportType");*/
-            
+            String userPass = (String) request.getSession().getAttribute("password");
+            String reportType = request.getParameter("reportType");
+
             // SAMPLE USER ONLY
-            String ex_email = "alejandra@gmail.com";
+            /* String ex_email = "alejandra@gmail.com";
             String ex_password = "admin";
             
             sec.encrypt(ex_password);
 
             String ex_role = "admin";
-            String ex_reportType = "schedule_admin";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list, schedule_admin;
-
+            String ex_reportType = "schedule_admin";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list, schedule_admin; */
             // Retrieve header and footer from web.xml
             String pdfHeader = getServletContext().getInitParameter("pdfHeader");
             String pdfFooter = getServletContext().getInitParameter("pdfFooter");
@@ -123,9 +121,12 @@ public class GenerateReport extends HttpServlet {
             SimpleDateFormat dateFormatRange = new SimpleDateFormat("yyyy-MM-dd");
             String dateTime = dateFormat.format(new Date());
 
-            /* GET START AND END DATE PARAMETER
+            // GET START AND END DATE PARAMETER
             Date startDate = null;
             Date endDate = null;
+
+            String startDateString = request.getParameter("startDate");
+            String endDateString = request.getParameter("endDate");
 
             try {
                 if (startDateString != null && !startDateString.isEmpty()) {
@@ -137,38 +138,24 @@ public class GenerateReport extends HttpServlet {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-             */
-            // SAMPLE DATE RANGE
-            /* Date startDate = dateFormatRange.parse("2024-05-20");
-            Date endDate = dateFormatRange.parse("2024-05-22"); */
 
-            Date startDate = null;
-            Date endDate = null;
-
-            /* try {
-            startDate = dateFormat.parse(startDateString);
-            endDate = dateFormat.parse(endDateString);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }*/
-            
             try {
                 response.setContentType("application/pdf");
 
                 Document document = new Document(PageSize.A4.rotate());
                 PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
 
-                switch (ex_reportType) {
+                switch (reportType) {
                     case "schedule_admin":
                         String title_sched_admin = "Schedule List Report";
                         String filename_sched_admin = "schedule_list_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_sched_admin + "\"");
 
-                        PdfHeaderFooter headerFooter_sched_admin = new PdfHeaderFooter(title_sched_admin, ex_email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, ex_role, null, schedule, startDate, endDate);
+                        PdfHeaderFooter headerFooter_sched_admin = new PdfHeaderFooter(title_sched_admin, email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
                         writer.setPageEvent(headerFooter_sched_admin);
 
                         document.open();
-                        generateScheduleAdminReport(response, document, writer, ex_email, schedule, startDate, endDate);
+                        generateScheduleAdminReport(response, document, writer, email, schedule, startDate, endDate);
                         document.close();
 
                         break;
@@ -179,11 +166,11 @@ public class GenerateReport extends HttpServlet {
                         String filename_user_list = "user_list_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_user_list + "\"");
 
-                        PdfHeaderFooter headerFooter_user_list = new PdfHeaderFooter(title, ex_email, data.size(), 15, dateTime, pdfFooter, pdfHeader, ex_role, data, null, null, null);
+                        PdfHeaderFooter headerFooter_user_list = new PdfHeaderFooter(title, email, data.size(), 15, dateTime, pdfFooter, pdfHeader, userRole, data, null, null, null);
                         writer.setPageEvent(headerFooter_user_list);
                         document.open();
                         // Call the method to generate user list report
-                        generateUserListReport(response, document, ex_email, data);
+                        generateUserListReport(response, document, email, data);
                         document.close();
 
                         break;
@@ -193,11 +180,11 @@ public class GenerateReport extends HttpServlet {
                         String filename_sched_student = "student_schedule_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_sched_student + "\"");
 
-                        PdfHeaderFooter headerFooter_sched_student = new PdfHeaderFooter(title_sched_student, ex_email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, ex_role, null, schedule, startDate, endDate);
+                        PdfHeaderFooter headerFooter_sched_student = new PdfHeaderFooter(title_sched_student, email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
                         writer.setPageEvent(headerFooter_sched_student);
                         document.open();
 
-                        generateStudentReport(response, document, writer, ex_email, schedule, startDate, endDate);
+                        generateStudentReport(response, document, writer, email, schedule, startDate, endDate);
                         document.close();
                         break;
 
@@ -206,11 +193,11 @@ public class GenerateReport extends HttpServlet {
                         String filename_sched_teacher = "teacher_schedule_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_sched_teacher + "\"");
 
-                        PdfHeaderFooter headerFooter_sched_teacher = new PdfHeaderFooter(title_sched_teacher, ex_email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, ex_role, null, schedule, startDate, endDate);
+                        PdfHeaderFooter headerFooter_sched_teacher = new PdfHeaderFooter(title_sched_teacher, email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
                         writer.setPageEvent(headerFooter_sched_teacher);
                         document.open();
 
-                        generateTeacherReport(response, document, writer, ex_email, schedule, startDate, endDate);
+                        generateTeacherReport(response, document, writer, email, schedule, startDate, endDate);
                         document.close();
                         break;
 
