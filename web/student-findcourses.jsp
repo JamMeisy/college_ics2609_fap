@@ -8,7 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="javax.crypto.Cipher" %>
+<%@ page import="exceptions.AuthorizationException" %>
+
+<%
+    String username = (String) session.getAttribute("username");
+    String role = (String) session.getAttribute("role");
+    System.out.println("-- Current User:" + username);
+    if (username == null || username.isEmpty()) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
+    if (!role.equals("student")) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
+%>
 
 <% session.setAttribute("page", "student-findcourses.jsp"); %>
 <html>
@@ -16,7 +28,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="css/styles-global.css"/>
+        <link rel="stylesheet" href="css/styles-header.css"/>
         <link rel="stylesheet" href="css/styles-student-findcourses.css"/>
         <link
                 rel="stylesheet"

@@ -38,9 +38,12 @@
         <jsp:include page="header.jsp"/>
         <div class="signup-box">
             <!-- Error Prompt -->
-            <% if (session.getAttribute("error") != null) { %>
-            <h1> <%= (String) session.getAttribute("error") %></h1>
-            <% } %>
+            <% if (session.getAttribute("signup-error") != null) { %>
+            <h1> <%= (String) session.getAttribute("signup-error") %></h1>
+            <%
+                    session.setAttribute("signup-error", null);
+                }
+            %>
             Are you a
             <div class="role-box" id="role-box">
                 <button type="button" id="student-btn" class="user-btn selected" onclick="student()">Student</button>
@@ -79,9 +82,9 @@
                 <input name="role" value="student" id="role" hidden/>
                 <button type="submit" name="submit-btn" id="submit-btn" class="submit-btn">Create a free account</button>
             </form>
-            <a id="link-login"href="index.jsp">Log In instead?</a>
+            <a id="link-login" href="index.jsp">Log In instead?</a>
         </div>
         <img class="img-photo" src="assets/UST.jpg" alt="UST">
-        <jsp:include page="footer.jsp"/> 
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>

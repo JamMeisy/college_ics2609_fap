@@ -39,12 +39,11 @@ public class DataServlet extends HttpServlet {
             System.out.println("2) Connecting to: " + mysqlUrl);
             Connection conn = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
 
-
             // Transfer data
             Statement stmt = conn.createStatement();
             String query1 = "SELECT * FROM users ORDER BY email ASC";
-            String query2 = "SELECT * FROM student ORDER BY users_email ASC";
-            String query3 = "SELECT * FROM teacher ORDER BY users_email ASC";
+            String query2 = "SELECT * FROM student ORDER BY USERS_student_email ASC";
+            String query3 = "SELECT * FROM teacher ORDER BY USERS_teacher_email ASC";
             String query4 = "SELECT * FROM courses ORDER BY course_name ASC";
             String query5 = "SELECT * FROM teacher_courses ORDER BY teacher_users_email ASC";
             String query6 = "SELECT * FROM schedule ORDER BY date ASC";
@@ -66,7 +65,7 @@ public class DataServlet extends HttpServlet {
             ArrayList<Student> student = new ArrayList<>();
             while (rs.next())
                 student.add(new Student(
-                        rs.getString("users_email"),
+                        rs.getString("USERS_student_email"),
                         rs.getString("firstname"),
                         rs.getString("lastname"),
                         rs.getDate("birthdate")));
@@ -76,7 +75,7 @@ public class DataServlet extends HttpServlet {
             ArrayList<Teacher> teacher = new ArrayList<>();
             while (rs.next())
                 teacher.add(new Teacher(
-                        rs.getString("users_email"),
+                        rs.getString("USERS_teacher_email"),
                         rs.getString("firstname"),
                         rs.getString("lastname"),
                         rs.getString("resume"),
@@ -98,8 +97,8 @@ public class DataServlet extends HttpServlet {
             ArrayList<TeacherCourses> teacher_courses = new ArrayList<>();
             while (rs.next())
                 teacher_courses.add(new TeacherCourses(
-                        rs.getString("teacher_users_email"),
-                        rs.getString("courses_course_name")));
+                        rs.getString("TEACHER_USERS_email"),
+                        rs.getString("COURSES_course_name")));
 
             System.out.println(query6);
             rs = stmt.executeQuery(query6);
@@ -107,9 +106,9 @@ public class DataServlet extends HttpServlet {
             while (rs.next())
                 schedule.add(new Schedule(
                         rs.getInt("entry"),
-                        rs.getString("STUDENT_USERS_email"),
-                        rs.getString("TEACHER_USERS_email"),
-                        rs.getString("COURSES_course_name"),
+                        rs.getString("STUDENT_USERS_email_schedule"),
+                        rs.getString("TEACHER_USERS_email_schedule"),
+                        rs.getString("COURSES_course_name_schedule"),
                         rs.getString("status"),
                         rs.getDate("date")));
 

@@ -8,18 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="exceptions.InvalidSessionException" %>
+<%@ page import="exceptions.AuthorizationException" %>
 
 <%
     String username = (String) session.getAttribute("username");
+    String password = (String) session.getAttribute("password");
     String role = (String) session.getAttribute("role");
     System.out.println("-- Current User:" + username);
-//    if (username == null || username.isEmpty()) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
-//    if (!role.equals("teacher")) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
+    if (username == null || username.isEmpty()) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
+    if (!role.equals("teacher")) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
 %>
 
 <html>
@@ -37,7 +38,9 @@
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:include page="/data"/>
+
         <!-- Teacher Course PENDING Schedules -->
+        <h1>Schedules</h1>
         <table>
             <tr>
                 <th>Student</th>
@@ -66,6 +69,7 @@
         </table>
 
         <!-- Teacher Course PENDING Schedules -->
+        <h1>Pending Requests</h1>
         <table>
             <tr>
                 <th>Student</th>
@@ -84,13 +88,12 @@
                 <td><%= x.getCourse() %></td>
                 <td><%= x.getSchedule() %></td>
                 <td>
-
                     <form action="request-decision" method="POST">
-                        <input name="username" value="<%= x.getEntry()%>" hidden/>
+                        <input name="entry" value="<%= x.getEntry()%>" hidden/>
                         <button type="submit" name="decision" value="accept">Accept</button>
                     </form>
                     <form action="request-decision" method="POST">
-                        <input name="username" value="<%= x.getEntry() %>" hidden/>
+                        <input name="entry" value="<%= x.getEntry() %>" hidden/>
                         <button type="submit" name="decision" value="reject">Reject</button>
                     </form>
                 </td>
@@ -101,6 +104,18 @@
                     System.out.println("Null Value");
             %>
         </table>
+        <form action="generate-report" method="POST">
+            <input type="hidden" name="email" value="<%= username %>">
+            <input type="hidden" name="password" value="<%= password %>">
+            <input type="hidden" name="role" value="<%= role %>">
+
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate">
+
+            <button type="submit" name="reportType" value="schedule_teacher">Generate Teacher Schedule</button>
+        </form>
         <jsp:include page="footer.jsp"/>
     </body>
 </html>

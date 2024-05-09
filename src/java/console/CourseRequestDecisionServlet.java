@@ -44,12 +44,11 @@ public class CourseRequestDecisionServlet extends HttpServlet {
         try {
             System.out.println("1) Initializing Preliminary Safety Protocols...");
 
-            // Role Checking
+//            // Role Checking
 //            if (!role.equals("teacher")) {
 //                System.out.println("-- Error: Invalid ");
 //                session.setAttribute("error", "Invalid Signup!");
 //            }
-
 
             // Load Driver & Establishing Connection
             Class.forName(mysqlDriver);

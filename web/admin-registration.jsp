@@ -8,18 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="exceptions.InvalidSessionException" %>
+<%@ page import="exceptions.AuthorizationException" %>
 
 <%
     String username = (String) session.getAttribute("username");
     String role = (String) session.getAttribute("role");
     System.out.println("-- Current User:" + username);
-//    if (username == null || username.isEmpty()) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
-//    if (!role.equals("admin")) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
+    if (username == null || username.isEmpty()) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
+    if (!role.equals("admin")) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
 %>
 
 <html>
@@ -27,7 +27,6 @@
         <title>Title</title>
     </head>
     <body>
-        <h2>Admin</h2>
         <jsp:include page="header.jsp" />
         <jsp:include page="/data" />
 
@@ -75,7 +74,6 @@
                 System.out.println("Null Value");
         %>
         </table>
-        <h1>END</h1>
         <jsp:include page="footer.jsp" />
     </body>
 </html>

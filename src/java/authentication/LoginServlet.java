@@ -36,7 +36,6 @@ public class LoginServlet extends HttpServlet {
 
         // Invalidating Previous Session if ever
         request.getSession().invalidate();
-        log("username");
 
         System.out.println("---------------------------------------------");
         
@@ -71,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 
             // Case 1: User is blank
             if (username.isEmpty()) {
-                session.setAttribute("error", "No Login Credentials");
+                session.setAttribute("login-error", "No Login Credentials");
                 throw new AuthenticationException("No Login Credentials");
             }
 
@@ -91,13 +90,13 @@ public class LoginServlet extends HttpServlet {
                 
                 // Case 2: No Password
                 if (password.equals("")) {
-                    session.setAttribute("error", "Incorrect Username, Blank Password");
+                    session.setAttribute("login-error", "Incorrect Username, Blank Password");
                     throw new AuthenticationException("Incorrect Username, Blank Password");
                 }
 
                 // Case 3: Password is incorrect
                 else {
-                    session.setAttribute("error", "Incorrect Username, Incorrect Password");
+                    session.setAttribute("login-error", "Incorrect Username, Incorrect Password");
                     throw new AuthenticationException("Incorrect Username, Incorrect Password");
                 }
             }
@@ -108,20 +107,21 @@ public class LoginServlet extends HttpServlet {
                 
             // Case 4: Correct Username with Incorrect Password
             if (encryptedPassword == null || !encryptedPassword.equals(encryptedVerify)) {
-                session.setAttribute("error", "Correct Username, Incorrect Password");
+                session.setAttribute("login-error", "Correct Username, Incorrect Password");
                 throw new AuthenticationException("Correct Username, Incorrect Password");
             }
 
-//            // Case 5: Captcha Failed
+//          // Case 5: Captcha Failed
 //            if (generatedCaptcha == null || !generatedCaptcha.equals(userCaptcha)) {
-//                session.setAttribute("error", "CAPTCHA verification failed");
+//                session.setAttribute("login-error", "CAPTCHA verification failed");
 //                throw new AuthenticationException("CAPTCHA verification failed");
 //            }
 
             session.setAttribute("username", username);
             session.setAttribute("password", password);
             session.setAttribute("role", role);
-            System.out.println("Role set in session: " + role);
+
+            System.out.println("--- Role set in session: " + role);
 
             System.out.println("5) Captcha & Credential Verification Successful");
             // </editor-fold>
@@ -135,12 +135,11 @@ public class LoginServlet extends HttpServlet {
             else if (role.equals("student"))
                 response.sendRedirect("student-mycourses.jsp");
 
-
             // Close the connection
             rs.close();
             stmt.close();
             conn.close();
-            
+
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
         }
