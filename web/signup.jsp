@@ -44,7 +44,7 @@
                     session.setAttribute("signup-error", null);
                 }
             %>
-            Are you a
+            <h3>Are you a</h3>
             <div class="role-box" id="role-box">
                 <button type="button" id="student-btn" class="user-btn selected" onclick="student()">Student</button>
                 <button type="button" id="teacher-btn" class="user-btn" onclick="teacher()">Teacher</button>
@@ -72,11 +72,11 @@
                     <label for="confirmpassword">Confirm password</label>
                     <input type="password" name="confirmpassword" id="confirmpassword" placeholder="  Confirm password" required/>
 
-                    <label for="bday">What's your date of birth <span>*</span></label>
+                    <label for="bday">Birth Date <span>*</span></label>
                     <input type="date" name="bday" id="bday" required>
 
                     <label for="resume" id="resume-label" hidden="true">Resume Link <span>*</span></label>
-                    <input type="text" name="resume" id="resume" hidden="true">
+                    <input type="text" name="resume" id="resume" hidden="true" placeholder="Paste your resume link here">
                 </div>
 
                 <input name="role" value="student" id="role" hidden/>
@@ -84,7 +84,6 @@
             </form>
             <a href="index.jsp" id="link-login">Log In instead?</a>
         </div>
-<%--    <img class="img-photo" src="assets/UST.jpg" alt="UST">--%>
         <jsp:include page="footer.jsp"/>
     </body>
 </html>

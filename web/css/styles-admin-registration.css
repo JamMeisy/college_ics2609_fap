@@ -1,0 +1,26 @@
+table {
+    width: auto;
+}
+
+tr {
+    margin-bottom: 4px;
+}
+
+th, td {
+    width: 20%;
+    color: white;
+    padding: 0 5px;
+    text-align: left;
+    vertical-align: center;
+}
+button {
+    background-color: whitesmoke;
+    color: black;
+    width: 100%;
+}
+
+.option {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}

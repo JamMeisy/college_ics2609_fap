@@ -1,17 +1,7 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: "Jakarta", sans-serif;
-    box-sizing: border-box;
-    font-size: 16px;
-    background-color: #131619;
-    color: #97999b;
-    border-color: #97999b;
-}
-
 body {
     min-width: 25.45vw;
     min-height: 72.5vh;
+    
 }
 
 .signup-box {
@@ -37,6 +27,7 @@ body {
 }
 
 #student-btn {
+    background-color: orange;
     float: left;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -52,6 +43,7 @@ body {
     float: right;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    background-color: orange;
 }
 
 #teacher-btn:hover {
@@ -145,9 +137,19 @@ form .input-box input, form .submit-btn {
     display: none;
 }
 
+h3 {
+    color: #fff;
+}
+
 label {
     font-size: 1.5vh;
     letter-spacing: 1px;
+    color: #fff;
+}
+
+resume-label, #bday, #password, #confirmpassword, #username{
+    color: graytext;
+     padding-left: 10px;
 }
 
 span {
@@ -161,11 +163,17 @@ span {
 }
 
 .signup-box #link-login{
+     font-size: 10px;
+    color: orange;
     display: block;
     text-align: center;
     margin:auto;
    -webkit-transition-duration: 0.4s; 
   transition-duration: 0.4s;
+  margin-bottom: 20px;
+}
+#link-login {
+    margin-top: 20px;
 }
 
 .signup-box #link-login:hover {
@@ -181,6 +189,18 @@ span {
 
 #link-login {
     margin-bottom: 10vh;
+}
+
+div.fname-box {
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    padding-bottom: 5px;
+    
+}
+
+#fname, #lname {
+    margin-top: 5px;
+    padding-left: 10px;
 }
 
 @-webkit-keyframes glow {

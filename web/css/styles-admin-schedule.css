@@ -1,11 +1,27 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: "Jackarta", sans-serif;
-    box-sizing: border-box;
-    font-size: 16px;
-    background-color: #131619;
-    color: #97999b;
-    border-color: #97999b;
+* {
+    color: white;
+}
+.generate-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+.generate-wrapper input, button {
+    background-color: whitesmoke;
+    color: black;
+}
+
+table {
+    width: auto;
+}
+tr {
+    margin-bottom: 4px;
+}
+th, td {
+    width: 20%;
+    color: white;
+    padding: 0 5px;
+    text-align: left;
+    vertical-align: center;
 }
 

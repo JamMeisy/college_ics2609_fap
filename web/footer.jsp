@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" href="css/styles-global.css">
+<div class="footer-divider"></div>
 <footer>
     <div class="footer-wrapper">
         <div class="footer-section">

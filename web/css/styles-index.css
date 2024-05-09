@@ -1,14 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-
-    font-family: "Jackarta", sans-serif;
-}
-
 .login-box{
     margin: auto;
     width: 100%;
 }
+
 .login-box * {
     display: flex;
     color: white;
@@ -32,6 +26,12 @@ form label{
     text-align: center;
 }
 
+h4{
+    margin-bottom: 2vh;
+    text-align: center;
+    margin-left: 5vh;
+}
+
 .label-container h2{
     font-size: 1.5rem;
     color: whitesmoke;
@@ -43,7 +43,7 @@ form label{
     color: #67696b
 }
 
-.label-container span{
+.label-container b{
     font-weight: 750;
     background-color: #f3ec78;
     background-image: linear-gradient(20deg, #75bac8, #d9a25b);
@@ -54,72 +54,53 @@ form label{
 }
 
 .label-container{
-    margin:3vh auto ;
+    margin:5vh auto ;
     display: block;
     width: fit-content;
 }
 .button-container {
     flex-direction: column;
     align-items: center;
+    width: 70%;
 }
 
-form input, .button-container button{
+button{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+b {
+    margin-left: 5px;
+    font-size: 25px;
+}
+
+input{
+    padding-left: 20px;
     width: 70%;
     height: 6vh;
     border-radius: 10px;
     margin-bottom: 3vh;
     border-style: solid;
     border-width: thin;
-    
+    background-color: transparent;
+    color: white;
 }
 
-.button-container{
-    width: 100%;
+.refresh-button {
+    width: 30%;
+}
+.submit-button {
+    width: 60%
 }
 
-.button-container button {
-  margin: 0 auto 4vh auto;
-  display: block;
-  width: 100%;
-  height: 5vh;
-  position: relative;
-  background-color: #f78c24;;
-  border: none;
-  font-size: 1rem;
-  color: #131619;
-  text-align: center;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  text-decoration: none;
-  overflow: hidden;
-  cursor: pointer;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-.button-container button:after {
-  content: "";
-  background-color: #2598DF;
-  display: block;
-  position: absolute;
-  padding-top: 300%;
-  padding-left: 350%;
-  margin-left: -20px;
-  margin-top: -120%;
-  opacity: 0;
-  transition: all 0.8s
-}
-
-.button-container button:hover {
-  background-color: #2598DF;
-  color: white;
-}
-
-.button-container button:active:after {
-  padding: 0;
-  margin: 0;
-  opacity: 1;
-  transition: 0s
+.button-container button{
+    border-radius: 12px;
+    margin-bottom: 3vh;
+    display: block;
+    font-size: 1rem;
+    color: #131619;
+    background-color: #f78c24;
 }
 
 .img-photo{
@@ -129,12 +110,21 @@ form input, .button-container button{
 #link-signup {
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    color: white;
+    text-decoration: underline;
+    color: orange;
+    font-size: 10px;
     padding: 10px;
-    margin-bottom: 10vh;
+    margin-bottom: 3vh;
 }
 
+input[type=text]:focus {
+  padding-left: 5%;
+}
+
+#generatedCaptcha {
+    text-align: center;
+    background-color: #FFA500;
+}
 
 @media only screen and (min-width: 768px){
 

@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
 }
 html {
     background-color: #131619;
@@ -69,6 +69,11 @@ header a:hover {
 }
 
 /* Footer */
+.footer-divider {
+    height: 20px;
+    margin-top: auto;
+}
+
 footer {
     background-color: #1B1B1B;
     bottom: 0;
