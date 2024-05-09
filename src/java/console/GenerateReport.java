@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpSession;
 import objects.Schedule;
 import objects.User;
 
@@ -61,17 +62,17 @@ public class GenerateReport extends HttpServlet {
         // Generating Data
         System.out.println("LOADING REPORT / CREDENTIALS");
         System.out.println("---------------------------------------------");
-        
+
         try {
             // Load Driver & Establishing Connection
             Class.forName(driver);
             System.out.println("1) Loaded Driver: " + driver);
             ArrayList<User> data;
             ArrayList<Schedule> schedule;
-            
+
             try (Connection conn = DriverManager.getConnection(url, dbuser, dbpass)) {
                 System.out.println("2) Connected to: " + url);
-                
+
                 // Transfer data for users
                 Statement stmtUsers = conn.createStatement();
                 String queryUsers = "SELECT * FROM users ORDER BY email ASC";
@@ -79,11 +80,11 @@ public class GenerateReport extends HttpServlet {
                 System.out.println("3) Executed Query: " + queryUsers);
                 data = new ArrayList<>();
                 System.out.println("4) Recording Users...");
-                
+
                 while (rsUsers.next()) {
                     data.add(new User(rsUsers.getString("email"), rsUsers.getString("password"), rsUsers.getString("role")));
                 }   // Close the users result set and statement
-                
+
                 rsUsers.close();
                 stmtUsers.close();
 
@@ -99,7 +100,7 @@ public class GenerateReport extends HttpServlet {
                     schedule.add(new Schedule(rsSchedule.getInt("entry"), rsSchedule.getString("STUDENT_USERS_email_schedule"), rsSchedule.getString("TEACHER_USERS_email_schedule"),
                             rsSchedule.getString("COURSES_course_name_schedule"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
                 }   // Close the schedule result set and statement
-                
+
                 rsSchedule.close();
                 stmtSchedule.close();
             }
@@ -119,7 +120,6 @@ public class GenerateReport extends HttpServlet {
 
             String ex_role = "admin";
             String ex_reportType = "schedule_admin";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list, schedule_admin; */
-
             // Retrieve header and footer from web.xml
             String pdfHeader = getServletContext().getInitParameter("pdfHeader");
             String pdfFooter = getServletContext().getInitParameter("pdfFooter");
@@ -135,6 +135,8 @@ public class GenerateReport extends HttpServlet {
             String startDateString = request.getParameter("startDate");
             String endDateString = request.getParameter("endDate");
 
+            HttpSession session = request.getSession();
+            
             try {
                 if (startDateString != null && !startDateString.isEmpty()) {
                     startDate = dateFormatRange.parse(startDateString);
@@ -142,7 +144,15 @@ public class GenerateReport extends HttpServlet {
                 if (endDateString != null && !endDateString.isEmpty()) {
                     endDate = dateFormatRange.parse(endDateString);
                 }
+
+                if (startDate != null && endDate != null && startDate.after(endDate)) {
+                    session.setAttribute("schedule-admin-error", "Cannot have start date greater than end date");
+                    response.sendRedirect("admin-schedule.jsp");
+                    return;
+                }
             } catch (ParseException e) {
+                session.setAttribute("schedule-admin-error", "Invalid date format. Please enter dates in the correct format.");
+                response.sendRedirect("admin-schedule.jsp");
                 e.printStackTrace();
             }
 
@@ -168,7 +178,6 @@ public class GenerateReport extends HttpServlet {
                         break;
 
                     case "user_list":
-                        // Generate header here
                         String title = "User List Report";
                         String filename_user_list = "user_list_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_user_list + "\"");
@@ -176,7 +185,7 @@ public class GenerateReport extends HttpServlet {
                         PdfHeaderFooter headerFooter_user_list = new PdfHeaderFooter(title, email, data.size(), 15, dateTime, pdfFooter, pdfHeader, userRole, data, null, null, null);
                         writer.setPageEvent(headerFooter_user_list);
                         document.open();
-                        // Call the method to generate user list report
+
                         generateUserListReport(response, document, email, data);
                         document.close();
 
@@ -562,6 +571,7 @@ public class GenerateReport extends HttpServlet {
 
         PdfPCell cellStatus = new PdfPCell(new Phrase("Status", headerFont));
         addCellToTable(cellStatus, table, true);
+
     }
 
     class PdfHeaderFooter extends PdfPageEventHelper {
@@ -705,8 +715,10 @@ public class GenerateReport extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (ParseException ex) {
-            Logger.getLogger(GenerateReport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GenerateReport.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -715,8 +727,10 @@ public class GenerateReport extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (ParseException ex) {
-            Logger.getLogger(GenerateReport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GenerateReport.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
