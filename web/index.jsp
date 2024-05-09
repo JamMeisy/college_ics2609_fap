@@ -102,6 +102,7 @@
                     <button type="submit" class="submit-button">Submit</button>
                 </div>
             </form>
+            <a href="signup.jsp">Sign Up instead?</a>
         </div>
         <img class="img-photo" src="assets/UST.jpg" alt="UST">
         <%@ include file="footer.jsp" %>

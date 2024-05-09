@@ -47,31 +47,35 @@
         <!-- Course Application Card-->
         <%
             ArrayList<Courses> courses = (ArrayList<Courses>) session.getAttribute("courses");
+            ArrayList<Teacher> teachers = (ArrayList<Teacher>) session.getAttribute("teacher");
             ArrayList<TeacherCourses> teacher_courses = (ArrayList<TeacherCourses>) session.getAttribute("teacher_courses");
             if (courses != null) {
                 // ! Inconsistency : Creates template for all courses even if there is not teacher
                 // ! Inconsistency : Teacher is added regardless of verified or not
                 // ! Quick Fix: Ensure Database is populated so that each course has a verified teacher
                 for (Courses x : courses) {
+                    int count = 1;
         %>
       
         <div class="course-card">
             <img class="course-card-img" src="assets/UST.jpg" alt="UST">
             <h3><%= x.getCname() %></h3>
             <p><%= x.getCdescription() %></p>
-            <p><%= x.getChours() %></p>
-            <form method="post" action="course-request">
+            <p>Course Hours: <%= x.getChours() %></p>
+            <form method="post" action="request" id="course<%= count %>">
                 <i>Choose Teacher</i>
-                <select name="request-teacher" id="request-teacher" required>
+                <select name="teacher" id="teacher" required>
                     <!-- Generates Options (Teacher) for the Course -->
                     <%
                         if (teacher_courses != null)
-                            for (TeacherCourses y : teacher_courses)
-                                if (y.getCname().equals(x.getCname())) {
-                                    String teach = y.getTeacherEmail();
+                            for (TeacherCourses link : teacher_courses)
+                                if (link.getCname().equals(x.getCname()))
+                                    for (Teacher y : teachers)
+                                        if (link.getTeacherEmail().equals(y.getEmail())) {
                     %>
-                    <option value="<%= teach %>"> <%= teach %> </option>
+                    <option value="<%= link.getTeacherEmail()%>"><%= y.getFname() %> <%= y.getLname() %></option>
                     <%
+                                    break;
                                 }
                     %>
                 </select>
@@ -84,8 +88,8 @@
                 <input type="date" name="date3" required>
                 <input type="date" name="date4" required>
 
-                <input type="hidden" name="<%= x.getCname() %>">
-                <button type="submit">Apply</button>
+                <input type="hidden" name="course" value="<%= x.getCname() %>">
+                <button type="submit" form="course<%= count %>">Apply</button>
             </form>
         </div>
         <%
