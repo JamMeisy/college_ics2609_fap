@@ -15,7 +15,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
-import exceptions.AuthorizationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -135,7 +134,7 @@ public class GenerateReport extends HttpServlet {
             String endDateString = request.getParameter("endDate");
 
             HttpSession session = request.getSession();
-            
+
             try {
                 if (startDateString != null && !startDateString.isEmpty()) {
                     startDate = dateFormatRange.parse(startDateString);
@@ -144,14 +143,22 @@ public class GenerateReport extends HttpServlet {
                     endDate = dateFormatRange.parse(endDateString);
                 }
 
-                if (startDate != null && endDate != null && startDate.after(endDate)) {
-                    session.setAttribute("schedule-admin-error", "Cannot have start date greater than end date");
-                    response.sendRedirect("admin-schedule.jsp");
+                if (reportType.equals("schedule-admin")) {
+                    if (startDate != null && endDate != null && startDate.after(endDate)) {
+                        session.setAttribute("schedule-admin-error", "Cannot have start date greater than end date");
+                        response.sendRedirect("admin-schedule.jsp");
+                        return;
+                    }
+                } else if (reportType.equals("schedule-student")) {
+                    session.setAttribute("schedule-student-error", "Cannot have start date greater than end date");
+                    response.sendRedirect("student_mycourses.jsp");
+                    return;
+                } else if (reportType.equals("schedule-teacher")) {
+                    session.setAttribute("schedule-teacher-error", "Cannot have start date greater than end date");
+                    response.sendRedirect("teacher_myclasses.jsp");
                     return;
                 }
             } catch (ParseException e) {
-                session.setAttribute("schedule-admin-error", "Invalid date format. Please enter dates in the correct format.");
-                response.sendRedirect("admin-schedule.jsp");
                 e.printStackTrace();
             }
 
@@ -167,7 +174,7 @@ public class GenerateReport extends HttpServlet {
                         String filename_sched_admin = "schedule_list_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_sched_admin + "\"");
 
-                        PdfHeaderFooter headerFooter_sched_admin = new PdfHeaderFooter(title_sched_admin, email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
+                        PdfHeaderFooter headerFooter_sched_admin = new PdfHeaderFooter(title_sched_admin, email, reportType, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
                         writer.setPageEvent(headerFooter_sched_admin);
 
                         document.open();
@@ -181,11 +188,25 @@ public class GenerateReport extends HttpServlet {
                         String filename_user_list = "user_list_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_user_list + "\"");
 
-                        PdfHeaderFooter headerFooter_user_list = new PdfHeaderFooter(title, email, data.size(), 15, dateTime, pdfFooter, pdfHeader, userRole, data, null, null, null);
+                        PdfHeaderFooter headerFooter_user_list = new PdfHeaderFooter(title, email, reportType, data.size(), 15, dateTime, pdfFooter, pdfHeader, userRole, data, null, null, null);
                         writer.setPageEvent(headerFooter_user_list);
                         document.open();
 
                         generateUserListReport(response, document, email, data);
+                        document.close();
+
+                        break;
+
+                    case "admin_record":
+                        String title_admin_record = email + "'s Record";
+                        String filename_admin_record = "admin_record_" + dateFormat.format(new Date()) + ".pdf";
+                        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_admin_record + "\"");
+
+                        PdfHeaderFooter headerFooter_admin_record = new PdfHeaderFooter(title_admin_record, email, reportType, data.size(), 1, dateTime, pdfFooter, pdfHeader, userRole, data, null, null, null);
+                        writer.setPageEvent(headerFooter_admin_record);
+                        document.open();
+
+                        generateAdminReport(response, document, email, userPass, data);
                         document.close();
 
                         break;
@@ -195,7 +216,7 @@ public class GenerateReport extends HttpServlet {
                         String filename_sched_student = "student_schedule_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_sched_student + "\"");
 
-                        PdfHeaderFooter headerFooter_sched_student = new PdfHeaderFooter(title_sched_student, email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
+                        PdfHeaderFooter headerFooter_sched_student = new PdfHeaderFooter(title_sched_student, email, reportType, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
                         writer.setPageEvent(headerFooter_sched_student);
                         document.open();
 
@@ -208,7 +229,7 @@ public class GenerateReport extends HttpServlet {
                         String filename_sched_teacher = "teacher_schedule_" + dateFormat.format(new Date()) + ".pdf";
                         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_sched_teacher + "\"");
 
-                        PdfHeaderFooter headerFooter_sched_teacher = new PdfHeaderFooter(title_sched_teacher, email, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
+                        PdfHeaderFooter headerFooter_sched_teacher = new PdfHeaderFooter(title_sched_teacher, email, reportType, schedule.size(), 8, dateTime, pdfFooter, pdfHeader, userRole, null, schedule, startDate, endDate);
                         writer.setPageEvent(headerFooter_sched_teacher);
                         document.open();
 
@@ -428,6 +449,43 @@ public class GenerateReport extends HttpServlet {
         table.addCell(cellRole);
     }
 
+    public void generateAdminReport(HttpServletResponse response, Document document, String loggedInUser, String userPass, ArrayList<User> data) throws IOException {
+        try {
+            PdfPTable table = new PdfPTable(1);
+            table.setWidthPercentage(50); // Set the width percentage of the table to 50% of the page width
+
+            Font headerFont = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD);
+
+            PdfPCell headerCell = new PdfPCell(new Phrase("Credentials", headerFont));
+            headerCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            headerCell.setPadding(5);
+            table.addCell(headerCell);
+
+            // Add username, password, and role to the table
+            table.addCell("Email: " + loggedInUser);
+            table.addCell("Password: " + userPass);
+
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+
+            // Center the table horizontally
+            PdfPTable centerTable = new PdfPTable(1);
+            centerTable.setWidthPercentage(50);
+            PdfPCell centerCell = new PdfPCell(table);
+            centerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            centerTable.addCell(centerCell);
+
+            document.add(centerTable); // Add the centered table to the document
+
+        } catch (DocumentException e) {
+            response.getWriter().println("An error occurred while generating the PDF: " + e.getMessage());
+        }
+    }
+
     public void generateStudentReport(HttpServletResponse response, Document document, PdfWriter writer, String loggedInUser, ArrayList<Schedule> schedule, Date startDate, Date endDate) throws IOException {
         try {
             // Define column widths
@@ -477,9 +535,6 @@ public class GenerateReport extends HttpServlet {
             document.add(table);
         } catch (DocumentException e) {
             response.getWriter().println("An error occurred while generating the PDF: " + e.getMessage());
-        } finally {
-            // Close Document
-            document.close();
         }
     }
 
@@ -577,6 +632,7 @@ public class GenerateReport extends HttpServlet {
 
         private final String title;
         private final String email;
+        private final String reportType;
         private int maxPage;
         private final String dateTime;
         private final String pdfFooter;
@@ -584,9 +640,10 @@ public class GenerateReport extends HttpServlet {
         private final Date startDate;
         private final Date endDate;
 
-        public PdfHeaderFooter(String title, String email, int dataLength, int maxRecord, String dateTime, String pdfFooter, String pdfHeader, String role, ArrayList<User> userData, ArrayList<Schedule> scheduleData, Date startDate, Date endDate) {
+        public PdfHeaderFooter(String title, String email, String reportType, int dataLength, int maxRecord, String dateTime, String pdfFooter, String pdfHeader, String role, ArrayList<User> userData, ArrayList<Schedule> scheduleData, Date startDate, Date endDate) {
             this.title = title;
             this.email = email;
+            this.reportType = reportType;
             this.dateTime = dateTime;
             this.pdfFooter = pdfFooter;
             this.pdfHeader = pdfHeader;
@@ -594,19 +651,23 @@ public class GenerateReport extends HttpServlet {
             this.endDate = endDate;
 
             if (role.equals("admin")) {
-                if (startDate != null && endDate != null) {
-                    // If start date and end date are provided, count only the records within the date range
-                    int recordsWithinRange = 0;
-                    for (Schedule schedule : scheduleData) {
-                        Date scheduleDate = schedule.getSchedule();
-                        if (scheduleDate.after(startDate) && scheduleDate.before(endDate)) {
-                            recordsWithinRange++;
-                        }
-                    }
-                    this.maxPage = (int) Math.ceil((double) recordsWithinRange / maxRecord);
+                if (reportType.equals("admin_record")) {
+                    maxPage = 1;
                 } else {
-                    // If start date and end date are not provided, consider all records
-                    this.maxPage = (int) Math.ceil((double) dataLength / maxRecord);
+                    if (startDate != null && endDate != null) {
+                        // If start date and end date are provided, count only the records within the date range
+                        int recordsWithinRange = 0;
+                        for (Schedule schedule : scheduleData) {
+                            Date scheduleDate = schedule.getSchedule();
+                            if (scheduleDate.after(startDate) && scheduleDate.before(endDate)) {
+                                recordsWithinRange++;
+                            }
+                        }
+                        this.maxPage = (int) Math.ceil((double) recordsWithinRange / maxRecord);
+                    } else {
+                        // If start date and end date are not provided, consider all records
+                        this.maxPage = (int) Math.ceil((double) dataLength / maxRecord);
+                    }
                 }
             } else {
                 // For roles like student and teacher, consider only their records
@@ -642,30 +703,34 @@ public class GenerateReport extends HttpServlet {
             Paragraph dateRangeUserParagraph = new Paragraph();
             dateRangeUserParagraph.setAlignment(Element.ALIGN_LEFT);
 
-            if (startDate != null && endDate != null) {
-                // If date range is provided, format and add it to the paragraph
-                String formattedStartDate = dateFormat.format(startDate);
-                String formattedEndDate = dateFormat.format(endDate);
-                dateRangeUserParagraph.add(new Chunk("RECORDS FROM: " + formattedStartDate + " to " + formattedEndDate, normalFont));
-            } else {
-                // If no date range is provided, add "ALL RECORDS" to the paragraph
-                dateRangeUserParagraph.add(new Chunk("ALL RECORDS", normalFont));
+            if (!reportType.equals("admin_record")) {
+                if (startDate != null && endDate != null) {
+                    // If date range is provided, format and add it to the paragraph
+                    String formattedStartDate = dateFormat.format(startDate);
+                    String formattedEndDate = dateFormat.format(endDate);
+                    dateRangeUserParagraph.add(new Chunk("RECORDS FROM: " + formattedStartDate + " to " + formattedEndDate, normalFont));
+                } else {
+                    // If no date range is provided, add "ALL RECORDS" to the paragraph
+                    dateRangeUserParagraph.add(new Chunk("ALL RECORDS", normalFont));
+                }
+
+                // Add a space between date range and current user
+                dateRangeUserParagraph.add(Chunk.NEWLINE);
+
+                // Add the Current User to the paragraph
+                dateRangeUserParagraph.add(new Chunk("Current User: " + email, normalFont));
+                dateRangeUserParagraph.setAlignment(Element.ALIGN_RIGHT);
             }
-
-            // Add a space between date range and current user
-            dateRangeUserParagraph.add(Chunk.NEWLINE);
-
-            // Add the Current User to the paragraph
-            dateRangeUserParagraph.add(new Chunk("Current User: " + email, normalFont));
-            dateRangeUserParagraph.setAlignment(Element.ALIGN_RIGHT);
 
             try {
                 // Add the header
                 document.add(headerParagraph);
                 document.add(Chunk.NEWLINE);
 
-                // Add the Date Range and Current User paragraph to the header
-                document.add(dateRangeUserParagraph);
+                // Add the Date Range and Current User paragraph to the header if not admin_record
+                if (!reportType.equals("admin_record")) {
+                    document.add(dateRangeUserParagraph);
+                }
 
             } catch (DocumentException e) {
                 e.printStackTrace();
