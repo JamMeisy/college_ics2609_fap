@@ -8,18 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="exceptions.InvalidSessionException" %>
+<%@ page import="exceptions.AuthorizationException" %>
 
 <%
     String username = (String) session.getAttribute("username");
+    String password = (String) session.getAttribute("password");
     String role = (String) session.getAttribute("role");
     System.out.println("-- Current User:" + username);
-//    if (username == null || username.isEmpty()) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
-//    if (!role.equals("student")) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
+    if (username == null || username.isEmpty()) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
+    if (!role.equals("student")) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
 %>
 
 <html>
@@ -28,7 +29,7 @@
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/styles-index.css"/>
-        <link rel="stylesheet" href="css/styles-global.css" />
+        <link rel="stylesheet" href="css/styles-header.css" />
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
@@ -63,7 +64,18 @@
                     System.out.println("Null Value");
             %>
         </table>
+        <form action="GenerateReport" method="get">
+            <input type="hidden" name="email" value="<%= username %>">
+            <input type="hidden" name="password" value="<%= password %>">
+            <input type="hidden" name="role" value="<%= role %>">
 
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate">
+
+            <button type="submit" name="reportType" value="schedule_student">Generate Student Schedule</button>
+        </form>
         <!-- Student Course PENDING Schedules -->
         <h1>Pending Schedules</h1>
         <table>

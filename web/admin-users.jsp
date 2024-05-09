@@ -9,27 +9,29 @@
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="authentication.Security" %>
+<%@ page import="exceptions.AuthorizationException" %>
 
 <%
     String username = (String) session.getAttribute("username");
+    String password = (String) session.getAttribute("password");
     String role = (String) session.getAttribute("role");
     System.out.println("-- Current User:" + username);
-//    if (username == null || username.isEmpty()) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
-//    if (!role.equals("admin")) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
+    if (username == null || username.isEmpty()) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
+    if (!role.equals("admin")) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
 %>
 
 <html>
     <head>
         <title>Title</title>
     </head>
+
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:include page="/data"/>
-
         <!-- Admin Prompt -->
         <h2>Admin Console</h2>
         <%
@@ -81,8 +83,20 @@
             <input name="type" value="delete" hidden/>
             <button type="submit" form="delete">Delete</button>
         </form>
+        <form action="GenerateReport" method="get">
+            <input type="hidden" name="email" value="<%= username %>">
+            <input type="hidden" name="password" value="<%= password %>">
+            <input type="hidden" name="role" value="<%= role %>">
 
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate">
+
+            <button type="submit" name="reportType" value="user_list">Generate User</button>
+        </form>
         <!-- All Users -->
+        <h2>User Database</h2>
         <table>
             <tr>
                 <th>User</th>

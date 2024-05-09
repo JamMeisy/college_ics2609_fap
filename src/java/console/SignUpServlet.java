@@ -8,6 +8,10 @@ package console;
 import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.sql.*;
 
 import authentication.Security;
@@ -18,6 +22,7 @@ public class SignUpServlet extends HttpServlet {
     String mysqlDriver, mysqlUrl, mysqlUser, mysqlPass;
     String key, cipher;
     Security sec;
+
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ServletContext context = getServletContext();
@@ -37,12 +42,12 @@ public class SignUpServlet extends HttpServlet {
         cipher = context.getInitParameter("cipher");
         sec = new Security(key, cipher);
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException  {
-        
+            throws ServletException, IOException {
+
         System.out.println("---------------------------------------------");
-        
+
         HttpSession session = request.getSession();
         String role = request.getParameter("role");
         String username = request.getParameter("username");
@@ -50,47 +55,51 @@ public class SignUpServlet extends HttpServlet {
         String confirmpassword = request.getParameter("confirmpassword");
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
-        Date bday = Date.valueOf(request.getParameter("bday"));
+        java.sql.Date birthday = java.sql.Date.valueOf(request.getParameter("bday"));
 
         String resume = request.getParameter("resume");
-        
+
         // Inserted password is being encrypted
-        String encryptedPassword =  sec.encrypt(password);       
+        String encryptedPassword = sec.encrypt(password);
         System.out.println("0) Encrypting Password ");
         System.out.println("-- Password: " + password);
         System.out.println("-- Encrypted Password: " + encryptedPassword);
-               
+
         try {
             System.out.println("--- Initializing Preliminary Safety Protocols...");
             // Role Checking
-            if (!role.equals("student") && !role.equals("teacher")) {
-                System.out.println("-- Error: Invalid Signup");
-                session.setAttribute("error", "Invalid Signup!");
-                response.sendRedirect("signup.jsp");
-            }
-            // Password Checking
-            if (!password.equals(confirmpassword)) {
-                System.out.println("-- Error: Passwords do not match!");
-                session.setAttribute("error", "Passwords do not match!");
-                response.sendRedirect("signup.jsp");
-                return;
-            }
-            // Bday Checking
-//            if (bday.before()) {
-//                if (bday.after(Date)) {
-//                    System.out.println("-- Error: Cannot set birthday in the future!");
-//                    session.setAttribute("error", "Cannot set birthday in the future!");
-//                }
-//                else {
-//                    System.out.println("-- Error: Person is not at least 5 years old!");
-//                    session.setAttribute("error", "Person is not at least 5 years old!");
-//                }
-//
+//            if (!role.equals("student") && !role.equals("teacher")) {
+//                System.out.println("-- Error: Invalid Signup");
+//                session.setAttribute("error", "Invalid Signup!");
 //                response.sendRedirect("signup.jsp");
 //            }
 
+            // Password Checking
+            if (!password.equals(confirmpassword)) {
+                System.out.println("-- Error: Passwords do not match!");
+                session.setAttribute("signup-error", "Passwords do not match!");
+                response.sendRedirect("signup.jsp");
+                return;
+            }
+            // TODO: BIRTHDAY CHECKING RIX
+            // Birthday Checking
+//            Date today = new Date();
+//            LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+//            ldt.minusYears(10);
+//            Date todayCenturyAgo = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+//
+//            System.out.println("Date today: " + today);
+//
+//            if (birthday.after(today)) {
+//                System.out.println("-- Error: Cannot set birthday in the future!");
+//                session.setAttribute("signup-error", "Cannot set birthday in the future!");
+//                response.sendRedirect("signup.jsp");
+//            }
+//            else if (birthday.after(todayCenturyAgo)) {
+//                System.out.println("-- Error: Person is not at least 10 years old!");
+//                session.setAttribute("signup-error", "Person is not at least 10 years old!");
+//            }
 
-            
             // Load Driver & Establishing Connection
             Class.forName(derbyDriver);
             System.out.println("1) Loaded Driver: " + derbyDriver);
@@ -103,8 +112,8 @@ public class SignUpServlet extends HttpServlet {
             System.out.println("2) Connected to: " + mysqlUrl);
 
             // Inserting User in Database
-            String queryDer = "INSERT INTO user_info VALUES (?, ?, ?)";
-            String querySql = "INSERT INTO users VALUES (?, ?, ?)";
+            String queryDer = "INSERT INTO user_info (USERNAME, PASSWORD, ROLE) VALUES (?, ?, ?)";
+            String querySql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
             PreparedStatement insertDer = connDer.prepareStatement(queryDer);
             PreparedStatement insertSql = connSql.prepareStatement(querySql);
 
@@ -132,7 +141,7 @@ public class SignUpServlet extends HttpServlet {
                 insertSqlStudent.setString(1, username);
                 insertSqlStudent.setString(2, fname);
                 insertSqlStudent.setString(3, lname);
-                insertSqlStudent.setDate(4, bday);
+                insertSqlStudent.setDate(4, birthday);
 
                 insertSqlStudent.executeUpdate();
                 insertSqlStudent.close();
@@ -142,14 +151,13 @@ public class SignUpServlet extends HttpServlet {
                 session.setAttribute("password", password);
                 session.setAttribute("role", role);
                 response.sendRedirect("student-mycourses.jsp");
-            }
-            else if (role.equals("teacher")) {
+            } else if (role.equals("teacher")) {
                 String querySqlInfo = "INSERT INTO teacher VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement insertSqlTeacher = connSql.prepareStatement(querySqlInfo);
                 insertSqlTeacher.setString(1, username);
                 insertSqlTeacher.setString(2, fname);
                 insertSqlTeacher.setString(3, lname);
-                insertSqlTeacher.setDate(4, bday);
+                insertSqlTeacher.setDate(4, birthday);
                 insertSqlTeacher.setString(5, resume);
                 insertSqlTeacher.setString(6, "pending");
 
@@ -166,18 +174,20 @@ public class SignUpServlet extends HttpServlet {
 
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
+            session.setAttribute("signup-error", "User already exists!");
             response.sendRedirect("signup.jsp");
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -188,10 +198,10 @@ public class SignUpServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

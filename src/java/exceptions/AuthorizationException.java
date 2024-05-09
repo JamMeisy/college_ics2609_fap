@@ -11,8 +11,8 @@ package exceptions;
  */
 
 // Correct Username, Incorrect Password
-public class InvalidSessionException extends RuntimeException {
-    public InvalidSessionException (String e) {
+public class AuthorizationException extends RuntimeException {
+    public AuthorizationException(String e) {
         super(e);
     }
 }

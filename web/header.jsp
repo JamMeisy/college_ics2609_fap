@@ -7,35 +7,36 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<link rel="stylesheet" href="css/styles-header.css">
 <% String role = (String) session.getAttribute("role"); %>
-        <header>
-            <%= request.getServletContext().getInitParameter("header") %>
-            <% if (role == null) { %>
-            <h1>HEADER WORKS - LOGIN</h1>
+<header class="header">
+    <div class="logo">
+        <img src="<%= request.getServletContext().getInitParameter("header") %>"
+             alt="Active Learning Logo"/>
+    </div>
 
-            <% } else if (role.equals("admin")) { %>
-            <h1>HEADER WORKS - ADMIN</h1>
-            <nav class="test">
-                <a href="admin-registration.jsp">Registration</a>
-                <a href="admin-schedule.jsp">Schedule</a>
-                <a href="admin-users.jsp">Users</a>
-            </nav>
-            <a href="profile.jsp">Profile</a>
+    <% if (role == null) { %>
 
-            <% } else if (role.equals("teacher")) { %>
-            <h1>HEADER WORKS - TEACHER</h1>
-            <nav class="test">
-                <a href="teacher-myclasses.jsp">My Classes</a>
-            </nav>
+    <% } else if (role.equals("admin")) { %>
+    <nav class="test">
+        <a href="admin-registration.jsp">Registration</a>
+        <a href="admin-schedule.jsp">Schedule</a>
+        <a href="admin-users.jsp">Users</a>
+    </nav>
 
-            <% } else if (role.equals("student")) { %>
-            <h1>HEADER WORKS - STUDENT</h1>
-            <nav class="test">
-                <a href="student-findcourses.jsp">Find Courses</a>
-                <a href="student-mycourses.jsp">My Courses</a>
-            </nav>
-            <a href="profile.jsp">Profile</a>
+    <% } else if (role.equals("teacher")) { %>
+    <nav class="test">
+        <a href="teacher-myclasses.jsp">My Classes</a>
+    </nav>
 
-            <% } %>
-            <a href="logout">Logout</a>
-        </header>
+    <% } else if (role.equals("student")) { %>
+    <nav class="test">
+        <a href="student-findcourses.jsp">Find Courses</a>
+        <a href="student-mycourses.jsp">My Courses</a>
+    </nav>
+
+    <% } %>
+    <div class="action-buttons">
+        <a href="logout" class="logout">Logout</a>
+    </div>
+</header>
