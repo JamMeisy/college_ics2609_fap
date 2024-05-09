@@ -1,0 +1,57 @@
+.footer {
+    background-color: #1B1B1B;
+    display: flex;
+    justify-content: space-between;
+    padding: 2vh 5%;
+    font-size: 1.25vh;
+    border-top: 1px solid #333;
+    box-sizing: border-box;
+}
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.footer-section h3 {
+    margin: 0;
+    padding-bottom: 1vh;
+}
+.footer-section a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5vh 0;
+    transition: color 0.3s;
+}
+.footer-section a:hover {
+    color: #ccc;
+}
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+.logo {
+    margin-right: 20px;
+}
+.copyright {
+    float: left;
+    padding-top: 1vh;
+    text-align: left;
+    font-size: .90vh;
+    width: 50%;
+}
+
+.team {
+    float: right;
+    text-align: right;
+    font-size: .90vh;
+    padding-top: 0.5vh;
+    padding-left: 0.5vh;
+    width: 50%;
+}
+
+/* Clearfix to contain floats */
+.footerloweralign::after {
+    content: "";
+    display: table;
+    clear: both;
+}

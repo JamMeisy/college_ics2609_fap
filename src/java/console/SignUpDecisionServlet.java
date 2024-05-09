@@ -5,6 +5,8 @@ package console;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import exceptions.AuthorizationException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,8 +42,7 @@ public class SignUpDecisionServlet extends HttpServlet {
         try {
             System.out.println("1) Initializing Preliminary Safety Protocols...");
 //            if (role == null || !role.equals("admin"))
-//                throw new InvalidSessionException("Unauthorized Action");
-
+//                throw new AuthorizationException("Unauthorized Action");
 
             // Load Driver & Establishing Connection
             Class.forName(mysqlDriver);

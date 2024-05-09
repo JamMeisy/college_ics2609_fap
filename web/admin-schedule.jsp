@@ -8,18 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="exceptions.InvalidSessionException" %>
+<%@ page import="exceptions.AuthorizationException" %>
 
 <%
     String username = (String) session.getAttribute("username");
+    String password = (String) session.getAttribute("password");
     String role = (String) session.getAttribute("role");
     System.out.println("-- Current User:" + username);
-//    if (username == null || username.isEmpty()) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
-//    if (!role.equals("admin")) {
-//        throw new InvalidSessionException("Unauthorized Access");
-//    }
+    if (username == null || username.isEmpty()) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
+    if (!role.equals("admin")) {
+        throw new AuthorizationException("Unauthorized Access");
+    }
 %>
 
 <html>
@@ -30,13 +31,28 @@
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:include page="/data"/>
+        <h2>All Schedules</h2>
         <!-- All Student-Teacher Schedules -->
+        <form action="GenerateReport" method="get">
+            <input type="hidden" name="email" value="<%= username %>">
+            <input type="hidden" name="password" value="<%= password %>">
+            <input type="hidden" name="role" value="<%= role %>">
+
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate">
+
+            <button type="submit" name="reportType" value="schedule_admin">Generate Schedule</button>
+            <button type="submit" name="reportType" value="user_list">Generate User</button>
+        </form>
         <table>
             <tr>
                 <th>Student</th>
                 <th>Teacher</th>
                 <th>Course</th>
                 <th>Schedule</th>
+                <th>Status</th>
             </tr>
             <%
                 if (session.getAttribute("schedule") != null) {
@@ -48,6 +64,7 @@
                 <td><%= x.getTeacherEmail() %></td>
                 <td><%= x.getCourse() %></td>
                 <td><%= x.getSchedule() %></td>
+                <td><%= x.getStatus() %></td>
             </tr>
             <%
                     }

@@ -17,7 +17,7 @@
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/styles-index.css"/>
-        <link rel="stylesheet" href="css/styles-global.css" />
+        <link rel="stylesheet" href="css/styles-header.css" />
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"/>
@@ -63,9 +63,12 @@
                 <h4>Login to Activate Learning to start Your IT career!</h4>
             </div>
             <!-- Error Prompt -->
-            <% if (session.getAttribute("error") != null) { %>
-            <h1> <%= (String) session.getAttribute("error") %></h1>
-            <% } %>
+            <% if (session.getAttribute("login-error") != null) { %>
+                <h1> <%= (String) session.getAttribute("login-error") %></h1>
+            <%
+                session.setAttribute("login-error", null);
+                }
+            %>
 
             <!-- Form -->
             <form action="login" method="POST">

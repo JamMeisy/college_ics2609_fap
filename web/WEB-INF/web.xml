@@ -3,14 +3,14 @@
          xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-    <!-- Header and Footer -->
+    <!-- Header and Footer for PDF Reports -->
     <context-param>
         <param-name>header</param-name>
         <param-value>assets/logo.png</param-value>
     </context-param>
     <context-param>
         <param-name>footer</param-name>
-        <param-value>| Borja | Castañeda | Dacayo | Juico | Tan | -- Finals (ICS2609)</param-value>
+        <param-value>| Borja | Castañeda | Dacayo | Juico | Tan |</param-value>
     </context-param>
     
     <!-- PDF Header and Footer -->
@@ -166,20 +166,20 @@
 
     <!-- Error Page -->
     <error-page>
-        <exception-type>exceptions.InvalidSessionException</exception-type>
-        <location>/error-invalid-session.jsp</location>
-    </error-page>
-    <error-page>
         <exception-type>exceptions.AuthenticationException</exception-type>
         <location>/index.jsp</location>
     </error-page>
     <error-page>
+        <exception-type>exceptions.AuthorizationException</exception-type>
+        <location>/error401.jsp</location>
+    </error-page>
+    <error-page>
         <error-code>404</error-code>
-        <location>/error.jsp</location>
+        <location>/error404.jsp</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/error.jsp</location>
+        <location>/error500.jsp</location>
     </error-page>
 
     <!-- Settings -->

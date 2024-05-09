@@ -51,7 +51,13 @@ public class AdminUserServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String type = request.getParameter("type");
-               
+
+        // Role Checking
+//            if (!role.equals("teacher")) {
+//                System.out.println("-- Error: Invalid ");
+//                session.setAttribute("error", "Invalid Signup!");
+//            }
+
         try {
             // Load Driver & Establishing Connection
             Class.forName(derbyDriver);

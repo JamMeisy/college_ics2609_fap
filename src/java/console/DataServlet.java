@@ -39,7 +39,6 @@ public class DataServlet extends HttpServlet {
             System.out.println("2) Connecting to: " + mysqlUrl);
             Connection conn = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
 
-
             // Transfer data
             Statement stmt = conn.createStatement();
             String query1 = "SELECT * FROM users ORDER BY email ASC";

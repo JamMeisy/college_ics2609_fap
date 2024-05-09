@@ -38,9 +38,12 @@
         <jsp:include page="header.jsp"/>
         <div class="signup-box">
             <!-- Error Prompt -->
-            <% if (session.getAttribute("error") != null) { %>
-            <h1> <%= (String) session.getAttribute("error") %></h1>
-            <% } %>
+            <% if (session.getAttribute("signup-error") != null) { %>
+            <h1> <%= (String) session.getAttribute("signup-error") %></h1>
+            <%
+                    session.setAttribute("signup-error", null);
+                }
+            %>
             Are you a
             <div class="role-box" id="role-box">
                 <button type="button" id="student-btn" class="user-btn selected" onclick="student()">Student</button>
