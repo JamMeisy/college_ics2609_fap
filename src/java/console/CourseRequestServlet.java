@@ -19,9 +19,7 @@ import java.sql.*;
 
 public class CourseRequestServlet extends HttpServlet {
 
-    String derbyDriver, derbyUrl, derbyUser, derbyPass;
     String mysqlDriver, mysqlUrl, mysqlUser, mysqlPass;
-    String key, cipher;
     Security sec;
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -32,54 +30,36 @@ public class CourseRequestServlet extends HttpServlet {
         mysqlUser = getServletContext().getInitParameter("mysqlUser");
         mysqlPass = getServletContext().getInitParameter("mysqlPass");
 
-        derbyDriver = context.getInitParameter("derbyDriver");
-        derbyUrl = context.getInitParameter("derbyUrl");
-        derbyUser = context.getInitParameter("derbyUser");
-        derbyPass = context.getInitParameter("derbyPass");
-
-        // Authentication
-        key = context.getInitParameter("key");
-        cipher = context.getInitParameter("cipher");
-        sec = new Security(key, cipher);
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
         
         System.out.println("---------------------------------------------");
-        
-        HttpSession session = request.getSession();
-        String role = request.getParameter("role");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String confirmpassword = request.getParameter("confirmpassword");
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
-        Date bday = Date.valueOf(request.getParameter("bday"));
 
-        String resume = request.getParameter("resume");
-        
-        // Inserted password is being encrypted
-        String encryptedPassword =  sec.encrypt(password);       
-        System.out.println("0) Encrypting Password ");
-        System.out.println("-- Password: " + password);
-        System.out.println("-- Encrypted Password: " + encryptedPassword);
+        // User Info
+        HttpSession session = request.getSession();
+        String student = (String) request.getSession().getAttribute("username");
+        String role = (String) request.getSession().getAttribute("role");
+
+        // Course Request Parameters
+        String teacher = request.getParameter("teacher");
+        String course = request.getParameter("course");
+        Date date1 = Date.valueOf(request.getParameter("date1"));
+        Date date2 = Date.valueOf(request.getParameter("date2"));
+        Date date3 = Date.valueOf(request.getParameter("date3"));
+        Date date4 = Date.valueOf(request.getParameter("date4"));
                
         try {
             System.out.println("--- Initializing Preliminary Safety Protocols...");
+
             // Role Checking
-            if (!role.equals("student") && !role.equals("teacher")) {
-                System.out.println("-- Error: Invalid Signup");
-                session.setAttribute("error", "Invalid Signup!");
-            }
-            // Password Checking
-            if (!password.equals(confirmpassword)) {
-                System.out.println("-- Error: Passwords do not match!");
-                session.setAttribute("error", "Passwords do not match!");
-                response.sendRedirect("signup.jsp");
-                return;
-            }
-            // Bday Checking
+//            if (!role.equals("student")) {
+//                System.out.println("-- Error: Invalid Signup");
+//                session.setAttribute("error", "Invalid Signup!");
+//            }
+
+            // Date Checking
 //            if (bday.before()) {
 //                if (bday.after(Date)) {
 //                    System.out.println("-- Error: Cannot set birthday in the future!");
@@ -93,82 +73,38 @@ public class CourseRequestServlet extends HttpServlet {
 //                response.sendRedirect("signup.jsp");
 //            }
 
-
             
             // Load Driver & Establishing Connection
-            Class.forName(derbyDriver);
-            System.out.println("1) Loaded Driver: " + derbyDriver);
             Class.forName(mysqlDriver);
             System.out.println("1) Loaded Driver: " + mysqlDriver);
 
-            Connection connDer = DriverManager.getConnection(derbyUrl, derbyUser, derbyPass);
-            System.out.println("2) Connected to: " + derbyUrl);
             Connection connSql = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
             System.out.println("2) Connected to: " + mysqlUrl);
 
-            // Inserting User in Database
-            String queryDer = "INSERT INTO user_info VALUES (?, ?, ?)";
-            String querySql = "INSERT INTO users VALUES (?, ?, ?)";
-            PreparedStatement insertDer = connDer.prepareStatement(queryDer);
-            PreparedStatement insertSql = connSql.prepareStatement(querySql);
+            // Setting Up Request to Insert in Database
+            String query = "INSERT INTO schedule (STUDENT_USERS_EMAIL, TEACHER_USERS_EMAIL, " +
+                    "COURSES_COURSE_NAME, DATE, STATUS) VALUES (?, ?, ?, ?, 'pending')";
+            PreparedStatement insert = connSql.prepareStatement(query);
 
-            System.out.println("3) User " + username + " is being added !");
-            insertDer.setString(1, username);
-            insertDer.setString(2, encryptedPassword);
-            insertDer.setString(3, role);
-            insertSql.setString(1, username);
-            insertSql.setString(2, encryptedPassword);
-            insertSql.setString(3, role);
-            int rows1 = insertDer.executeUpdate();
-            int rows2 = insertSql.executeUpdate();
+            System.out.println("3) Schedule request of " + student + " is being added !");
+            insert.setString(1, student);
+            insert.setString(2, teacher);
+            insert.setString(3, course);
 
-            if (rows1 == 0 || rows2 == 0) {
-                System.out.println("-- Error: User already exists! ");
-                session.setAttribute("error", "Email already exists!");
-                response.sendRedirect("signup.jsp");
-                return;
-            }
-
-            // Setting Session Information
-            session.setAttribute("username", username);
-            session.setAttribute("password", password);
-            session.setAttribute("role", role);
-
-            // Insert Info for Student / Teacher
-            if (role.equals("student")) {
-                String querySqlInfo = "INSERT INTO student VALUES (?, ?, ?, ?)";
-                PreparedStatement insertSqlStudent = connSql.prepareStatement(querySqlInfo);
-                insertSqlStudent.setString(1, username);
-                insertSqlStudent.setString(2, fname);
-                insertSqlStudent.setString(3, lname);
-                insertSqlStudent.setDate(4, bday);
-
-                insertSqlStudent.executeUpdate();
-                insertSqlStudent.close();
-                response.sendRedirect("student-mycourses.jsp");
-            }
-            else if (role.equals("teacher")) {
-                String querySqlInfo = "INSERT INTO student VALUES (?, ?, ?, ?, ?, ?)";
-                PreparedStatement insertSqlTeacher = connSql.prepareStatement(querySqlInfo);
-                insertSqlTeacher.setString(1, username);
-                insertSqlTeacher.setString(2, fname);
-                insertSqlTeacher.setString(3, lname);
-                insertSqlTeacher.setDate(4, bday);
-                insertSqlTeacher.setString(5, resume);
-                insertSqlTeacher.setString(6, "pending");
-
-                insertSqlTeacher.executeUpdate();
-                insertSqlTeacher.close();
-                response.sendRedirect("teacher-myclasses.jsp");
-
-            }
+            // Inserting the Schedule
+            insert.setDate(4, date1);
+            insert.executeUpdate();
+            insert.setDate(4, date2);
+            insert.executeUpdate();
+            insert.setDate(4, date3);
+            insert.executeUpdate();
+            insert.setDate(4, date4);
+            insert.executeUpdate();
 
             // Close the connection
-            insertDer.close();
-            insertSql.close();
-            connDer.close();
+            insert.close();
             connSql.close();
-
+            response.sendRedirect("student-mycourses.jsp");
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
         }

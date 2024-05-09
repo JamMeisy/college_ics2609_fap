@@ -92,10 +92,8 @@
                 for (User x : users) {
             %>
             <tr>
-                <td><%= x.getEmail() %>
-                </td>
-                <td><%= x.getRole() %>
-                </td>
+                <td><%= x.getEmail() %></td>
+                <td><%= x.getRole() %></td>
             </tr>
             <%
                     }

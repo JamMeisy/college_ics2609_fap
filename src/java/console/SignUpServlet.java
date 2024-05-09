@@ -66,6 +66,7 @@ public class SignUpServlet extends HttpServlet {
             if (!role.equals("student") && !role.equals("teacher")) {
                 System.out.println("-- Error: Invalid Signup");
                 session.setAttribute("error", "Invalid Signup!");
+                response.sendRedirect("signup.jsp");
             }
             // Password Checking
             if (!password.equals(confirmpassword)) {

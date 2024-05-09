@@ -37,7 +37,8 @@
     <body>
         <jsp:include page="header.jsp" />
         <jsp:include page="/data" />
-        <!-- Student Course Schedules -->
+        <!-- Student Course APPROVED Schedules -->
+        <h1>Approved Schedules</h1>
         <table>
             <tr>
                 <th>Teacher</th>
@@ -48,7 +49,34 @@
                 if (session.getAttribute("schedule") != null) {
                     ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
                     for (Schedule x : schedule) {
-                        if (x.getStudentEmail().equals(username)) {
+                        if (x.getStatus().equals("approved") && x.getStudentEmail().equals(username)) {
+            %>
+            <tr>
+                <td><%= x.getTeacherEmail() %></td>
+                <td><%= x.getCourse() %></td>
+                <td><%= x.getSchedule() %></td>
+            </tr>
+            <%
+                        }
+                    }
+                } else
+                    System.out.println("Null Value");
+            %>
+        </table>
+
+        <!-- Student Course PENDING Schedules -->
+        <h1>Pending Schedules</h1>
+        <table>
+            <tr>
+                <th>Teacher</th>
+                <th>Course</th>
+                <th>Schedule</th>
+            </tr>
+            <%
+                if (session.getAttribute("schedule") != null) {
+                    ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
+                    for (Schedule x : schedule) {
+                        if (x.getStatus().equals("pending") && x.getStudentEmail().equals(username)) {
             %>
             <tr>
                 <td><%= x.getTeacherEmail() %></td>

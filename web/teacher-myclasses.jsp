@@ -27,9 +27,37 @@
         <title>Title</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        <jsp:include page="/data" />
-        <!-- Teacher Course Schedules -->
+        <jsp:include page="header.jsp"/>
+        <jsp:include page="/data"/>
+        <!-- Teacher Course PENDING Schedules -->
+        <table>
+            <tr>
+                <th>Student</th>
+                <th>Course</th>
+                <th>Schedule</th>
+            </tr>
+            <%
+                if (session.getAttribute("schedule") != null) {
+                    ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
+                    for (Schedule x : schedule)
+                        if (x.getStatus().equals("approved")) {
+            %>
+            <tr>
+                <td><%= x.getStudentEmail() %>
+                </td>
+                <td><%= x.getCourse() %>
+                </td>
+                <td><%= x.getSchedule() %>
+                </td>
+            </tr>
+            <%
+                        }
+                } else
+                    System.out.println("Null Value");
+            %>
+        </table>
+
+        <!-- Teacher Course PENDING Schedules -->
         <table>
             <tr>
                 <th>Student</th>
@@ -40,29 +68,31 @@
             <%
                 if (session.getAttribute("schedule") != null) {
                     ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
-                    for (Schedule x : schedule) {
+                    for (Schedule x : schedule)
+                        if (x.getStatus().equals("pending")) {
             %>
             <tr>
                 <td><%= x.getStudentEmail() %></td>
                 <td><%= x.getCourse() %></td>
                 <td><%= x.getSchedule() %></td>
                 <td>
+
                     <form action="request-decision" method="POST">
-                        <input name="username" value="<%= x.getStudentEmail()%>" hidden/>
+                        <input name="username" value="<%= x.getEntry()%>" hidden/>
                         <button type="submit" name="decision" value="accept">Accept</button>
                     </form>
                     <form action="request-decision" method="POST">
-                        <input name="username" value="<%= x.getStudentEmail()%>" hidden/>
+                        <input name="username" value="<%= x.getEntry() %>" hidden/>
                         <button type="submit" name="decision" value="reject">Reject</button>
                     </form>
                 </td>
             </tr>
             <%
-                    }
+                        }
                 } else
                     System.out.println("Null Value");
             %>
         </table>
-        <jsp:include page="footer.jsp" />
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>
