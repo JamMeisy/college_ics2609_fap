@@ -10,7 +10,7 @@
     </context-param>
     <context-param>
         <param-name>footer</param-name>
-        <param-value>| Borja | Castañeda | Dacayo | Juico | Tan |</param-value>
+        <param-value>2CSC-Group7 2024.</param-value>
     </context-param>
     
     <!-- PDF Header and Footer -->

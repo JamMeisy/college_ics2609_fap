@@ -15,7 +15,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
-import exceptions.InvalidSessionException;
+import exceptions.AuthorizationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -83,15 +83,15 @@ public class GenerateReport extends HttpServlet {
                 stmtUsers.close();
                 // Transfer data for schedule
                 Statement stmtSchedule = conn.createStatement();
-                String querySchedule = "SELECT * FROM schedule ORDER BY TEACHER_USERS_email";
+                String querySchedule = "SELECT * FROM schedule ORDER BY date ASC";
                 ResultSet rsSchedule = stmtSchedule.executeQuery(querySchedule);
                 System.out.println("5) Executed Query: " + querySchedule);
                 schedule = new ArrayList<>();
                 System.out.println("6) Recording Schedule...");
                 
                 while (rsSchedule.next()) {
-                    schedule.add(new Schedule(rsSchedule.getInt("#"), rsSchedule.getString("STUDENT_USERS_email"), rsSchedule.getString("TEACHER_USERS_email"),
-                            rsSchedule.getString("COURSES_course_name"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
+                    schedule.add(new Schedule(rsSchedule.getInt("entry"), rsSchedule.getString("STUDENT_USERS_email_schedule"), rsSchedule.getString("TEACHER_USERS_email_schedule"),
+                            rsSchedule.getString("COURSES_course_name_schedule"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
                 }   // Close the schedule result set and statement
                 rsSchedule.close();
                 stmtSchedule.close();
