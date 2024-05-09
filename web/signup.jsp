@@ -12,22 +12,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="css/styles-signup.css"/>
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"/>
+        <link rel="stylesheet" href="css/styles-signup.css"/>
+
         <script>
             function student() {
                 document.getElementById("role").value = "student";
-                document.getElementById("resume").element.setAttribute("hidden", true);
-                document.getElementById("resume").element.setAttribute("hidden", true);
+                document.getElementById("resume").hidden = true;
+                document.getElementById("resume-label").hidden = true;
                 document.getElementById("student-btn").classList.add("selected");
                 document.getElementById("teacher-btn").classList.remove("selected");
             }
             function teacher() {
                 document.getElementById("role").value = "teacher";
-                document.getElementById("resume").element.setAttribute("hidden", false);
-                document.getElementById("resume").element.setAttribute("hidden", false);
+                document.getElementById("resume").hidden = false;
+                document.getElementById("resume-label").hidden = false;
                 document.getElementById("teacher-btn").classList.add("selected");
                 document.getElementById("student-btn").classList.remove("selected");
             }
@@ -40,14 +41,13 @@
             <% if (session.getAttribute("error") != null) { %>
             <h1> <%= (String) session.getAttribute("error") %></h1>
             <% } %>
-
+            Are you a
+            <div class="role-box" id="role-box">
+                <button type="button" id="student-btn" class="user-btn selected" onclick="student()">Student</button>
+                <button type="button" id="teacher-btn" class="user-btn" onclick="teacher()">Teacher</button>
+            </div>
             <!-- Form -->
             <form action="signup" method="POST">
-                Are you a?
-                <div class="button-box" id="button-box">
-                    <button type="button" name="student-btn" id="student-btn" class="user-btn selected" onclick="student()">Student</button>
-                    <button type="button" name="teacher-btn" id="teacher-btn" class="user-btn" onclick="teacher()">Teacher</button>
-                </div>
                 <div class="input-box">
                     <div class="name">
                         <div class="fname-box">
@@ -72,8 +72,8 @@
                     <label for="bday">What's your date of birth <span>*</span></label>
                     <input type="date" name="bday" id="bday" required>
 
-                    <label for="resume" id="resume-label" hidden>Resume Link <span>*</span></label>
-                    <input type="text" name="resume" id="resume" hidden>
+                    <label for="resume" id="resume-label" hidden="true">Resume Link <span>*</span></label>
+                    <input type="text" name="resume" id="resume" hidden="true">
                 </div>
 
                 <input name="role" value="student" id="role" hidden/>

@@ -49,7 +49,7 @@
                 if (session.getAttribute("schedule") != null) {
                     ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
                     for (Schedule x : schedule) {
-                        if (x.getStatus().equals("approved") && x.getStudentEmail().equals(username)) {
+                        if (x.getStudentEmail().equals(username) && x.getStatus().equals("approved")) {
             %>
             <tr>
                 <td><%= x.getTeacherEmail() %></td>
@@ -76,7 +76,7 @@
                 if (session.getAttribute("schedule") != null) {
                     ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
                     for (Schedule x : schedule) {
-                        if (x.getStatus().equals("pending") && x.getStudentEmail().equals(username)) {
+                        if (x.getStudentEmail().equals(username) && x.getStatus().equals("pending")) {
             %>
             <tr>
                 <td><%= x.getTeacherEmail() %></td>

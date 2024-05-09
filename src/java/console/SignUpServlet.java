@@ -125,11 +125,6 @@ public class SignUpServlet extends HttpServlet {
                 return;
             }
 
-            // Setting Session Information
-            session.setAttribute("username", username);
-            session.setAttribute("password", password);
-            session.setAttribute("role", role);
-
             // Insert Info for Student / Teacher
             if (role.equals("student")) {
                 String querySqlInfo = "INSERT INTO student VALUES (?, ?, ?, ?)";
@@ -141,10 +136,15 @@ public class SignUpServlet extends HttpServlet {
 
                 insertSqlStudent.executeUpdate();
                 insertSqlStudent.close();
+
+                // Setting Session Information
+                session.setAttribute("username", username);
+                session.setAttribute("password", password);
+                session.setAttribute("role", role);
                 response.sendRedirect("student-mycourses.jsp");
             }
             else if (role.equals("teacher")) {
-                String querySqlInfo = "INSERT INTO student VALUES (?, ?, ?, ?, ?, ?)";
+                String querySqlInfo = "INSERT INTO teacher VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement insertSqlTeacher = connSql.prepareStatement(querySqlInfo);
                 insertSqlTeacher.setString(1, username);
                 insertSqlTeacher.setString(2, fname);
@@ -155,8 +155,7 @@ public class SignUpServlet extends HttpServlet {
 
                 insertSqlTeacher.executeUpdate();
                 insertSqlTeacher.close();
-                response.sendRedirect("teacher-myclasses.jsp");
-
+                response.sendRedirect("signup.jsp");
             }
 
             // Close the connection
@@ -167,6 +166,7 @@ public class SignUpServlet extends HttpServlet {
 
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
+            response.sendRedirect("signup.jsp");
         }
     }
 

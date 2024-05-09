@@ -40,7 +40,7 @@
                 if (session.getAttribute("schedule") != null) {
                     ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
                     for (Schedule x : schedule)
-                        if (x.getStatus().equals("approved")) {
+                        if (x.getTeacherEmail().equals(username) && x.getStatus().equals("approved")) {
             %>
             <tr>
                 <td><%= x.getStudentEmail() %>
@@ -69,7 +69,7 @@
                 if (session.getAttribute("schedule") != null) {
                     ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
                     for (Schedule x : schedule)
-                        if (x.getStatus().equals("pending")) {
+                        if (x.getTeacherEmail().equals(username) && x.getStatus().equals("pending")) {
             %>
             <tr>
                 <td><%= x.getStudentEmail() %></td>
@@ -88,7 +88,7 @@
                 </td>
             </tr>
             <%
-                        }
+                            }
                 } else
                     System.out.println("Null Value");
             %>
