@@ -17,6 +17,7 @@
     <body>
         <jsp:include page="header.jsp" />
         <h1>Unauthorized Access</h1>
+        <a href="index.jsp">Go Back</a>
         <jsp:include page="footer.jsp" />
 
     </body>

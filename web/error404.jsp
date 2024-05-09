@@ -12,10 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/styles-error.css"/>
     </head>
     <body>
         <jsp:include page="header.jsp" />
         <h1> ERROR 404 </h1>
+        <a href="index.jsp">Go Back</a>
         <jsp:include page="footer.jsp" />
     </body>
 </html>

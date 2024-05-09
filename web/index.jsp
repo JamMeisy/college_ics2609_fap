@@ -94,7 +94,7 @@
                         name="captcha"
                         id="captcha"
                         onpaste="return false;"
-                        placeholder="  Type the Characters above"
+                        placeholder="Type the Characters above"
                         required
                 />
 
