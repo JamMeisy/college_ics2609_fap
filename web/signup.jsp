@@ -82,7 +82,7 @@
                 <input name="role" value="student" id="role" hidden/>
                 <button type="submit" name="submit-btn" id="submit-btn" class="submit-btn">Create a free account</button>
             </form>
-            <a href="index.jsp">Log In instead?</a>
+            <a id="link-login" href="index.jsp">Log In instead?</a>
         </div>
         <img class="img-photo" src="assets/UST.jpg" alt="UST">
         <jsp:include page="footer.jsp"/>

@@ -22,6 +22,7 @@
     }
 %>
 
+<% session.setAttribute("page", "student-findcourses.jsp"); %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -82,20 +83,22 @@
 
                 <i>Choose your sessions</i>
                 <i>Note that choosing the same date indicates more hours</i>
-
-                <input type="date" name="date1" required>
-                <input type="date" name="date2" required>
-                <input type="date" name="date3" required>
-                <input type="date" name="date4" required>
+                <div class="date-container">
+                    <input type="date" name="date1" required>
+                    <input type="date" name="date2" required>
+                    <input type="date" name="date3" required>
+                    <input type="date" name="date4" required>
+                </div>
 
                 <input type="hidden" name="course" value="<%= x.getCname() %>">
                 <button type="submit" form="course<%= count %>">Apply</button>
             </form>
         </div>
-        <%
-                }
+    <%
             }
-        %>
-        <jsp:include page="footer.jsp" />
-    </body>
+    %>
+    </div> <!-- End of .container -->
+    <% } %>
+</body>
+
 </html>
