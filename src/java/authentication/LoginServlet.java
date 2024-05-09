@@ -35,15 +35,17 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException  {
 
         // Invalidating Previous Session if ever
-        request.getSession().invalidate();
+        HttpSession session = request.getSession();
+        String generatedCaptcha = (String) session.getAttribute("captcha");
+        session.invalidate();
 
         System.out.println("---------------------------------------------");
         
-        HttpSession session = request.getSession();
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String userCaptcha = request.getParameter("captcha");
-        String generatedCaptcha = (String) session.getAttribute("captcha");
+
         
         // Password is being encrypted
         String encryptedPassword = sec.encrypt(password);
@@ -110,6 +112,9 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("login-error", "Correct Username, Incorrect Password");
                 throw new AuthenticationException("Correct Username, Incorrect Password");
             }
+
+            System.out.println("Generate Captcha: " + generatedCaptcha);
+            System.out.println("User Captcha: " + userCaptcha);
 
             // Case 5: Captcha Failed
             if (generatedCaptcha == null || !generatedCaptcha.equals(userCaptcha)) {
