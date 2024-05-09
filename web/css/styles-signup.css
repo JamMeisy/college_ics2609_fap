@@ -172,12 +172,15 @@ span {
     background-image: linear-gradient(25deg, #dd7227, #3756cb);
     background-size: 100%;
     -webkit-background-clip: text;
-    -moz-background-clip: text;
     -webkit-text-fill-color: transparent; 
     -moz-text-fill-color: transparent;
   color: #fff;
   text-align: center;
   animation: glow 1s ease-in-out infinite alternate;
+}
+
+#link-login {
+    margin-bottom: 10vh;
 }
 
 @-webkit-keyframes glow {

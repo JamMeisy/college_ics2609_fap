@@ -28,7 +28,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="css/styles-header.css"/>
+        <link rel="stylesheet" href="css/styles-global.css"/>
         <link rel="stylesheet" href="css/styles-student-findcourses.css"/>
         <link
                 rel="stylesheet"

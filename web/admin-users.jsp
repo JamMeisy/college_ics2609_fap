@@ -130,5 +130,6 @@
                     System.out.println("Null Value");
             %>
         </table>
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>
