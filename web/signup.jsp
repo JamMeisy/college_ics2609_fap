@@ -84,7 +84,6 @@
             </form>
             <a href="index.jsp" id="link-login">Log In instead?</a>
         </div>
-<%--    <img class="img-photo" src="assets/UST.jpg" alt="UST">--%>
         <jsp:include page="footer.jsp"/>
     </body>
 </html>
