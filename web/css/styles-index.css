@@ -26,6 +26,12 @@ form label{
     text-align: center;
 }
 
+h4{
+    margin-bottom: 2vh;
+    text-align: center;
+    margin-left: 5vh;
+}
+
 .label-container h2{
     font-size: 1.5rem;
     color: whitesmoke;
@@ -58,7 +64,19 @@ form label{
     width: 70%;
 }
 
+button{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+b {
+    margin-left: 5px;
+    font-size: 25px;
+}
+
 input{
+    padding-left: 20px;
     width: 70%;
     height: 6vh;
     border-radius: 10px;
@@ -93,10 +111,20 @@ input{
     align-items: center;
     justify-content: center;
     text-decoration: underline;
-    color: white;
+    color: orange;
+    font-size: 10px;
     padding: 10px;
+    margin-bottom: 3vh;
 }
 
+input[type=text]:focus {
+  padding-left: 5%;
+}
+
+#generatedCaptcha {
+    text-align: center;
+    background-color: #FFA500;
+}
 
 @media only screen and (min-width: 768px){
 
