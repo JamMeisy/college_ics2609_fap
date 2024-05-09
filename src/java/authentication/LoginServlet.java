@@ -37,7 +37,6 @@ public class LoginServlet extends HttpServlet {
         // Invalidating Previous Session if ever
         HttpSession session = request.getSession();
         String generatedCaptcha = (String) session.getAttribute("captcha");
-        session.invalidate();
 
         System.out.println("---------------------------------------------");
         
