@@ -1,0 +1,42 @@
+* {
+    color: white;
+}
+.generate-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+.generate-wrapper input, .generate-wrapper button {
+    background-color: whitesmoke;
+    color: black;
+}
+.console {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+input, button, select, option {
+    background-color: whitesmoke;
+    color: black;
+}
+
+table {
+    width: auto;
+}
+tr {
+    margin-bottom: 4px;
+}
+th, td {
+    width: 20%;
+    color: white;
+    padding: 0 5px;
+    text-align: left;
+    vertical-align: center;
+}
