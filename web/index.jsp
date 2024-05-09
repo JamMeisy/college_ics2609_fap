@@ -8,6 +8,8 @@
 
     // Auto-Logout
     session.setAttribute("username", null);
+    session.setAttribute("role", null);
+    session.setAttribute("password", null);
 %>
 
 <!DOCTYPE html>
