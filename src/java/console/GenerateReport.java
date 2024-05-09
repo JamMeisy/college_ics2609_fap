@@ -18,7 +18,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import exceptions.InvalidSessionException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,8 +88,9 @@ public class GenerateReport extends HttpServlet {
                 System.out.println("5) Executed Query: " + querySchedule);
                 schedule = new ArrayList<>();
                 System.out.println("6) Recording Schedule...");
+                
                 while (rsSchedule.next()) {
-                    schedule.add(new Schedule(rsSchedule.getString("STUDENT_USERS_email"), rsSchedule.getString("TEACHER_USERS_email"),
+                    schedule.add(new Schedule(rsSchedule.getInt("#"), rsSchedule.getString("STUDENT_USERS_email"), rsSchedule.getString("TEACHER_USERS_email"),
                             rsSchedule.getString("COURSES_course_name"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
                 }   // Close the schedule result set and statement
                 rsSchedule.close();
@@ -108,7 +108,7 @@ public class GenerateReport extends HttpServlet {
             String ex_email = "cherry@gmail.com";
             String ex_password = "teacher";
             String ex_role = "teacher";
-            String ex_reportType = "schedule_teacher";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list;
+            String ex_reportType = "schedule_teacher";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list, schedule_admin;
 
             // Retrieve header and footer from web.xml
             String pdfHeader = getServletContext().getInitParameter("pdfHeader");
