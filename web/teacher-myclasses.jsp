@@ -80,13 +80,12 @@
                 <td><%= x.getCourse() %></td>
                 <td><%= x.getSchedule() %></td>
                 <td>
-
                     <form action="request-decision" method="POST">
-                        <input name="username" value="<%= x.getEntry()%>" hidden/>
+                        <input name="entry" value="<%= x.getEntry()%>" hidden/>
                         <button type="submit" name="decision" value="accept">Accept</button>
                     </form>
                     <form action="request-decision" method="POST">
-                        <input name="username" value="<%= x.getEntry() %>" hidden/>
+                        <input name="entry" value="<%= x.getEntry() %>" hidden/>
                         <button type="submit" name="decision" value="reject">Reject</button>
                     </form>
                 </td>
@@ -97,7 +96,7 @@
                     System.out.println("Null Value");
             %>
         </table>
-        <form action="GenerateReport" method="get">
+        <form action="generate-report" method="POST">
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">
             <input type="hidden" name="role" value="<%= role %>">

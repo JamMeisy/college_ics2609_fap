@@ -83,8 +83,8 @@ public class CourseRequestServlet extends HttpServlet {
             System.out.println("2) Connected to: " + mysqlUrl);
 
             // Setting Up Request to Insert in Database
-            String query = "INSERT INTO schedule (STUDENT_USERS_EMAIL, TEACHER_USERS_EMAIL, " +
-                    "COURSES_COURSE_NAME, DATE, STATUS) VALUES (?, ?, ?, ?, 'pending')";
+            String query = "INSERT INTO schedule (STUDENT_USERS_email_schedule, TEACHER_USERS_email_schedule, " +
+                    "COURSES_course_name_schedule, DATE, STATUS) VALUES (?, ?, ?, ?, 'pending')";
             PreparedStatement insert = connSql.prepareStatement(query);
 
             System.out.println("3) Schedule request of " + student + " is being added !");
