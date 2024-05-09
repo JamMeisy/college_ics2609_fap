@@ -32,6 +32,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/styles-admin-registration.css"/>
     </head>
     <body>
         <jsp:include page="header.jsp" />
@@ -65,7 +66,7 @@
                 <td><%= x.getLname() %></td>
                 <td><%= x.getFname() %></td>
                 <td><%= x.getBday() %></td>
-                <td>
+                <td class="option">
                     <form action="signup-decision" method="POST">
                         <input name="username" value="<%= x.getEmail()%>" hidden/>
                         <button type="submit" name="decision" value="accept">Accept</button>

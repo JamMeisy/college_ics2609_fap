@@ -69,6 +69,11 @@ header a:hover {
 }
 
 /* Footer */
+.footer-divider {
+    height: 20px;
+    margin-top: auto;
+}
+
 footer {
     background-color: #1B1B1B;
     bottom: 0;

@@ -38,6 +38,21 @@
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:include page="/data"/>
+        <h2>Generate Schedules</h2>
+        <!-- All Student-Teacher Schedules -->
+        <form action="generate-report" method="POST">
+            <input type="hidden" name="email" value="<%= username %>">
+            <input type="hidden" name="password" value="<%= password %>">
+            <input type="hidden" name="role" value="<%= role %>">
+
+            <div class="generate-wrapper">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate">
+            </div>
+            <button type="submit" name="reportType" value="schedule_admin">Generate Schedule</button>
+        </form>
 
         <h2>All Schedules</h2>
         <table>
@@ -54,11 +69,16 @@
                     for (Schedule x : schedule) {
             %>
             <tr>
-                <td><%= x.getStudentEmail() %></td>
-                <td><%= x.getTeacherEmail() %></td>
-                <td><%= x.getCourse() %></td>
-                <td><%= x.getSchedule() %></td>
-                <td><%= x.getStatus() %></td>
+                <td><%= x.getStudentEmail() %>
+                </td>
+                <td><%= x.getTeacherEmail() %>
+                </td>
+                <td><%= x.getCourse() %>
+                </td>
+                <td><%= x.getSchedule() %>
+                </td>
+                <td><%= x.getStatus() %>
+                </td>
             </tr>
             <%
                     }
@@ -67,25 +87,13 @@
             %>
         </table>
         <% if (session.getAttribute("schedule-admin-error") != null) { %>
-        <p><%= session.getAttribute("schedule-admin-error") %></p>
+        <p><%= session.getAttribute("schedule-admin-error") %>
+        </p>
         <%
                 session.setAttribute("schedule-admin-error", null);
             }
         %>
-        <h2>Generate Schedules</h2>
-        <!-- All Student-Teacher Schedules -->
-        <form action="generate-report" method="POST">
-            <input type="hidden" name="email" value="<%= username %>">
-            <input type="hidden" name="password" value="<%= password %>">
-            <input type="hidden" name="role" value="<%= role %>">
 
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate">
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate">
-
-            <button type="submit" name="reportType" value="schedule_admin">Generate Schedule</button>
-        </form>
         <jsp:include page="footer.jsp"/>
     </body>
 </html>

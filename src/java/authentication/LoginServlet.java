@@ -111,11 +111,11 @@ public class LoginServlet extends HttpServlet {
                 throw new AuthenticationException("Correct Username, Incorrect Password");
             }
 
-//          // Case 5: Captcha Failed
-//            if (generatedCaptcha == null || !generatedCaptcha.equals(userCaptcha)) {
-//                session.setAttribute("login-error", "CAPTCHA verification failed");
-//                throw new AuthenticationException("CAPTCHA verification failed");
-//            }
+            // Case 5: Captcha Failed
+            if (generatedCaptcha == null || !generatedCaptcha.equals(userCaptcha)) {
+                session.setAttribute("login-error", "CAPTCHA verification failed");
+                throw new AuthenticationException("CAPTCHA verification failed");
+            }
 
             session.setAttribute("username", username);
             session.setAttribute("password", password);
