@@ -59,7 +59,6 @@
     <body>
         <%@ include file="header.jsp" %>
         <!-- Body  -->
-
         <div class="login-box">
             <div class="label-container">
                 <h2>Welcome to   <b class="bold">   Active Learning!</b></h2>
@@ -67,8 +66,10 @@
             </div>
             <!-- Error Prompt -->
             <% if (session.getAttribute("login-error") != null) { %>
-            <h1><%= (String) session.getAttribute("login-error") %>
+            
+            <h1 class="error" id="error"><%= (String) session.getAttribute("login-error") %>
             </h1>
+            
             <%
                     session.setAttribute("login-error", null);
                 }
