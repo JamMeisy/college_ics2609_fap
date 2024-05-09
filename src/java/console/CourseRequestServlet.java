@@ -45,20 +45,21 @@ public class CourseRequestServlet extends HttpServlet {
         // Course Request Parameters
         String teacher = request.getParameter("teacher");
         String course = request.getParameter("course");
-        Date date1 = Date.valueOf(request.getParameter("date1"));
-        Date date2 = Date.valueOf(request.getParameter("date2"));
-        Date date3 = Date.valueOf(request.getParameter("date3"));
-        Date date4 = Date.valueOf(request.getParameter("date4"));
+        java.sql.Date date1 = java.sql.Date.valueOf(request.getParameter("date1"));
+        java.sql.Date date2 = java.sql.Date.valueOf(request.getParameter("date2"));
+        java.sql.Date date3 = java.sql.Date.valueOf(request.getParameter("date3"));
+        java.sql.Date date4 = java.sql.Date.valueOf(request.getParameter("date4"));
                
         try {
             System.out.println("--- Initializing Preliminary Safety Protocols...");
 
             // Role Checking
-//            if (!role.equals("student")) {
-//                System.out.println("-- Error: Invalid Signup");
-//                session.setAttribute("error", "Invalid Signup!");
-//            }
+            if (!role.equals("student")) {
+                System.out.println("-- Error: Invalid Signup");
+                session.setAttribute("error", "Invalid Signup!");
+            }
 
+            // TODO: DATE CHECKING RIX
             // Date Checking
 //            if (bday.before()) {
 //                if (bday.after(Date)) {
@@ -82,8 +83,8 @@ public class CourseRequestServlet extends HttpServlet {
             System.out.println("2) Connected to: " + mysqlUrl);
 
             // Setting Up Request to Insert in Database
-            String query = "INSERT INTO schedule (STUDENT_USERS_EMAIL, TEACHER_USERS_EMAIL, " +
-                    "COURSES_COURSE_NAME, DATE, STATUS) VALUES (?, ?, ?, ?, 'pending')";
+            String query = "INSERT INTO schedule (STUDENT_USERS_email_schedule, TEACHER_USERS_email_schedule, " +
+                    "COURSES_course_name_schedule, DATE, STATUS) VALUES (?, ?, ?, ?, 'pending')";
             PreparedStatement insert = connSql.prepareStatement(query);
 
             System.out.println("3) Schedule request of " + student + " is being added !");
