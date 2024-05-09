@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="objects.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="exceptions.InvalidSessionException" %>
+<%@ page import="authentication.Security" %>
 
 <%
     String username = (String) session.getAttribute("username");
@@ -86,16 +86,25 @@
         <table>
             <tr>
                 <th>User</th>
+                <!-- For monitoring purposes only -->
+                <th>Decrypted Password</th>
+
                 <th>Role</th>
             </tr>
             <%
                 for (User x : users) {
             %>
             <tr>
-                <td><%= x.getEmail() %>
-                </td>
-                <td><%= x.getRole() %>
-                </td>
+                <td><%= x.getEmail() %></td>
+                <!-- For monitoring purposes only -->
+                <%
+                    String key = request.getServletContext().getInitParameter("key");
+                    String cipher = request.getServletContext().getInitParameter("cipher");
+                    Security sec = new Security(key, cipher);
+                %>
+                <td><%= sec.decrypt(x.getPassword()) %></td>
+
+                <td><%= x.getRole() %></td>
             </tr>
             <%
                     }

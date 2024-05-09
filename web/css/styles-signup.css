@@ -1,7 +1,7 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: "Jackarta", sans-serif;
+    font-family: "Jakarta", sans-serif;
     box-sizing: border-box;
     font-size: 16px;
     background-color: #131619;
@@ -9,56 +9,55 @@
     border-color: #97999b;
 }
 
-body{
+body {
     min-width: 25.45vw;
     min-height: 72.5vh;
 }
 
-.signup-box{
+.signup-box {
     width: 100%;
     margin-top: 2vh;
 }
 
-form{
-    width: 70%;
-    margin:auto;
-}
-
-.button-box{    
-    margin:1vh 0;
+.role-box {
+    margin: 1vh 0;
     border: solid;
     height: 6vh;
     border-radius: 10px;
     margin-bottom: 3vh;
     border-style: solid;
     border-width: thin;
-    
 }
 
-.button-box .user-btn{
-    width:50%;
+.user-btn {
+    width: 50%;
     height: fit-content;
     border-style: none;
-    background-image: linear-gradient(335deg,  #dd7227, #3756cb);
-    color: black;
-}
-
-.button-box #student-btn{
-    float: left;
+    color: white;
     height: 100%;
-    background-image: linear-gradient( 25deg,   #dd7227, #3756cb);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
-.button-box #teacher-btn{
-   float:right;
-   height: 100%;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
-.input-box{
+#student-btn {
+    float: left;
+}
+
+#teacher-btn {
+    float: right;
+
+}
+
+.selected {
+    color: yellow;
+}
+
+form {
+    width: 70%;
+    margin: auto;
+}
+
+.input-box {
     width: 100%;
 }
 
@@ -66,9 +65,9 @@ form{
     width: 100%;
 }
 
-form .input-box input{
+form .input-box input {
     margin: 1vh 0 3vh;
-    width:100%;
+    width: 100%;
     height: 5vh;
     border-radius: 10px;
     margin-bottom: 3vh;
@@ -81,29 +80,30 @@ input, input::placeholder {
     font-size: 0.8rem;
 }
 
-form .submit-btn {
+form > .submit-btn {
     width: 100%;
     height: 5vh;
-    background-image: linear-gradient( 25deg,   #dd7227, #3756cb);
+    background-image: linear-gradient(25deg, #dd7227, #3756cb);
     color: black;
 }
 
-form .input-box input, form .submit-btn{    
+form .input-box input, form .submit-btn {
     border-radius: 10px;
     margin-bottom: 3vh;
     border-style: solid;
     border-width: thin;
 }
 
-.img-photo{
+.img-photo {
     display: none;
 }
-label{
+
+label {
     font-size: 1.5vh;
     letter-spacing: 1px;
 }
 
-span{
+span {
     color: #de6d20;
 }
 
@@ -125,43 +125,43 @@ span{
     form .name label,
     form .name input,
     .fname-box,
-    .lname-box{
-        width:100%;
+    .lname-box {
+        width: 100%;
         margin: auto;
     }
-    
-     .fname-box,
-    .lname-box{
+
+    .fname-box,
+    .lname-box {
         display: flex;
         flex-direction: column;
     }
-    
-    .fname-box{
+
+    .fname-box {
         float: left;
     }
-    
-    .lname-box{
+
+    .lname-box {
         float: right;
     }
 }
 
-@media only screen and (min-width: 1248px){
-    
-    .signup-box{
+@media only screen and (min-width: 1248px) {
+
+    .signup-box {
         width: 50%;
         float: left;
         margin: auto;
     }
-    
-    .img-photo{
+
+    .img-photo {
         margin: 0;
         width: 50vw;
-        height: 100vh;  
+        height: 100vh;
         object-fit: cover;
-        position: fixed; 
-        top: 0; 
-        right: 0; 
+        position: fixed;
+        top: 0;
+        right: 0;
         border-top-left-radius: 3%;
         border-bottom-left-radius: 3%;
-   }
+    }
 }

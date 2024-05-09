@@ -37,8 +37,7 @@ public class DataServlet extends HttpServlet {
             System.out.println("1) Loading Driver: " + mysqlDriver);
             Class.forName(mysqlDriver);
             System.out.println("2) Connecting to: " + mysqlUrl);
-            System.out.println("2.1) User: " + mysqlUser + " Password: " + mysqlPass);
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/applicationdb?useSSL=false", mysqlUser, mysqlPass);
+            Connection conn = DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPass);
 
 
             // Transfer data
@@ -107,6 +106,7 @@ public class DataServlet extends HttpServlet {
             ArrayList<Schedule> schedule = new ArrayList<>();
             while (rs.next())
                 schedule.add(new Schedule(
+                        rs.getInt("entry"),
                         rs.getString("STUDENT_USERS_email"),
                         rs.getString("TEACHER_USERS_email"),
                         rs.getString("COURSES_course_name"),

@@ -2,10 +2,11 @@ package objects;
 import java.util.Date;
 
 public class Schedule {
+    int entry;
     String studentEmail, teacherEmail, course, status;
     Date schedule;
-
-    public Schedule(String studentEmail, String teacherEmail, String course, String status, Date schedule) {
+    public Schedule(int entry, String studentEmail, String teacherEmail, String course, String status, Date schedule) {
+        this.entry = entry;
         this.studentEmail = studentEmail;
         this.teacherEmail = teacherEmail;
         this.course = course;
@@ -51,5 +52,13 @@ public class Schedule {
 
     public void setSchedule(Date schedule) {
         this.schedule = schedule;
+    }
+
+    public int getEntry() {
+        return entry;
+    }
+
+    public void setEntry(int entry) {
+        this.entry = entry;
     }
 }
