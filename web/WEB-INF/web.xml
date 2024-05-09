@@ -12,6 +12,16 @@
         <param-name>footer</param-name>
         <param-value>| Borja | Castañeda | Dacayo | Juico | Tan | -- Finals (ICS2609)</param-value>
     </context-param>
+    
+    <!-- PDF Header and Footer -->
+    <context-param>
+        <param-name>pdfHeader</param-name>
+        <param-value>ActiveLearning</param-value>
+    </context-param>
+    <context-param>
+        <param-name>pdfFooter</param-name>
+        <param-value>Borja, Castaneda, Dacayo, Juico, Tan - FAP</param-value>
+    </context-param>
 
     <!-- Encryption -->
     <context-param>
@@ -143,6 +153,15 @@
     <servlet-mapping>
         <servlet-name>AdminUserServlet</servlet-name>
         <url-pattern>/admin-user</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>GenerateReport</servlet-name>
+        <servlet-class>console.GenerateReport</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GenerateReport</servlet-name>
+        <url-pattern>/generate-report</url-pattern>
     </servlet-mapping>
 
     <!-- Error Page -->
