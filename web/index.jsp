@@ -62,7 +62,7 @@
 
         <div class="login-box">
             <div class="label-container">
-                <h2>Welcome to <span class="bold"> Active Learning!</span></h2>
+                <h2>Welcome to<b class="bold"> Active Learning!</b></h2>
                 <h4>Login to Activate Learning to start Your IT career!</h4>
             </div>
             <!-- Error Prompt -->
@@ -111,8 +111,6 @@
             </form>
             <a href="signup.jsp" id="link-signup">Sign Up instead?</a>
         </div>
-
-        <%--    <img class="img-photo" src="assets/UST.jpg" alt="UST">--%>
         <%@ include file="footer.jsp" %>
     </body>
 </html>

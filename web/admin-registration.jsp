@@ -11,6 +11,11 @@
 <%@ page import="exceptions.AuthorizationException" %>
 
 <%
+    // Disable Caching
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); //HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+
     String username = (String) session.getAttribute("username");
     String role = (String) session.getAttribute("role");
     System.out.println("-- Current User:" + username);
@@ -24,7 +29,9 @@
 
 <html>
     <head>
-        <title>Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>ActiveLearning PH</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
         <jsp:include page="header.jsp" />
