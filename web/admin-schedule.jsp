@@ -26,25 +26,13 @@
 <html>
     <head>
         <title>Title</title>
+        <link rel="stylesheet" href="css/styles-admin-schedule.css"/>
         <script src="generatedata.js"></script>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:include page="/data"/>
-        <h2>Generate Schedules</h2>
-        <!-- All Student-Teacher Schedules -->
-        <form action="generate-report" method="POST">
-            <input type="hidden" name="email" value="<%= username %>">
-            <input type="hidden" name="password" value="<%= password %>">
-            <input type="hidden" name="role" value="<%= role %>">
 
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate">
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate">
-
-            <button type="submit" name="reportType" value="schedule_admin">Generate Schedule</button>
-        </form>
         <h2>All Schedules</h2>
         <table>
             <tr>
@@ -72,6 +60,20 @@
                     System.out.println("Null Value");
             %>
         </table>
+        <h2>Generate Schedules</h2>
+        <!-- All Student-Teacher Schedules -->
+        <form action="generate-report" method="POST">
+            <input type="hidden" name="email" value="<%= username %>">
+            <input type="hidden" name="password" value="<%= password %>">
+            <input type="hidden" name="role" value="<%= role %>">
+
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate">
+
+            <button type="submit" name="reportType" value="schedule_admin">Generate Schedule</button>
+        </form>
         <jsp:include page="footer.jsp"/>
     </body>
 </html>

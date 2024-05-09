@@ -1,16 +1,14 @@
-body, html {
+* {
     margin: 0;
     padding: 0;
-    font-family: Plus Sans Jakarta, sans-serif;
-    background-color: #131619;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     color: white;
-    padding-top: 10vh;
 }
 .header {
     display: flex;
     align-items: center;
     background-color: #131619;
-    padding: 2vh 3vh;
+    padding: 1.5vh 3vh;
     box-sizing: border-box;
     position: fixed;
     top: 0;
@@ -24,7 +22,7 @@ body, html {
     margin-right: 2vh;
 }
 .header .logo img {
-    height: 8vh;
+    height: 6.5vh;
 }
 .header nav {
     display: flex;
@@ -33,11 +31,11 @@ body, html {
 .header nav a {
     text-decoration: none;
     margin: 0 1.5vh;
-    padding: 1vh 1.5vh;
+    padding: 0.5vh 1.5vh;
     color: white;
     background-color: transparent;
     transition: color 0.3s, background-color 0.3s;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 .header nav a:hover {
     color: #ecf0f1;
@@ -45,12 +43,12 @@ body, html {
 }
 .header .action-buttons a {
     margin-left: 2vh;
-    padding: 1vh 1.5vh;
+    padding: 0.75vh 1.5vh;
     color: white;
     background-color: transparent;
     text-decoration: none;
     transition: background-color 0.3s;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 .header .action-buttons a.logout {
     border: none;

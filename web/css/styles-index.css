@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     background-color: #131619;
@@ -7,7 +7,8 @@
 
 body {
     min-height: 72.5vh;
-    min-width: 25vw; 
+    min-width: 25vw;
+    margin: 15vh 0;
 }
 
 .login-box, form{
@@ -48,7 +49,6 @@ form label{
     background-image: linear-gradient(20deg, #75bac8, #d9a25b);
     background-size: 100%;
     -webkit-background-clip: text;
-    -moz-background-clip: text;
     -webkit-text-fill-color: transparent; 
     -moz-text-fill-color: transparent;
 }

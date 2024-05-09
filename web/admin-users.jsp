@@ -37,6 +37,13 @@
         <%
             if (session.getAttribute("users") != null) {
                 ArrayList<User> users = (ArrayList<User>) session.getAttribute("users"); %>
+
+        <% if (session.getAttribute("admin-insert-error") != null) { %>
+        <h1> <%= (String) session.getAttribute("admin-insert-error") %></h1>
+        <%
+                session.setAttribute("admin-insert-error", null);
+            }
+        %>
         <form action="admin-user" method="POST" id="insert">
             <h3>ADD ADMIN</h3>
             <label for="add-username">Username</label>
@@ -89,11 +96,6 @@
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">
             <input type="hidden" name="role" value="<%= role %>">
-
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate">
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate">
 
             <button type="submit" name="reportType" value="user_list">Generate User</button>
         </form>
