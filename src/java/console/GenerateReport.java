@@ -81,17 +81,18 @@ public class GenerateReport extends HttpServlet {
                 }   // Close the users result set and statement
                 rsUsers.close();
                 stmtUsers.close();
+
                 // Transfer data for schedule
                 Statement stmtSchedule = conn.createStatement();
-                String querySchedule = "SELECT * FROM schedule ORDER BY TEACHER_USERS_email";
+                String querySchedule = "SELECT * FROM schedule ORDER BY date ASC";
                 ResultSet rsSchedule = stmtSchedule.executeQuery(querySchedule);
                 System.out.println("5) Executed Query: " + querySchedule);
                 schedule = new ArrayList<>();
                 System.out.println("6) Recording Schedule...");
-                
+
                 while (rsSchedule.next()) {
-                    schedule.add(new Schedule(rsSchedule.getInt("#"), rsSchedule.getString("STUDENT_USERS_email"), rsSchedule.getString("TEACHER_USERS_email"),
-                            rsSchedule.getString("COURSES_course_name"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
+                    schedule.add(new Schedule(rsSchedule.getInt("entry"),rsSchedule.getString("STUDENT_USERS_email_schedule"), rsSchedule.getString("TEACHER_USERS_email_schedule"),
+                            rsSchedule.getString("COURSES_course_name_schedule"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
                 }   // Close the schedule result set and statement
                 rsSchedule.close();
                 stmtSchedule.close();
@@ -100,15 +101,19 @@ public class GenerateReport extends HttpServlet {
             System.out.println("5) Data recorded... Generating...");
 
             /* 
-            String username = (String) request.getSession().getAttribute("username");
+            String email = (String) request.getSession().getAttribute("email");
             String userRole = (String) request.getSession().getAttribute("role");
             String userPass = (String) request.getSession().getAttribute("password"); 
             String reportType = request.getParameter("reportType");*/
+            
             // SAMPLE USER ONLY
-            String ex_email = "cherry@gmail.com";
-            String ex_password = "teacher";
-            String ex_role = "teacher";
-            String ex_reportType = "schedule_teacher";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list, schedule_admin;
+            String ex_email = "alejandra@gmail.com";
+            String ex_password = "admin";
+            
+            sec.encrypt(ex_password);
+
+            String ex_role = "admin";
+            String ex_reportType = "schedule_admin";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list, schedule_admin;
 
             // Retrieve header and footer from web.xml
             String pdfHeader = getServletContext().getInitParameter("pdfHeader");
@@ -119,15 +124,26 @@ public class GenerateReport extends HttpServlet {
             String dateTime = dateFormat.format(new Date());
 
             /* GET START AND END DATE PARAMETER
-            String startDateString = request.getParameter("startDate");
-            String endDateString = request.getParameter("endDate"); */
-            
-            // SAMPLE DATE RANGE
-            Date startDate = dateFormatRange.parse("2024-05-05");
-            Date endDate = dateFormatRange.parse("2024-05-07");
+            Date startDate = null;
+            Date endDate = null;
 
-            /* Date startDate = null;
-            Date endDate = null;*/
+            try {
+                if (startDateString != null && !startDateString.isEmpty()) {
+                    startDate = dateFormatRange.parse(startDateString);
+                }
+                if (endDateString != null && !endDateString.isEmpty()) {
+                    endDate = dateFormatRange.parse(endDateString);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+             */
+            // SAMPLE DATE RANGE
+            /* Date startDate = dateFormatRange.parse("2024-05-20");
+            Date endDate = dateFormatRange.parse("2024-05-22"); */
+
+            Date startDate = null;
+            Date endDate = null;
 
             /* try {
             startDate = dateFormat.parse(startDateString);
@@ -135,22 +151,6 @@ public class GenerateReport extends HttpServlet {
             } catch (ParseException e) {
                 e.printStackTrace();
             }*/
-            // SECURITY
-            /* boolean authorized = false;
-            for (User i : data) {
-                if (i.getEmail().equals(ex_email)) {
-                    if (i.getPassword().equals(sec.encrypt(ex_password))) {
-                        authorized = true;
-                        break;
-                    } else {
-                        break;
-                    }
-                }
-            }
-
-            if (!authorized) {
-                throw new InvalidSessionException("Unauthorized Access");
-            }  */
             
             try {
                 response.setContentType("application/pdf");
