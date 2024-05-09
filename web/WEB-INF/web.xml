@@ -16,7 +16,7 @@
     <!-- PDF Header and Footer -->
     <context-param>
         <param-name>pdfHeader</param-name>
-        <param-value>Course List</param-value>
+        <param-value>ActiveLearning</param-value>
     </context-param>
     <context-param>
         <param-name>pdfFooter</param-name>
@@ -153,6 +153,15 @@
     <servlet-mapping>
         <servlet-name>AdminUserServlet</servlet-name>
         <url-pattern>/admin-user</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>GenerateReport</servlet-name>
+        <servlet-class>console.GenerateReport</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GenerateReport</servlet-name>
+        <url-pattern>/generate-report</url-pattern>
     </servlet-mapping>
 
     <!-- Error Page -->
