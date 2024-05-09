@@ -34,7 +34,7 @@
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/styles-global.css"/>
-        <link rel="stylesheet" href="css/styles-student-findcourses.css"/>
+        <link rel="stylesheet" href="css/styles-teacher-myclasses.css"/>
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
@@ -45,35 +45,38 @@
         <jsp:include page="/data"/>
 
         <!-- Teacher Course PENDING Schedules -->
-        <h1>Schedules</h1>
-        <table>
-            <tr>
-                <th>Student</th>
-                <th>Course</th>
-                <th>Schedule</th>
-            </tr>
-            <%
-                if (session.getAttribute("schedule") != null) {
-                    ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
-                    for (Schedule x : schedule)
-                        if (x.getTeacherEmail().equals(username) && x.getStatus().equals("approved")) {
-            %>
-            <tr>
-                <td><%= x.getStudentEmail() %>
-                </td>
-                <td><%= x.getCourse() %>
-                </td>
-                <td><%= x.getSchedule() %>
-                </td>
-            </tr>
-            <%
-                        }
-                } else
-                    System.out.println("Null Value");
-            %>
-        </table>
-
+        <div class="table-container">
+            <h1>Schedules</h1>
+            <table>
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Schedule</th>
+                </tr>
+                <%
+                    if (session.getAttribute("schedule") != null) {
+                        ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
+                        for (Schedule x : schedule)
+                            if (x.getTeacherEmail().equals(username) && x.getStatus().equals("approved")) {
+                %>
+                <tr>
+                    <td><%= x.getStudentEmail() %>
+                    </td>
+                    <td><%= x.getCourse() %>
+                    </td>
+                    <td><%= x.getSchedule() %>
+                    </td>
+                </tr>
+                <%
+                            }
+                    } else
+                        System.out.println("Null Value");
+                %>
+            </table>
+        </div>
+            
         <!-- Teacher Course PENDING Schedules -->
+        <div class="table-container">
         <h1>Pending Requests</h1>
         <table>
             <tr>
@@ -95,11 +98,11 @@
                 <td>
                     <form action="request-decision" method="POST">
                         <input name="entry" value="<%= x.getEntry()%>" hidden/>
-                        <button type="submit" name="decision" value="accept">Accept</button>
+                        <button type="submit" id="btn-accept" name="decision" value="accept">Accept</button>
                     </form>
                     <form action="request-decision" method="POST">
                         <input name="entry" value="<%= x.getEntry() %>" hidden/>
-                        <button type="submit" name="decision" value="reject">Reject</button>
+                        <button type="submit" id="btn-reject" name="decision" value="reject">Reject</button>
                     </form>
                 </td>
             </tr>
@@ -109,14 +112,17 @@
                     System.out.println("Null Value");
             %>
         </table>
-        <h1>Generate Schedule</h1>
+        </div>
+        
+        
+        <h1 id="gs-label">Generate Schedule</h1>
         <% if (session.getAttribute("schedule-teacher-error") != null) { %>
         <p><%= session.getAttribute("schedule-teacher-error") %></p>
         <%
                 session.setAttribute("schedule-teacher-error", null);
             }
         %>
-        <form action="generate-report" method="POST">
+        <form class="generate-report" action="generate-report" method="POST">
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">
             <input type="hidden" name="role" value="<%= role %>">
