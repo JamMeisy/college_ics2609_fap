@@ -73,42 +73,60 @@ public class CourseRequestServlet extends HttpServlet {
             System.out.println("User Input Dates : " + date1 + ", " +date2+ ", " +date3 + ", " +date4);
             System.out.println("-- Comparing Dates from User Input");
 
+            //<editor-fold desc="Date Checking">
             if (date1.isBefore(localDate)){
                 System.out.println("-- Error: Date 1 should not be in the PAST!");
-                session.setAttribute("signup-error", "Date 1 should not be in the PAST!");
-                response.sendRedirect("signup.jsp");
-            } else if (date2.isBefore(localDate)){
+                session.setAttribute("course-request-error", "Date 1 should not be in the PAST!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else if (date2.isBefore(localDate)){
                 System.out.println("-- Error: Date 2 should not be in the PAST!");
-                session.setAttribute("signup-error", "Date 2 should not be in the PAST!");
-                response.sendRedirect("signup.jsp");
-            } else if (date3.isBefore(localDate)){
+                session.setAttribute("course-request-error", "Date 2 should not be in the PAST!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else if (date3.isBefore(localDate)){
                 System.out.println("-- Error: Date 3 should not be in the PAST!");
-                session.setAttribute("signup-error", "Date 3 should not be in the PAST!");
-                response.sendRedirect("signup.jsp");
-            } else if (date4.isBefore(localDate)){
-                System.out.println("-- Error: Date 3 should not be in the PAST!");
-                session.setAttribute("signup-error", "Date 3 should not be in the PAST!");
-                response.sendRedirect("signup.jsp");
-            } else if (date1.isEqual(localDate)){
+                session.setAttribute("course-request-error", "Date 3 should not be in the PAST!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else if (date4.isBefore(localDate)){
+                System.out.println("-- Error: Date 4 should not be in the PAST!");
+                session.setAttribute("course-request-error", "Date 4 should not be in the PAST!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else if (date1.isEqual(localDate)){
                 System.out.println("-- Error: Date 1 should not be equal to PRESENT!");
-                session.setAttribute("signup-error", "Date 1 should not be equal to PRESENT!");
-                response.sendRedirect("signup.jsp");
-            } else if (date2.isEqual(localDate)){
+                session.setAttribute("course-request-error", "Date 1 should not be equal to PRESENT!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else if (date2.isEqual(localDate)){
                 System.out.println("-- Error: Date 2 should not be equal to PRESENT!");
-                session.setAttribute("signup-error", "Date 2 should not be equal to PRESENT!");
-                response.sendRedirect("signup.jsp");
-            } else if (date3.isEqual(localDate)){
+                session.setAttribute("course-request-error", "Date 2 should not be equal to PRESENT!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else if (date3.isEqual(localDate)){
                 System.out.println("-- Error: Date 3 should not be equal to PRESENT!");
-                session.setAttribute("signup-error", "Date 3 should not be equal to PRESENT!");
-                response.sendRedirect("signup.jsp");
-            } else if (date4.isEqual(localDate)){
+                session.setAttribute("course-request-error", "Date 3 should not be equal to PRESENT!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else if (date4.isEqual(localDate)){
                 System.out.println("-- Error: Date 4 should not be equal to PRESENT!");
-                session.setAttribute("signup-error", "Date 4 should not be equal to PRESENT!");
-                response.sendRedirect("signup.jsp");
-            } else {
+                session.setAttribute("course-request-error", "Date 4 should not be equal to PRESENT!");
+                response.sendRedirect("student-findcourses.jsp");
+                return;
+            }
+            else {
                 System.out.println("signup-success: Dates are VALID!");
             }
-            
+            //</editor-fold>
+
             java.sql.Date dateone = java.sql.Date.valueOf(date1);
             java.sql.Date datetwo = java.sql.Date.valueOf(date2);
             java.sql.Date datethree = java.sql.Date.valueOf(date3);

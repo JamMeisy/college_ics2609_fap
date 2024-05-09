@@ -7,8 +7,8 @@
     response.setDateHeader("Expires", 0); // Proxies
 
     // Auto-Logout
-//    session.setAttribute("username", null);
-//    session.setAttribute("role", null);
+    session.setAttribute("username", null);
+    session.setAttribute("role", null);
     session.setAttribute("password", null);
 %>
 
@@ -19,7 +19,7 @@
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/styles-index.css"/>
-        <link rel="stylesheet" href="css/styles-header.css" />
+        <link rel="stylesheet" href="css/styles-global.css"/>
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"/>
@@ -59,16 +59,18 @@
     <body>
         <%@ include file="header.jsp" %>
         <!-- Body  -->
+
         <div class="login-box">
             <div class="label-container">
-                <h2>Welcome to <span class="bold">Active Learning!</span></h2>
+                <h2>Welcome to <span class="bold"> Active Learning!</span></h2>
                 <h4>Login to Activate Learning to start Your IT career!</h4>
             </div>
             <!-- Error Prompt -->
             <% if (session.getAttribute("login-error") != null) { %>
-                <h1 class="error-prompt"> <%= (String) session.getAttribute("login-error") %></h1>
+            <h1><%= (String) session.getAttribute("login-error") %>
+            </h1>
             <%
-                session.setAttribute("login-error", null);
+                    session.setAttribute("login-error", null);
                 }
             %>
 
@@ -92,7 +94,7 @@
                         name="captcha"
                         id="captcha"
                         onpaste="return false;"
-                        placeholder="  Type the Characters above" 
+                        placeholder="  Type the Characters above"
                         required
                 />
 
@@ -107,9 +109,10 @@
                     <button type="submit" class="submit-button">Submit</button>
                 </div>
             </form>
-            <a href="signup.jsp">Sign Up instead?</a>
+            <a href="signup.jsp" id="link-signup">Sign Up instead?</a>
         </div>
-        <img class="img-photo" src="assets/UST.jpg" alt="UST">
+
+        <%--    <img class="img-photo" src="assets/UST.jpg" alt="UST">--%>
         <%@ include file="footer.jsp" %>
     </body>
 </html>

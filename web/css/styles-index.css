@@ -1,30 +1,21 @@
 * {
     margin: 0;
     padding: 0;
-    background-color: #131619;
+
     font-family: "Jackarta", sans-serif;
 }
 
-body {
-    min-height: 72.5vh;
-    min-width: 25vw;
-    margin: 15vh 0;
-}
-
-.error-prompt{
-    text-align: center;
-    margin-bottom: 3vh;
-    font-size: 1.5rem;
-    color: #D0302F;
-}
-
-
-
-.login-box, form{
+.login-box{
+    margin: auto;
     width: 100%;
 }
+.login-box * {
+    display: flex;
+    color: white;
+}
 
-form{
+form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,6 +57,10 @@ form label{
     margin:3vh auto ;
     display: block;
     width: fit-content;
+}
+.button-container {
+    flex-direction: column;
+    align-items: center;
 }
 
 form input, .button-container button{
@@ -129,6 +124,15 @@ form input, .button-container button{
 
 .img-photo{
     display: none;
+}
+
+#link-signup {
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10vh;
 }
 
 
