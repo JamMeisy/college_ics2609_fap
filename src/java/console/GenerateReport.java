@@ -105,7 +105,7 @@ public class GenerateReport extends HttpServlet {
 
             System.out.println("5) Data recorded... Generating...");
 
-            String email = (String) request.getSession().getAttribute("email");
+            String email = (String) request.getSession().getAttribute("username");
             String userRole = (String) request.getSession().getAttribute("role");
             String userPass = (String) request.getSession().getAttribute("password");
             String reportType = request.getParameter("reportType");

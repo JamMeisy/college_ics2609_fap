@@ -15,6 +15,7 @@ import java.util.Date;
 import java.sql.*;
 
 import authentication.Security;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,7 @@ public class SignUpServlet extends HttpServlet {
         String confirmpassword = request.getParameter("confirmpassword");
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
-        LocalDate birthday = LocalDate.parse(request.getParameter("bday"));        
+        LocalDate birthday = LocalDate.parse(request.getParameter("bday"));
         String resume = request.getParameter("resume");
 
         // Inserted password is being encrypted
@@ -85,60 +86,38 @@ public class SignUpServlet extends HttpServlet {
                 response.sendRedirect("signup.jsp");
                 return;
             }
-            
+
             // TODO: BIRTHDAY CHECKING RIX
             // Birthday Checking
-            DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             LocalDate localDate = LocalDate.now();
             LocalDate TenYearsAgo = localDate.minusYears(10);
-            
-            //PRINTS
+
+            // PRINTS
             System.out.println("-- Printing Dates...");
-            System.out.println("Current Date : "+localDate);
-            System.out.println("Date 10 Years AGO : "+TenYearsAgo);
-            System.out.println("User Input Date : "+birthday);
+            System.out.println("Current Date : " + localDate);
+            System.out.println("Date 10 Years AGO : " + TenYearsAgo);
+            System.out.println("User Input Date : " + birthday);
             System.out.println("-- Comparing Dates from User Input");
-            
-            if (birthday.isBefore(localDate)){
-                    if (birthday.isBefore(TenYearsAgo)){
-                        System.out.println("signup-success: Person has a VALID birthdate!");
-                    } else {
-                        System.out.println("-- Error: Person is not at least 10 years old!");
-                        session.setAttribute("signup-error", "Person is not at least 10 years old!");
-                    }
-            } else {
+
+            if (birthday.isBefore(TenYearsAgo)) {
+                System.out.println("signup-success: Person has a VALID birthdate!");
+            }
+            else if (birthday.isBefore(localDate)) {
+                System.out.println("-- Error: Person is not at least 10 years old!");
+                session.setAttribute("signup-error", "Person is not at least 10 years old!");
+                response.sendRedirect("signup.jsp");
+                return;
+            }
+            else {
                 System.out.println("-- Error: Cannot set birthday in the future!");
                 session.setAttribute("signup-error", "Cannot set birthday in the future!");
                 response.sendRedirect("signup.jsp");
+                return;
             }
 
-//            Date today = new Date();
-//            LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
-//            ldt.minusYears(10);
-//            Date todayCenturyAgo = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
-//
-//            System.out.println("Date today: " + today);
-//
-//            if (birthday.after(today)) {
-//                System.out.println("-- Error: Cannot set birthday in the future!");
-//                session.setAttribute("signup-error", "Cannot set birthday in the future!");
-//                response.sendRedirect("signup.jsp");
-//            }
-//            else if (birthday.after(todayCenturyAgo)) {
-//                System.out.println("-- Error: Person is not at least 10 years old!");
-//                session.setAttribute("signup-error", "Person is not at least 10 years old!");
-//            }
+            java.sql.Date birthdate = java.sql.Date.valueOf(birthday);
 
-            Date birthdateUtil = null;
-            
-            try {
-                birthdateUtil = new SimpleDateFormat ("yyyy-MM-dd").parse(dateFormat.format(birthday));
-            } catch (ParseException ex) {
-                Logger.getLogger(SignUpServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            java.sql.Date birthdate = new java.sql.Date(birthdateUtil.getTime());
-            
             // Load Driver & Establishing Connection
             Class.forName(derbyDriver);
             System.out.println("1) Loaded Driver: " + derbyDriver);

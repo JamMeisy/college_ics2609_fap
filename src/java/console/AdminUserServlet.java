@@ -206,6 +206,7 @@ public class AdminUserServlet extends HttpServlet {
 
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
+            session.setAttribute("admin-insert-error", "User already exists!");
             response.sendRedirect("admin-users.jsp");
         }
     }
