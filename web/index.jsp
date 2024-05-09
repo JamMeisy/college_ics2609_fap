@@ -62,7 +62,7 @@
 
         <div class="login-box">
             <div class="label-container">
-                <h2>Welcome to<b class="bold"> Active Learning!</b></h2>
+                <h2>Welcome to   <b class="bold">   Active Learning!</b></h2>
                 <h4>Login to Activate Learning to start Your IT career!</h4>
             </div>
             <!-- Error Prompt -->
@@ -76,7 +76,7 @@
 
             <!-- Form -->
             <form action="login" method="POST">
-                <input type="email" name="username" id="username" placeholder="  Email address" required/>
+                <input type="email" name="username" id="username" placeholder="  Email Address" required/>
 
                 <input type="password" name="password" id="password" placeholder="  Password" required/>
 
@@ -94,7 +94,7 @@
                         name="captcha"
                         id="captcha"
                         onpaste="return false;"
-                        placeholder="  Type the Characters above"
+                        placeholder="  Type the text above"
                         required
                 />
 
@@ -103,10 +103,11 @@
                             type="button"
                             onclick="refreshCaptcha()"
                             class="refresh-button"
+                            id="refresh-button"
                     >
                         &#8635;
                     </button>
-                    <button type="submit" class="submit-button">Submit</button>
+                    <button type="submit" class="submit-button">SUBMIT</button>
                 </div>
             </form>
             <a href="signup.jsp" id="link-signup">Sign Up instead?</a>
