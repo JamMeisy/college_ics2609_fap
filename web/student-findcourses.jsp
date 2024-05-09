@@ -68,6 +68,7 @@
                 for (Courses x : courses) {
         %>
       
+        <div class="container">
         <div class="course-card">
             <img class="course-card-img" src="assets/UST.jpg" alt="UST">
             <h3><%= x.getCname() %></h3>
