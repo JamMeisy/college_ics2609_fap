@@ -64,7 +64,7 @@
                     System.out.println("Null Value");
             %>
         </table>
-        <form action="GenerateReport" method="get">
+        <form action="generate-report" method="POST">
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">
             <input type="hidden" name="role" value="<%= role %>">

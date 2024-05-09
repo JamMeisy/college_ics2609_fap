@@ -31,9 +31,9 @@
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:include page="/data"/>
-        <h2>All Schedules</h2>
+        <h2>Generate Schedules</h2>
         <!-- All Student-Teacher Schedules -->
-        <form action="GenerateReport" method="get">
+        <form action="generate-report" method="POST">
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">
             <input type="hidden" name="role" value="<%= role %>">
@@ -44,8 +44,8 @@
             <input type="date" id="endDate" name="endDate">
 
             <button type="submit" name="reportType" value="schedule_admin">Generate Schedule</button>
-            <button type="submit" name="reportType" value="user_list">Generate User</button>
         </form>
+        <h2>All Schedules</h2>
         <table>
             <tr>
                 <th>Student</th>

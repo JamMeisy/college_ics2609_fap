@@ -83,7 +83,9 @@
             <input name="type" value="delete" hidden/>
             <button type="submit" form="delete">Delete</button>
         </form>
-        <form action="GenerateReport" method="get">
+
+        <h2>Generate Users</h2>
+        <form action="generate-report" method="POST">
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">
             <input type="hidden" name="role" value="<%= role %>">
