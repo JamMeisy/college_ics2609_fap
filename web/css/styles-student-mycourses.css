@@ -1,27 +1,133 @@
-*{
+/* Global Settings */
+* {
     margin: 0;
     padding: 0;
-    font-family: "Jackarta", sans-serif;
-    background-color: #131619;
-    color: #97999b;
-    border-color: #97999b;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
 }
-
-.container{
+html {
+    background-color: #131619;
+}
+body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.table-container{
+    width: 70%;
+    color: black;
+    margin: 3vh auto;
+    padding: 1%;
+    border-radius: 10px;
+    border-style:none;
+    background-color: #ffffff;
+}
+
+.table-container h1{
+    margin: 1vh auto;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.table-container table{
     width: 100%;
+    border: none;
     height: fit-content;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.approved-box{
-    
+.table-container table th{
+   text-align: center;
+   padding: 2%;
 }
 
-.generate-report-box{
-    
+.table-container table td{
+   text-align: left;
+   padding: 2%;
+   
 }
 
-.pending-box{
-    
+.table-container table tr{
+   background-color: #E0E4EA;
 }
+
+.table-container table form button{
+    display: block;
+    margin: 0.5vh 0;
+    width: 100%;
+    border-radius: 10px;
+    padding: 0.3%;
+    border-style: none;
+}
+
+#btn-reject{
+    background-color: #DED8E5;
+}
+
+#btn-accept{
+    background-color: #D3DFEA;
+}
+
+#btn-reject,
+#btn-accept {
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+#btn-reject:hover {
+    background-color: #CFC1D6; 
+}
+
+#btn-accept:hover {
+    background-color: #B8D3EC; 
+}
+
+#gs-label{
+    font-size: 1.5rem;
+    margin-bottom: 0.5vh;
+    color: white;
+}
+
+.generate-report{
+    width: fit-content;
+    margin-bottom: 5vh;
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 10px;
+    padding: 1%;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.generate-report label{
+    font-size: 0.8rem;
+    margin-bottom: 0.5vh;
+}
+
+.generate-report input{
+    width: 90%;
+   border-radius: 10px;
+   margin-bottom: 0.5vh;
+}
+
+.generate-report button{
+    margin: 1.5vh 0;
+    padding: 0.5%;
+   border-radius: 10px;
+   border-style: none;
+   background-color: #D3DFEA;
+}
+
+.generate-report button:hover {
+    background-color: #B8D3EC; 
+}
+
+
+

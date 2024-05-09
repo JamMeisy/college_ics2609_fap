@@ -40,8 +40,7 @@
         <jsp:include page="header.jsp" />
         <jsp:include page="/data" />
         <!-- Student Course APPROVED Schedules -->
-        <div class="container">
-            <div classes="approved-box">
+        <div class="table-container">
                 <h1>Approved Schedules</h1>
                 <table>
                     <tr>
@@ -69,8 +68,8 @@
                 </table>
             </div>
                 
-           <div class="generate-report-box">
-                <form action="generate-report" method="POST">
+                <h1 id="gs-label">Generate Schedule</h1>
+                <form class="generate-report" action="generate-report" method="POST">
                     <input type="hidden" name="email" value="<%= username %>">
                     <input type="hidden" name="password" value="<%= password %>">
                     <input type="hidden" name="role" value="<%= role %>">
@@ -85,7 +84,7 @@
            </div>
                     
             <!-- Student Course PENDING Schedules -->
-            <div class="pending-box">
+            <div class="table-container">
                 <h1>Pending Schedules</h1>
                 <table>
                     <tr>
