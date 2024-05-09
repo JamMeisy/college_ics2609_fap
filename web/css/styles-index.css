@@ -11,6 +11,15 @@ body {
     margin: 15vh 0;
 }
 
+.error-prompt{
+    text-align: center;
+    margin-bottom: 3vh;
+    font-size: 1.5rem;
+    color: #D0302F;
+}
+
+
+
 .login-box, form{
     width: 100%;
 }
@@ -54,7 +63,7 @@ form label{
 }
 
 .label-container{
-    margin:5vh auto ;
+    margin:3vh auto ;
     display: block;
     width: fit-content;
 }
@@ -73,12 +82,49 @@ form input, .button-container button{
     width: 100%;
 }
 
-.button-container button{
-    margin: 0 auto 4vh auto;
-    display: block;
-    font-size: 1rem;
-    color: #131619;
-    background-color: #f78c24;
+.button-container button {
+  margin: 0 auto 4vh auto;
+  display: block;
+  width: 100%;
+  height: 5vh;
+  position: relative;
+  background-color: #f78c24;;
+  border: none;
+  font-size: 1rem;
+  color: #131619;
+  text-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.button-container button:after {
+  content: "";
+  background-color: #2598DF;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button-container button:hover {
+  background-color: #2598DF;
+  color: white;
+}
+
+.button-container button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
 }
 
 .img-photo{

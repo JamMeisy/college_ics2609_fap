@@ -57,10 +57,10 @@ public class CourseRequestServlet extends HttpServlet {
             System.out.println("--- Initializing Preliminary Safety Protocols...");
 
             // Role Checking
-            if (!role.equals("student")) {
-                System.out.println("-- Error: Invalid Signup");
-                session.setAttribute("error", "Invalid Signup!");
-            }
+//            if (!role.equals("student")) {
+//                System.out.println("-- Error: Invalid Signup");
+//                session.setAttribute("error", "Invalid Signup!");
+//            }
 
             // TODO: DATE CHECKING RIX
             // Date Checking

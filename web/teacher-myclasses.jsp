@@ -29,46 +29,49 @@
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="css/styles-global.css"/>
-        <link rel="stylesheet" href="css/styles-student-findcourses.css"/>
+        <link rel="stylesheet" href="css/styles-teacher-myclasses.css"/>
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"
         />
     </head>
     <body>
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="header.jsp" />
         <jsp:include page="/data"/>
+        <!-- Teacher Course PENDING Schedules -->
+
+        <div class="table-container">
+            <h1 class="label">Schedules</h1>
+            <table>
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Schedule</th>
+                </tr>
+                <%
+                    if (session.getAttribute("schedule") != null) {
+                        ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
+                        for (Schedule x : schedule)
+                            if (x.getTeacherEmail().equals(username) && x.getStatus().equals("approved")) {
+                %>
+                <tr>
+                    <td><%= x.getStudentEmail() %>
+                    </td>
+                    <td><%= x.getCourse() %>
+                    </td>
+                    <td><%= x.getSchedule() %>
+                    </td>
+                </tr>
+                <%
+                            }
+                    } else
+                        System.out.println("Null Value");
+                %>
+            </table>
+        </div>
 
         <!-- Teacher Course PENDING Schedules -->
-        <h1>Schedules</h1>
-        <table>
-            <tr>
-                <th>Student</th>
-                <th>Course</th>
-                <th>Schedule</th>
-            </tr>
-            <%
-                if (session.getAttribute("schedule") != null) {
-                    ArrayList<Schedule> schedule = (ArrayList<Schedule>) session.getAttribute("schedule");
-                    for (Schedule x : schedule)
-                        if (x.getTeacherEmail().equals(username) && x.getStatus().equals("approved")) {
-            %>
-            <tr>
-                <td><%= x.getStudentEmail() %>
-                </td>
-                <td><%= x.getCourse() %>
-                </td>
-                <td><%= x.getSchedule() %>
-                </td>
-            </tr>
-            <%
-                        }
-                } else
-                    System.out.println("Null Value");
-            %>
-        </table>
-
-        <!-- Teacher Course PENDING Schedules -->
+         <div class="table-container">
         <h1>Pending Requests</h1>
         <table>
             <tr>
@@ -104,6 +107,9 @@
                     System.out.println("Null Value");
             %>
         </table>
+         </div>
+        
+        
         <form action="generate-report" method="POST">
             <input type="hidden" name="email" value="<%= username %>">
             <input type="hidden" name="password" value="<%= password %>">

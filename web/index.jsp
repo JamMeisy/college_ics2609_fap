@@ -7,8 +7,8 @@
     response.setDateHeader("Expires", 0); // Proxies
 
     // Auto-Logout
-    session.setAttribute("username", null);
-    session.setAttribute("role", null);
+//    session.setAttribute("username", null);
+//    session.setAttribute("role", null);
     session.setAttribute("password", null);
 %>
 
@@ -66,7 +66,7 @@
             </div>
             <!-- Error Prompt -->
             <% if (session.getAttribute("login-error") != null) { %>
-                <h1> <%= (String) session.getAttribute("login-error") %></h1>
+                <h1 class="error-prompt"> <%= (String) session.getAttribute("login-error") %></h1>
             <%
                 session.setAttribute("login-error", null);
                 }
