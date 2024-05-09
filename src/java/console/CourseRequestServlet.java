@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class CourseRequestServlet extends HttpServlet {
 
@@ -45,10 +48,10 @@ public class CourseRequestServlet extends HttpServlet {
         // Course Request Parameters
         String teacher = request.getParameter("teacher");
         String course = request.getParameter("course");
-        java.sql.Date date1 = java.sql.Date.valueOf(request.getParameter("date1"));
-        java.sql.Date date2 = java.sql.Date.valueOf(request.getParameter("date2"));
-        java.sql.Date date3 = java.sql.Date.valueOf(request.getParameter("date3"));
-        java.sql.Date date4 = java.sql.Date.valueOf(request.getParameter("date4"));
+        LocalDate date1 = LocalDate.parse(request.getParameter("date1"));        
+        LocalDate date2 = LocalDate.parse(request.getParameter("date2"));        
+        LocalDate date3 = LocalDate.parse(request.getParameter("date3"));        
+        LocalDate date4 = LocalDate.parse(request.getParameter("date4")); 
                
         try {
             System.out.println("--- Initializing Preliminary Safety Protocols...");
@@ -61,20 +64,56 @@ public class CourseRequestServlet extends HttpServlet {
 
             // TODO: DATE CHECKING RIX
             // Date Checking
-//            if (bday.before()) {
-//                if (bday.after(Date)) {
-//                    System.out.println("-- Error: Cannot set birthday in the future!");
-//                    session.setAttribute("error", "Cannot set birthday in the future!");
-//                }
-//                else {
-//                    System.out.println("-- Error: Person is not at least 5 years old!");
-//                    session.setAttribute("error", "Person is not at least 5 years old!");
-//                }
-//
-//                response.sendRedirect("signup.jsp");
-//            }
+            DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.now();
 
+            //PRINTS
+            System.out.println("-- Printing Dates...");
+            System.out.println("Current Date : " + localDate);
+            System.out.println("User Input Dates : " + date1 + ", " +date2+ ", " +date3 + ", " +date4);
+            System.out.println("-- Comparing Dates from User Input");
+
+            if (date1.isBefore(localDate)){
+                System.out.println("-- Error: Date 1 should not be in the PAST!");
+                session.setAttribute("signup-error", "Date 1 should not be in the PAST!");
+                response.sendRedirect("signup.jsp");
+            } else if (date2.isBefore(localDate)){
+                System.out.println("-- Error: Date 2 should not be in the PAST!");
+                session.setAttribute("signup-error", "Date 2 should not be in the PAST!");
+                response.sendRedirect("signup.jsp");
+            } else if (date3.isBefore(localDate)){
+                System.out.println("-- Error: Date 3 should not be in the PAST!");
+                session.setAttribute("signup-error", "Date 3 should not be in the PAST!");
+                response.sendRedirect("signup.jsp");
+            } else if (date4.isBefore(localDate)){
+                System.out.println("-- Error: Date 3 should not be in the PAST!");
+                session.setAttribute("signup-error", "Date 3 should not be in the PAST!");
+                response.sendRedirect("signup.jsp");
+            } else if (date1.isEqual(localDate)){
+                System.out.println("-- Error: Date 1 should not be equal to PRESENT!");
+                session.setAttribute("signup-error", "Date 1 should not be equal to PRESENT!");
+                response.sendRedirect("signup.jsp");
+            } else if (date2.isEqual(localDate)){
+                System.out.println("-- Error: Date 2 should not be equal to PRESENT!");
+                session.setAttribute("signup-error", "Date 2 should not be equal to PRESENT!");
+                response.sendRedirect("signup.jsp");
+            } else if (date3.isEqual(localDate)){
+                System.out.println("-- Error: Date 3 should not be equal to PRESENT!");
+                session.setAttribute("signup-error", "Date 3 should not be equal to PRESENT!");
+                response.sendRedirect("signup.jsp");
+            } else if (date4.isEqual(localDate)){
+                System.out.println("-- Error: Date 4 should not be equal to PRESENT!");
+                session.setAttribute("signup-error", "Date 4 should not be equal to PRESENT!");
+                response.sendRedirect("signup.jsp");
+            } else {
+                System.out.println("signup-success: Dates are VALID!");
+            }
             
+            java.sql.Date dateone = java.sql.Date.valueOf(date1);
+            java.sql.Date datetwo = java.sql.Date.valueOf(date2);
+            java.sql.Date datethree = java.sql.Date.valueOf(date3);
+            java.sql.Date datefour = java.sql.Date.valueOf(date4);
+
             // Load Driver & Establishing Connection
             Class.forName(mysqlDriver);
             System.out.println("1) Loaded Driver: " + mysqlDriver);
@@ -93,13 +132,13 @@ public class CourseRequestServlet extends HttpServlet {
             insert.setString(3, course);
 
             // Inserting the Schedule
-            insert.setDate(4, date1);
+            insert.setDate(4, dateone);
             insert.executeUpdate();
-            insert.setDate(4, date2);
+            insert.setDate(4, datetwo);
             insert.executeUpdate();
-            insert.setDate(4, date3);
+            insert.setDate(4, datethree);
             insert.executeUpdate();
-            insert.setDate(4, date4);
+            insert.setDate(4, datefour);
             insert.executeUpdate();
 
             // Close the connection
