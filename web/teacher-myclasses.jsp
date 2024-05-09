@@ -74,13 +74,13 @@
                     <td><%= x.getCourse() %></td>
                     <td><%= x.getSchedule() %></td>
                     <td>
-                        <form action="request-decision" method="POST">
+                        <form id="accept" action="request-decision" method="POST">
                             <input name="username" value="<%= x.getStudentEmail()%>" hidden/>
-                            <button type="submit" name="decision" value="accept">Accept</button>
+                            <button type="submit" class="btn-accept" name="decision" value="accept">Accept</button>
                         </form>
-                        <form action="request-decision" method="POST">
+                        <form id="accept"action="request-decision" method="POST">
                             <input name="username" value="<%= x.getStudentEmail()%>" hidden/>
-                            <button type="submit" name="decision" value="reject">Reject</button>
+                            <button type="submit" class="btn-reject" name="decision" value="reject">Reject</button>
                         </form>
                     </td>
                 </tr>
