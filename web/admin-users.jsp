@@ -38,8 +38,8 @@
             if (session.getAttribute("users") != null) {
                 ArrayList<User> users = (ArrayList<User>) session.getAttribute("users"); %>
 
-        <% if (session.getAttribute("admin-insert-error") != null) { %>
-        <h1> <%= (String) session.getAttribute("admin-insert-error") %></h1>
+        <% if (session.getAttribute("admin-insert-error") != null) {%>
+        <h1> <%= (String) session.getAttribute("admin-insert-error")%></h1>
         <%
                 session.setAttribute("admin-insert-error", null);
             }
@@ -63,8 +63,8 @@
             <h3>Update User</h3>
             <label for="update-username">Username</label>
             <select name="username" id="update-username">
-                <% for (User x : users) { %>
-                    <option value='<%= x.getEmail() %>'><%=x.getEmail()%></option>
+                <% for (User x : users) {%>
+                <option value='<%= x.getEmail()%>'><%=x.getEmail()%></option>
                 <% } %>
             </select>
 
@@ -82,9 +82,9 @@
             <h3>Delete User</h3>
             <label for="delete-username">Username</label>
             <select name="username" id="delete-username">
-                <% for (User x : users) { %>
-                    <option value='<%= x.getEmail() %>'><%=x.getEmail()%></option>
-                <% } %>
+                <% for (User x : users) {%>
+                <option value='<%= x.getEmail()%>'><%=x.getEmail()%></option>
+                <% }%>
             </select>
 
             <input name="type" value="delete" hidden/>
@@ -93,11 +93,20 @@
 
         <h2>Generate Users</h2>
         <form action="generate-report" method="POST">
-            <input type="hidden" name="email" value="<%= username %>">
-            <input type="hidden" name="password" value="<%= password %>">
-            <input type="hidden" name="role" value="<%= role %>">
+            <input type="hidden" name="email" value="<%= username%>">
+            <input type="hidden" name="password" value="<%= password%>">
+            <input type="hidden" name="role" value="<%= role%>">
 
             <button type="submit" name="reportType" value="user_list">Generate User</button>
+        </form>
+
+        <h2>Generate Admin Record</h2>
+        <form action="generate-report" method="POST">
+            <input type="hidden" name="email" value="<%= username%>">
+            <input type="hidden" name="password" value="<%= password%>">
+            <input type="hidden" name="role" value="<%= role%>">
+
+            <button type="submit" name="reportType" value="admin_record">Generate Admin Record</button>
         </form>
         <!-- All Users -->
         <h2>User Database</h2>
@@ -113,16 +122,16 @@
                 for (User x : users) {
             %>
             <tr>
-                <td><%= x.getEmail() %></td>
+                <td><%= x.getEmail()%></td>
                 <!-- For monitoring purposes only -->
                 <%
                     String key = request.getServletContext().getInitParameter("key");
                     String cipher = request.getServletContext().getInitParameter("cipher");
                     Security sec = new Security(key, cipher);
                 %>
-                <td><%= sec.decrypt(x.getPassword()) %></td>
+                <td><%= sec.decrypt(x.getPassword())%></td>
 
-                <td><%= x.getRole() %></td>
+                <td><%= x.getRole()%></td>
             </tr>
             <%
                     }
