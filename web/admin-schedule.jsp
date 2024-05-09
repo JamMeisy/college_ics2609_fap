@@ -60,6 +60,12 @@
                     System.out.println("Null Value");
             %>
         </table>
+        <% if (session.getAttribute("schedule-admin-error") != null) { %>
+        <p><%= session.getAttribute("schedule-admin-error") %></p>
+        <%
+                session.setAttribute("schedule-admin-error", null);
+            }
+        %>
         <h2>Generate Schedules</h2>
         <!-- All Student-Teacher Schedules -->
         <form action="generate-report" method="POST">

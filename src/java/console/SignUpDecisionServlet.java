@@ -63,15 +63,17 @@ public class SignUpDecisionServlet extends HttpServlet {
             if (rows > 0) {
                 System.out.println("4) Teacher " + username + " has been updated successfully!");
                 String message = username + " has been " + decision + "ed!";
-                request.getSession().setAttribute("message", message);
+                request.getSession().setAttribute("registration-message", message);
             } else {
                 System.out.println("-- Error: Something went wrong! ");
+                request.getSession().setAttribute("registration-message", "Something went wrong!");
             }
 
             // Close the connection
             update.close();
             conn.close();
             response.sendRedirect("admin-registration.jsp");
+
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
         }

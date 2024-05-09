@@ -32,9 +32,12 @@
 
         <!-- Pending Registration Applications -->
         <!-- TODO: Make Javascript to hide this message after action -->
-        <% if (session.getAttribute("message") != null) { %>
-            <p><%= session.getAttribute("message") %></p>
-        <% } %>
+        <% if (session.getAttribute("registration-message") != null) { %>
+            <p><%= session.getAttribute("registration-message") %></p>
+        <%
+            session.setAttribute("registration-message", null);
+            }
+        %>
         <table>
             <tr>
                 <th>Email</th>
