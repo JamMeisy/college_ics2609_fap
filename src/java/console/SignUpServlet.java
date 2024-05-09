@@ -15,6 +15,11 @@ import java.util.Date;
 import java.sql.*;
 
 import authentication.Security;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SignUpServlet extends HttpServlet {
 
@@ -55,8 +60,7 @@ public class SignUpServlet extends HttpServlet {
         String confirmpassword = request.getParameter("confirmpassword");
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
-        java.sql.Date birthday = java.sql.Date.valueOf(request.getParameter("bday"));
-
+        LocalDate birthday = LocalDate.parse(request.getParameter("bday"));        
         String resume = request.getParameter("resume");
 
         // Inserted password is being encrypted
@@ -81,8 +85,33 @@ public class SignUpServlet extends HttpServlet {
                 response.sendRedirect("signup.jsp");
                 return;
             }
+            
             // TODO: BIRTHDAY CHECKING RIX
             // Birthday Checking
+            DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.now();
+            LocalDate TenYearsAgo = localDate.minusYears(10);
+            
+            //PRINTS
+            System.out.println("-- Printing Dates...");
+            System.out.println("Current Date : "+localDate);
+            System.out.println("Date 10 Years AGO : "+TenYearsAgo);
+            System.out.println("User Input Date : "+birthday);
+            System.out.println("-- Comparing Dates from User Input");
+            
+            if (birthday.isBefore(localDate)){
+                    if (birthday.isBefore(TenYearsAgo)){
+                        System.out.println("signup-success: Person has a VALID birthdate!");
+                    } else {
+                        System.out.println("-- Error: Person is not at least 10 years old!");
+                        session.setAttribute("signup-error", "Person is not at least 10 years old!");
+                    }
+            } else {
+                System.out.println("-- Error: Cannot set birthday in the future!");
+                session.setAttribute("signup-error", "Cannot set birthday in the future!");
+                response.sendRedirect("signup.jsp");
+            }
+
 //            Date today = new Date();
 //            LocalDateTime ldt = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
 //            ldt.minusYears(10);
@@ -100,6 +129,16 @@ public class SignUpServlet extends HttpServlet {
 //                session.setAttribute("signup-error", "Person is not at least 10 years old!");
 //            }
 
+            Date birthdateUtil = null;
+            
+            try {
+                birthdateUtil = new SimpleDateFormat ("yyyy-MM-dd").parse(dateFormat.format(birthday));
+            } catch (ParseException ex) {
+                Logger.getLogger(SignUpServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            java.sql.Date birthdate = new java.sql.Date(birthdateUtil.getTime());
+            
             // Load Driver & Establishing Connection
             Class.forName(derbyDriver);
             System.out.println("1) Loaded Driver: " + derbyDriver);
@@ -141,7 +180,7 @@ public class SignUpServlet extends HttpServlet {
                 insertSqlStudent.setString(1, username);
                 insertSqlStudent.setString(2, fname);
                 insertSqlStudent.setString(3, lname);
-                insertSqlStudent.setDate(4, birthday);
+                insertSqlStudent.setDate(4, birthdate);
 
                 insertSqlStudent.executeUpdate();
                 insertSqlStudent.close();
@@ -157,7 +196,7 @@ public class SignUpServlet extends HttpServlet {
                 insertSqlTeacher.setString(1, username);
                 insertSqlTeacher.setString(2, fname);
                 insertSqlTeacher.setString(3, lname);
-                insertSqlTeacher.setDate(4, birthday);
+                insertSqlTeacher.setDate(4, birthdate);
                 insertSqlTeacher.setString(5, resume);
                 insertSqlTeacher.setString(6, "pending");
 
