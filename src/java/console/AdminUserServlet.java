@@ -50,15 +50,7 @@ public class AdminUserServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String confirmpassword = request.getParameter("confirmpassword");
         String type = request.getParameter("type");
-
-        // Inserted password is being encrypted
-        String encryptedPassword =  sec.encrypt(password);       
-        System.out.println("0) Encrypting Password ");
-        System.out.println("-- Password: " + password);
-        System.out.println("-- Encrypted Password: " + encryptedPassword);
                
         try {
             // Load Driver & Establishing Connection
@@ -74,6 +66,14 @@ public class AdminUserServlet extends HttpServlet {
 
             // <editor-fold defaultstate="collapsed" desc="Insert ADMIN Method (Click to expand)">
             if (type.equals("insert")) {
+                // Initializing Parameters and Encryption
+                String password = request.getParameter("password");
+                String confirmpassword = request.getParameter("confirmpassword");
+                String encryptedPassword =  sec.encrypt(password);       
+                System.out.println("#) Encrypting Password ");
+                System.out.println("-- Password: " + password);
+                System.out.println("-- Encrypted Password: " + encryptedPassword);
+                
                 System.out.println("--- Initializing Preliminary Safety Protocols...");
                 // Password Checking
                 if (!password.equals(confirmpassword)) {
@@ -114,6 +114,14 @@ public class AdminUserServlet extends HttpServlet {
 
             // <editor-fold defaultstate="collapsed" desc="Update Method (Click to expand)">
             if (type.equals("update")) {
+                // Initializing Parameters and Encryption
+                String password = request.getParameter("password");
+                String confirmpassword = request.getParameter("confirmpassword");
+                String encryptedPassword =  sec.encrypt(password);       
+                System.out.println("#) Encrypting Password ");
+                System.out.println("-- Password: " + password);
+                System.out.println("-- Encrypted Password: " + encryptedPassword);
+                
                 System.out.println("--- Initializing Preliminary Safety Protocols...");
                 // Password Checking
                 if (!password.equals(confirmpassword)) {

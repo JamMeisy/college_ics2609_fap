@@ -35,13 +35,20 @@ public class CourseRequestDecisionServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String username = request.getParameter("username");
-        String decision = request.getParameter("decision");
         String role = (String) request.getSession().getAttribute("role");
+
+        // Course Request Decision Parameters
+        int entry = Integer.parseInt(request.getParameter("entry"));
+        String decision = request.getParameter("decision");
 
         try {
             System.out.println("1) Initializing Preliminary Safety Protocols...");
-//            if (role == null || !role.equals("admin"))
-//                throw new InvalidSessionException("Unauthorized Action");
+
+            // Role Checking
+//            if (!role.equals("teacher")) {
+//                System.out.println("-- Error: Invalid ");
+//                session.setAttribute("error", "Invalid Signup!");
+//            }
 
 
             // Load Driver & Establishing Connection
@@ -53,16 +60,16 @@ public class CourseRequestDecisionServlet extends HttpServlet {
             // Accept User
             String query;
             if (decision.equals("accept"))
-                query = "UPDATE teacher SET status='approved' WHERE USERS_email=?";
+                query = "UPDATE schedule SET status='approved' WHERE entry=?";
             else
-                query = "UPDATE teacher SET status='rejected' WHERE USERS_email=?";
+                query = "UPDATE schedule SET status='rejected' WHERE entry=?";
             PreparedStatement update = conn.prepareStatement(query);
-            update.setString(1, username);
+            update.setInt(1, entry);
             int rows = update.executeUpdate();
 
             if (rows > 0) {
-                System.out.println("4) Teacher " + username + " has been updated successfully!");
-                String message = username + " has been " + decision + "ed!";
+                System.out.println("4) Schedule " + username + " has been updated successfully!");
+                String message = "Schedule has been " + decision + "ed!";
                 request.getSession().setAttribute("message", message);
             } else {
                 System.out.println("-- Error: Something went wrong! ");
@@ -71,7 +78,7 @@ public class CourseRequestDecisionServlet extends HttpServlet {
             // Close the connection
             update.close();
             conn.close();
-            response.sendRedirect("admin-registration.jsp");
+            response.sendRedirect("teacher-myclasses.jsp");
         } catch (SQLException | ClassNotFoundException sqle) {
             sqle.printStackTrace();
         }

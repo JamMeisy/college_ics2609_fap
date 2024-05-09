@@ -12,11 +12,27 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>ActiveLearning PH</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="css/styles-signup.css"/>
         <link
                 rel="stylesheet"
                 href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400&display=swap"/>
+        <link rel="stylesheet" href="css/styles-signup.css"/>
 
+        <script>
+            function student() {
+                document.getElementById("role").value = "student";
+                document.getElementById("resume").hidden = true;
+                document.getElementById("resume-label").hidden = true;
+                document.getElementById("student-btn").classList.add("selected");
+                document.getElementById("teacher-btn").classList.remove("selected");
+            }
+            function teacher() {
+                document.getElementById("role").value = "teacher";
+                document.getElementById("resume").hidden = false;
+                document.getElementById("resume-label").hidden = false;
+                document.getElementById("teacher-btn").classList.add("selected");
+                document.getElementById("student-btn").classList.remove("selected");
+            }
+        </script>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -25,15 +41,13 @@
             <% if (session.getAttribute("error") != null) { %>
             <h1> <%= (String) session.getAttribute("error") %></h1>
             <% } %>
-
+            Are you a
+            <div class="role-box" id="role-box">
+                <button type="button" id="student-btn" class="user-btn selected" onclick="student()">Student</button>
+                <button type="button" id="teacher-btn" class="user-btn" onclick="teacher()">Teacher</button>
+            </div>
             <!-- Form -->
             <form action="signup" method="POST">
-                <label for="button-box">Are you a? <span>*</span></label>
-                <div class="button-box" id="button-box">
-                    <button type="button" name="student-btn" id="student-btn" class="user-btn">Student</button>
-                    <button type="button" name="teacher-btn" id="teacher-btn" class="user-btn">Teacher</button>
-                </div>
-                <input name="role" value="student" />
                 <div class="input-box">
                     <div class="name">
                         <div class="fname-box">
@@ -58,11 +72,14 @@
                     <label for="bday">What's your date of birth <span>*</span></label>
                     <input type="date" name="bday" id="bday" required>
 
-                    <label for="resume">Resume Link <span>*</span></label>
-                    <input type="text" name="resume" id="resume">
+                    <label for="resume" id="resume-label" hidden="true">Resume Link <span>*</span></label>
+                    <input type="text" name="resume" id="resume" hidden="true">
                 </div>
+
+                <input name="role" value="student" id="role" hidden/>
                 <button type="submit" name="submit-btn" id="submit-btn" class="submit-btn">Create a free account</button>
             </form>
+            <a href="index.jsp">Log In instead?</a>
         </div>
         <img class="img-photo" src="assets/UST.jpg" alt="UST">
         <jsp:include page="footer.jsp"/>
