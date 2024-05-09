@@ -15,7 +15,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
-import exceptions.AuthorizationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -135,7 +134,7 @@ public class GenerateReport extends HttpServlet {
             String endDateString = request.getParameter("endDate");
 
             HttpSession session = request.getSession();
-            
+
             try {
                 if (startDateString != null && !startDateString.isEmpty()) {
                     startDate = dateFormatRange.parse(startDateString);
@@ -144,14 +143,22 @@ public class GenerateReport extends HttpServlet {
                     endDate = dateFormatRange.parse(endDateString);
                 }
 
-                if (startDate != null && endDate != null && startDate.after(endDate)) {
-                    session.setAttribute("schedule-admin-error", "Cannot have start date greater than end date");
-                    response.sendRedirect("admin-schedule.jsp");
+                if (reportType.equals("schedule-admin")) {
+                    if (startDate != null && endDate != null && startDate.after(endDate)) {
+                        session.setAttribute("schedule-admin-error", "Cannot have start date greater than end date");
+                        response.sendRedirect("admin-schedule.jsp");
+                        return;
+                    }
+                } else if (reportType.equals("schedule-student")) {
+                    session.setAttribute("schedule-student-error", "Cannot have start date greater than end date");
+                    response.sendRedirect("student_mycourses.jsp");
+                    return;
+                } else if (reportType.equals("schedule-teacher")) {
+                    session.setAttribute("schedule-teacher-error", "Cannot have start date greater than end date");
+                    response.sendRedirect("teacher_myclasses.jsp");
                     return;
                 }
             } catch (ParseException e) {
-                session.setAttribute("schedule-admin-error", "Invalid date format. Please enter dates in the correct format.");
-                response.sendRedirect("admin-schedule.jsp");
                 e.printStackTrace();
             }
 
@@ -186,6 +193,20 @@ public class GenerateReport extends HttpServlet {
                         document.open();
 
                         generateUserListReport(response, document, email, data);
+                        document.close();
+
+                        break;
+
+                    case "admin_record":
+                        String title_admin_record = email + "'s Record";
+                        String filename_admin_record = "admin_record_" + dateFormat.format(new Date()) + ".pdf";
+                        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename_admin_record + "\"");
+
+                        PdfHeaderFooter headerFooter_admin_record = new PdfHeaderFooter(title_admin_record, email, data.size(), 1, dateTime, pdfFooter, pdfHeader, userRole, data, null, null, null);
+                        writer.setPageEvent(headerFooter_admin_record);
+                        document.open();
+
+                        generateAdminReport(response, document, email, userPass, data);
                         document.close();
 
                         break;
@@ -428,6 +449,27 @@ public class GenerateReport extends HttpServlet {
         table.addCell(cellRole);
     }
 
+    public void generateAdminReport(HttpServletResponse response, Document document, String loggedInUser, String userPass, ArrayList<User> data) throws IOException {
+        try {
+            PdfPTable table = new PdfPTable(1);
+            PdfPCell headerCell = new PdfPCell(new Phrase("Credentials"));
+            headerCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            headerCell.setPadding(5);
+            table.addCell(headerCell);
+
+            // Add username, password, and role to the table
+            table.addCell("Email: " + loggedInUser);
+            table.addCell("Password: " + sec.decrypt(userPass));
+
+            document.add(table);
+
+        } catch (DocumentException e) {
+            response.getWriter().println("An error occurred while generating the PDF: " + e.getMessage());
+        }
+    }
+
     public void generateStudentReport(HttpServletResponse response, Document document, PdfWriter writer, String loggedInUser, ArrayList<Schedule> schedule, Date startDate, Date endDate) throws IOException {
         try {
             // Define column widths
@@ -477,9 +519,6 @@ public class GenerateReport extends HttpServlet {
             document.add(table);
         } catch (DocumentException e) {
             response.getWriter().println("An error occurred while generating the PDF: " + e.getMessage());
-        } finally {
-            // Close Document
-            document.close();
         }
     }
 
