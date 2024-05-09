@@ -113,6 +113,7 @@ body {
 .generate-report input{
    border-radius: 10px;
    margin-bottom: 0.5vh;
+   background-color: transparent;
 }
 
 .generate-report button{
@@ -125,6 +126,14 @@ body {
 
 .generate-report button:hover {
     background-color: #B8D3EC; 
+}
+
+#startDate{
+    color:black
+}
+
+#endDate{
+    color:black
 }
 
 

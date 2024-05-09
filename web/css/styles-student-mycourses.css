@@ -112,6 +112,7 @@ body {
 }
 
 .generate-report input{
+    background-color: transparent;
     width: 90%;
    border-radius: 10px;
    margin-bottom: 0.5vh;
@@ -127,6 +128,14 @@ body {
 
 .generate-report button:hover {
     background-color: #B8D3EC; 
+}
+
+#startDate{
+    color:black
+}
+
+#endDate{
+    color:black
 }
 
 
