@@ -34,7 +34,6 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException  {
 
-        // Invalidating Previous Session if ever
         HttpSession session = request.getSession();
         String generatedCaptcha = (String) session.getAttribute("captcha");
 
