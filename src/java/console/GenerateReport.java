@@ -61,14 +61,17 @@ public class GenerateReport extends HttpServlet {
         // Generating Data
         System.out.println("LOADING REPORT / CREDENTIALS");
         System.out.println("---------------------------------------------");
+        
         try {
             // Load Driver & Establishing Connection
             Class.forName(driver);
             System.out.println("1) Loaded Driver: " + driver);
             ArrayList<User> data;
             ArrayList<Schedule> schedule;
+            
             try (Connection conn = DriverManager.getConnection(url, dbuser, dbpass)) {
                 System.out.println("2) Connected to: " + url);
+                
                 // Transfer data for users
                 Statement stmtUsers = conn.createStatement();
                 String queryUsers = "SELECT * FROM users ORDER BY email ASC";
@@ -76,9 +79,11 @@ public class GenerateReport extends HttpServlet {
                 System.out.println("3) Executed Query: " + queryUsers);
                 data = new ArrayList<>();
                 System.out.println("4) Recording Users...");
+                
                 while (rsUsers.next()) {
                     data.add(new User(rsUsers.getString("email"), rsUsers.getString("password"), rsUsers.getString("role")));
                 }   // Close the users result set and statement
+                
                 rsUsers.close();
                 stmtUsers.close();
 
@@ -94,6 +99,7 @@ public class GenerateReport extends HttpServlet {
                     schedule.add(new Schedule(rsSchedule.getInt("entry"), rsSchedule.getString("STUDENT_USERS_email_schedule"), rsSchedule.getString("TEACHER_USERS_email_schedule"),
                             rsSchedule.getString("COURSES_course_name_schedule"), rsSchedule.getString("status"), rsSchedule.getDate("date")));
                 }   // Close the schedule result set and statement
+                
                 rsSchedule.close();
                 stmtSchedule.close();
             }
@@ -113,6 +119,7 @@ public class GenerateReport extends HttpServlet {
 
             String ex_role = "admin";
             String ex_reportType = "schedule_admin";    // OTHER CHOICE: schedule_student, schedule_teachers, user_list, schedule_admin; */
+
             // Retrieve header and footer from web.xml
             String pdfHeader = getServletContext().getInitParameter("pdfHeader");
             String pdfFooter = getServletContext().getInitParameter("pdfFooter");
