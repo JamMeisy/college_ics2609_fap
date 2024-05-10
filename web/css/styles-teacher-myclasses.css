@@ -111,6 +111,7 @@ body {
 }
 
 .generate-report input{
+    color: black;
    border-radius: 10px;
    margin-bottom: 0.5vh;
    background-color: transparent;
@@ -129,11 +130,11 @@ body {
 }
 
 #startDate{
-    color:black
+    color:black;
 }
 
 #endDate{
-    color:black
+    color:black;
 }
 
 

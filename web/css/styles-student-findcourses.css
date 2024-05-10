@@ -18,7 +18,7 @@
 
 .label-container{
     margin: 3vh 4vw;
-    width: 100%;
+    width: 90%;
 }
 
 .label-container h2{
@@ -37,9 +37,9 @@
 }
 
 .container {
-    padding: 3vh;
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
     justify-content: center;
     gap: 2vh;
     border-style: none;
@@ -50,8 +50,8 @@
     margin: 2vh 1vw;
     min-width: 250px;
     width: 4vw;
-    height: 55vh;
-    padding: 2vh 2vw;
+    height: 35vh;
+    padding: 2vh 1.7vw;
     border-radius: 10px;
     margin-bottom: 2vh;
     border-style: solid;
@@ -144,34 +144,6 @@
     background-image: linear-gradient(25deg,  #4472CF, #B48C65);
     background-size: 100%;
     -webkit-background-clip: text;
-    -moz-background-clip: text;
     -webkit-text-fill-color: transparent; 
     -moz-text-fill-color: transparent;
-}
-
-
-@media only screen and (min-width: 1024px) {
-    :root {
-        --columns: 3; 
-        
-    }
-    
-    .label-container h2{
-    font-size: 1rem;
-    }
-
-    .label-container .p1{
-        font-size: 0.9rem;
-    }
-
-    .label-container .p2{
-        font-size: 0.8rem;
-    }
-
-}
-
-@media only screen and (min-width: 1280px) {
-    :root {
-        --columns: 4;
-    }
 }
