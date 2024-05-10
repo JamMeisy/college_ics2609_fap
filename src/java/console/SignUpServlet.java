@@ -181,6 +181,7 @@ public class SignUpServlet extends HttpServlet {
 
                 insertSqlTeacher.executeUpdate();
                 insertSqlTeacher.close();
+                session.setAttribute("teacher-signup", username + " has signed up for verification!");
                 response.sendRedirect("signup.jsp");
             }
 
