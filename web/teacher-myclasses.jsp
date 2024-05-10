@@ -43,7 +43,12 @@
     <body>
         <jsp:include page="header.jsp"/>
         <jsp:include page="/data"/>
-
+        <% if (session.getAttribute("teacher-signup") != null) { %>
+        <h1> <%= (String) session.getAttribute("teacher-signup") %></h1>
+        <%
+                session.setAttribute("teacher-signup", null);
+            }
+        %>
         <!-- Teacher Course PENDING Schedules -->
         <div class="table-container">
             <h1>Schedules</h1>

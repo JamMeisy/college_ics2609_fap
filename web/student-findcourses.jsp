@@ -55,6 +55,7 @@
                 session.setAttribute("course-request-error", null);
             }
         %>
+    <div class="container">
         <!-- Course Application Card-->
         <%
             ArrayList<Courses> courses = (ArrayList<Courses>) session.getAttribute("courses");
@@ -68,7 +69,7 @@
                 for (Courses x : courses) {
         %>
       
-        <div class="container">
+
         <div class="course-card">
             <img class="course-card-img" src="assets/UST.jpg" alt="UST">
             <h3><%= x.getCname() %></h3>

@@ -104,14 +104,17 @@ body {
     padding: 1%;
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: black;
 }
 
-.generate-report label{
+label{
+    color: black;
     font-size: 0.8rem;
     margin-bottom: 0.5vh;
 }
 
 .generate-report input{
+    color: black;
     background-color: transparent;
     width: 90%;
    border-radius: 10px;
@@ -131,11 +134,11 @@ body {
 }
 
 #startDate{
-    color:black
+    color:black;
 }
 
 #endDate{
-    color:black
+    color:black;
 }
 
 
