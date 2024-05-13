@@ -1,6 +1,13 @@
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 .login-box{
     margin: auto;
     width: 100%;
+    margin-bottom: 20px; 
 }
 
 .login-box * {
@@ -87,20 +94,27 @@ input{
     color: white;
 }
 
-.refresh-button {
-    width: 30%;
-}
-.submit-button {
-    width: 60%
+input:not([name="generatedCaptcha"]):hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+    transition: box-shadow 0.4s ease;
 }
 
+
 .button-container button{
+    width: 60%;
     border-radius: 12px;
     margin-bottom: 3vh;
     display: block;
     font-size: 1rem;
+    border-style: none;
     color: #131619;
     background-color: #f78c24;
+    transition: color 0.4s ease, box-shadow 0.5s ease;
+}
+
+.button-container button:hover {
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
 }
 
 .img-photo{
@@ -144,27 +158,39 @@ input[type=text]:focus {
         text-align: left;
     }
     
-form input, .button-container button{
-    width: 50%;
-}
-    
-    .img-photo{
-        display: block;
-        max-width: 100%;
-        margin-top: 3vh;
+    form input{
+        width: 100%;
     }
+   
+    
 }
 
 @media only screen and (min-width: 1248px){
     
-    .login-box{
+    .main-container {
+        display: flex;
+    }
+    
+    .login-box {
         width: 50%;
-        float: left;
-        margin: auto;
+        max-width: 600px;
+        margin-bottom: 20px; 
+    }
+    
+    .img-photo {
+        display: block;
+        width: 50%;
+        max-width: calc(50% - 20px); 
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
     }
   
-    form input, .button-container button{
+    form input{
         width: 60%;
+    }
+    
+    .button-container button{
+        width:40%;
     }
     
     .label-container{
@@ -175,15 +201,4 @@ form input, .button-container button{
         font-size: 1.5rem;
     }
 
-    .img-photo{
-        margin: 0;
-        width: 50vw;
-        height: 100vh; 
-        object-fit: cover;
-        position: fixed; 
-        top: 0; 
-        right: 0; 
-        border-top-left-radius: 3%;
-        border-bottom-left-radius: 3%;
-    }
 }
