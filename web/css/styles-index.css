@@ -20,6 +20,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: ease all .5s;
 }
 
 form label{
@@ -92,6 +93,7 @@ input{
     border-width: thin;
     background-color: transparent;
     color: white;
+    transition: ease all .5s;
 }
 
 input:not([name="generatedCaptcha"]):hover {
@@ -119,6 +121,7 @@ input:not([name="generatedCaptcha"]):hover {
 
 .img-photo{
     display: none;
+    transition: ease all .5s;
 }
 
 div.login-box h1.error {
@@ -145,6 +148,10 @@ input[type=text]:focus {
 #generatedCaptcha {
     text-align: center;
     background-color: #FFA500;
+}
+
+.footer-divider {
+    display: none
 }
 
 @media only screen and (min-width: 768px){
