@@ -18,12 +18,14 @@ body {
 
 .table-container{
     width: 70%;
+    min-width: fit-content;
     color: black;
     margin: 3vh auto;
     padding: 1%;
     border-radius: 10px;
     border-style:none;
     background-color: #ffffff;
+    overflow-x: auto; 
 }
 
 .table-container h1{
@@ -39,17 +41,17 @@ body {
     border: none;
     border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
 }
 
-.table-container table th{
-   text-align: center;
-   padding: 2%;
+.table-container table th, .table-container table td {
+    text-align: center;
+    padding: 2%;
+    word-wrap: break-word; 
 }
 
 .table-container table td{
    text-align: left;
-   padding: 2%;
-   
 }
 
 .table-container table tr{

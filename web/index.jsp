@@ -59,59 +59,62 @@
     <body>
         <%@ include file="header.jsp" %>
         <!-- Body  -->
-        <div class="login-box">
-            <div class="label-container">
-                <h2>Welcome to   <b class="bold">   Active Learning!</b></h2>
-                <h4>Login to Activate Learning to start Your IT career!</h4>
-            </div>
-            <!-- Error Prompt -->
-            <% if (session.getAttribute("login-error") != null) { %>
-            
-            <h1 class="error" id="error"><%= (String) session.getAttribute("login-error") %>
-            </h1>
-            
-            <%
-                    session.setAttribute("login-error", null);
-                }
-            %>
-
-            <!-- Form -->
-            <form action="login" method="POST">
-                <input type="email" name="username" id="username" placeholder="  Email Address" required/>
-
-                <input type="password" name="password" id="password" placeholder="  Password" required/>
-
-                <label for="generatedCaptcha">Generated CAPTCHA:</label>
-                <input
-                        type="text"
-                        name="generatedCaptcha"
-                        id="generatedCaptcha"
-                        readonly
-                        onfocus="this.blur()"
-                />
-
-                <input
-                        type="text"
-                        name="captcha"
-                        id="captcha"
-                        onpaste="return false;"
-                        placeholder="  Type the text above"
-                        required
-                />
-
-                <div class="button-container">
-                    <button
-                            type="button"
-                            onclick="refreshCaptcha()"
-                            class="refresh-button"
-                            id="refresh-button"
-                    >
-                        &#8635;
-                    </button>
-                    <button type="submit" class="submit-button">SUBMIT</button>
+        <div class="main-container">
+            <div class="login-box">
+                <div class="label-container">
+                    <h2>Welcome to   <b class="bold">   Active Learning!</b></h2>
+                    <h4>Login to Activate Learning to start Your IT career!</h4>
                 </div>
-            </form>
-            <a href="signup.jsp" id="link-signup">Sign Up instead?</a>
+                <!-- Error Prompt -->
+                <% if (session.getAttribute("login-error") != null) { %>
+
+                <h1 class="error" id="error"><%= (String) session.getAttribute("login-error") %>
+                </h1>
+
+                <%
+                        session.setAttribute("login-error", null);
+                    }
+                %>
+
+                <!-- Form -->
+                <form action="login" method="POST">
+                    <input type="email" name="username" id="username" placeholder="  Email Address" required/>
+
+                    <input type="password" name="password" id="password" placeholder="  Password" required/>
+
+                    <label for="generatedCaptcha">Generated CAPTCHA:</label>
+                    <input
+                            type="text"
+                            name="generatedCaptcha"
+                            id="generatedCaptcha"
+                            readonly
+                            onfocus="this.blur()"
+                    />
+
+                    <input
+                            type="text"
+                            name="captcha"
+                            id="captcha"
+                            onpaste="return false;"
+                            placeholder="  Type the text above"
+                            required
+                    />
+
+                    <div class="button-container">
+                        <button
+                                type="button"
+                                onclick="refreshCaptcha()"
+                                class="refresh-button"
+                                id="refresh-button"
+                        >
+                            &#8635;
+                        </button>
+                        <button type="submit" class="submit-button">SUBMIT</button>
+                    </div>
+                </form>
+                <a href="signup.jsp" id="link-signup">Sign Up instead?</a>
+            </div>
+            <img class="img-photo" src="assets/UST.jpg" alt="UST">
         </div>
         <%@ include file="footer.jsp" %>
     </body>

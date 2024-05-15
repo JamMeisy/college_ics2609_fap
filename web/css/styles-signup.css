@@ -127,7 +127,7 @@ form > .submit-btn:after {
   margin-left: -20px;
   margin-top: -120%;
   opacity: 0;
-  transition: all 0.8s
+  transition: all 0.4s
 }
 
 form > .submit-btn:hover {
@@ -153,6 +153,7 @@ form .input-box input, form .submit-btn {
 }
 
 h3 {
+    margin-left: 1.5vw;
     color: #fff;
 }
 
@@ -268,6 +269,10 @@ div.fname-box {
         display: block;
         max-width: 100%;
         margin-top: 3vh;
+    }
+    
+    h3{
+        margin-left: 0;
     }
 }
 
