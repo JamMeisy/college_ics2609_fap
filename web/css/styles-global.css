@@ -5,9 +5,11 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 16px;
 }
+
 html {
     background-color: #131619;
 }
+
 body {
     display: flex;
     flex-direction: column;

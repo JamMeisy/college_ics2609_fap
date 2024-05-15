@@ -74,7 +74,8 @@ body {
 }
 
 #btn-reject,
-#btn-accept {
+#btn-accept,
+.generate-report button{
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
@@ -115,6 +116,7 @@ body {
    border-radius: 10px;
    margin-bottom: 0.5vh;
    background-color: transparent;
+    cursor: pointer;
 }
 
 .generate-report button{
